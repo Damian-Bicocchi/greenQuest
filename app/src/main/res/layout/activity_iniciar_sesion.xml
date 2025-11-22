@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/activity_adapter" />
+
+    <TextView
+        android:id="@+id/inicio_sesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:text="@string/inicio_sesion"
+        android:textSize="24sp"
+        android:textColor="@color/texto_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descripcion_inicio_sesion"
+        android:layout_width="277dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/descripcion_inicio_sesion"
+        android:textAlignment="center"
+        android:textColor="@color/texto_secundario"
+        app:layout_constraintTop_toBottomOf="@id/inicio_sesion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
