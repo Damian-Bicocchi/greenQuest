@@ -9,5 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="texto_normal">#CAD3F5</color>
     <color name="texto_secundario">#A5ADCB</color>
-
+    <color name="fondo_secundario">#363A4F </color>
+    <color name="fondo_primario">#181926</color>
+    <color name="accent_color"> #AC96D6</color>
+    <color name="recuadros_input_text">#6D7089</color>
 </resources>
