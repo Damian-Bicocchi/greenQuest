@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">greenQuest</string>
+    <string name="inicio_sesion">Iniciar Sesion</string>
+    <string name="descripcion_inicio_sesion">Ingresa tus credenciales para empezar
+        a sumar puntos por reciclar</string>
+    <string name="email_text">Correo electronico</string>
+    <string name="password_text">Contraseña</string>
+    <string name="login_button">Iniciar Sesion</string>
+    <string name="password_hint">Distingue entre mayúsculas y minúsculas</string>
+    <string name="email_hint">ejemplo@correo.com</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
