@@ -42,4 +42,11 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+    <string name="title_recuperar_contrasenia">Recuperar contraseña</string>
+    <string name="description_recuperar_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
+    <string name="label_input_email">Ingrese su correo electrónico</string>
+    <string name="email_hint">alguien@mail.com</string>
+    <string name="cancel">Cancelar</string>
+    <string name="button_recuperar_contrasenia">Recuperar contraseña</string>
 </resources>
