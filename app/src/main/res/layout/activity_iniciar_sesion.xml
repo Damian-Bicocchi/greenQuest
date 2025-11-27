@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
-        android:importantForContentCapture=""
         android:text="@string/inicio_sesion"
         android:textColor="@color/texto_normal"
         android:textSize="24sp"
