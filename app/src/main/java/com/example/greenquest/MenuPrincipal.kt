@@ -9,6 +9,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.greenquest.databinding.ActivityToolbarBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.bottomnavigation.    LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
+
 class MenuPrincipal : AppCompatActivity() {
 
     private val topGlobalFragment = TopGlobalFragment()
@@ -27,6 +31,7 @@ class MenuPrincipal : AppCompatActivity() {
         setContentView(binding.root)
 
         val navigation = binding.bottomNavigation
+        navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
         navigation.setOnItemSelectedListener { item -> onNavigationItemSelectedListener(item) }
         loadFragment(topGlobalFragment)
     }
