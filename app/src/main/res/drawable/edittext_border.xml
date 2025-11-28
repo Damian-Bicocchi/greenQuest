@@ -7,7 +7,7 @@
         android:color="@android:color/white" />
 
     <solid
-        android:color="@color/secondary_background" />
+        android:color="@color/fondo_secundario" />
 
     <corners
         android:radius="4dp" />

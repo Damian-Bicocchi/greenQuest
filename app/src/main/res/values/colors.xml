@@ -12,6 +12,7 @@
     <color name="texto_naranja">#f5a97f</color>
     <color name="acento_de_fondo">#6E738D</color>
     <color name="color_de_la_barra_de_abajo">#8087a2</color>
+    <color name="texto_oscuro">#181926</color>
 
 
 </resources>
