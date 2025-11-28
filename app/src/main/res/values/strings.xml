@@ -55,10 +55,21 @@
     <string name="title_recuperar_contrasenia">Recuperar contraseña</string>
     <string name="description_recuperar_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
     <string name="label_input_email">Ingrese su correo electrónico</string>
-    <string name="email_hint">alguien@mail.com</string>
+
     <string name="cancel">Cancelar</string>
     <string name="button_recuperar_contrasenia">Recuperar contraseña</string>
     <string name="title_activity_ranking_global">ranking_global</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+
+
+    <!-- Para pantalla restablecer contraseña -->
+    <string name="title_restablecer_contrasenia">Restablecer contraseña</string>
+    <string name="description_restablecer_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
+    <string name="label_codigo_contrasenia">Ingrese el código de 6 caracteres</string>
+    <string name="hint_codigo_contrasenia">abc123</string>
+    <string name="label_nueva_contrasenia">Nueva contraseña</string>
+    <string name="label_repita_restablecer_contrasenia">Repita su nueva contraseña</string>
+    <string name="button_restablecer_contrasenia">Establecer nueva contraseña</string>
+
 </resources>

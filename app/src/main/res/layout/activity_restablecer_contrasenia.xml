@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="@string/title_recuperar_contrasenia"
+        android:text="@string/title_restablecer_contrasenia"
         android:textColor="@color/texto_normal"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_marginHorizontal="48dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/description_recuperar_contrasenia"
+        android:text="@string/description_restablecer_contrasenia"
         android:textColor="@color/texto_normal"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,22 +74,60 @@
             android:padding="20dp">
 
             <TextView
-                android:id="@+id/label_email"
+                android:id="@+id/label_codigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_input_email"
+                android:text="@string/label_codigo_contrasenia"
                 android:textColor="@color/texto_normal"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/input_email"
+                android:id="@+id/input_codigo"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_border"
-                android:hint="@string/email_hint"
+                android:hint="@string/hint_codigo_contrasenia"
                 android:paddingHorizontal="12dp"
-                android:inputType="textEmailAddress"
+                android:textColor="@color/texto_normal"
+                android:textColorHint="@color/texto_secundario"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/label_nueva_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_nueva_contrasenia"
+                android:textColor="@color/texto_normal"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_border"
+                android:hint="@string/password_hint"
+                android:paddingHorizontal="12dp"
+                android:textColor="@color/texto_normal"
+                android:textColorHint="@color/texto_secundario"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/label_repetir_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_repita_restablecer_contrasenia"
+                android:textColor="@color/texto_normal"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/input_repetir_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_border"
+                android:hint="@string/password_hint"
+                android:paddingHorizontal="12dp"
                 android:textColor="@color/texto_normal"
                 android:textColorHint="@color/texto_secundario"
                 android:textSize="16sp"/>
@@ -113,12 +151,12 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
                 <Button
-                    android:id="@+id/btn_recuperar"
+                    android:id="@+id/btn_restablecer"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="4dp"
                     android:backgroundTint="@color/accent_color"
-                    android:text="@string/button_recuperar_contrasenia"
+                    android:text="@string/button_restablecer_contrasenia"
                     android:textColor="@color/fondo_primario"
 
                     app:layout_constraintStart_toEndOf="@+id/btn_cancelar"

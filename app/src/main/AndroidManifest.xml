@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenQuest">
         <activity
+            android:name=".restablecer_contrasenia"
+            android:exported="false" />
+        <activity
             android:name=".ranking_global"
             android:exported="false"
             android:label="@string/title_activity_ranking_global"
@@ -19,7 +22,6 @@
         <activity
             android:name=".recuperar_contrasenia"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
