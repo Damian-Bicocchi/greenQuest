@@ -2,15 +2,14 @@ package com.example.greenquest
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.greenquest.databinding.ActivityToolbarBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.bottomnavigation.    LabelVisibilityMode
+import com.example.greenquest.fragments.AmigosFragment
+import com.example.greenquest.fragments.CategorizarFragment
+import com.example.greenquest.fragments.EscanearFragment
+import com.example.greenquest.fragments.TopAmigosFragment
+import com.example.greenquest.fragments.TopGlobalFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class MenuPrincipal : AppCompatActivity() {
@@ -21,7 +20,7 @@ class MenuPrincipal : AppCompatActivity() {
 
     private val categorizarFragment = CategorizarFragment()
 
-    private val amigosFragment = AmigosFragment()
+    private val amigosFragment = TopAmigosFragment()
 
     private lateinit var binding: ActivityToolbarBinding
 

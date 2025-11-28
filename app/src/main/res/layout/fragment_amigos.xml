@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/amigosFragment"
-    tools:context=".AmigosFragment">
+    tools:context=".fragments.AmigosFragment">
     <include layout="@layout/activity_adapter" />
 
     <!-- TODO: Update blank fragment layout -->
