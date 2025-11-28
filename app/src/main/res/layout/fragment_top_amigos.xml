@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TopAmigosFragment">
+    tools:context=".fragments.TopAmigosFragment">
     <include layout="@layout/activity_adapter" />
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,5 +16,10 @@
         android:textColor="@color/texto_normal"
         android:textSize="35sp"
         android:text="Fragmento Top Amigos" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="447dp" />
+
 
 </FrameLayout>
