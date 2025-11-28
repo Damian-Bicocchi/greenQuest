@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/firstFragment"
+        android:id="@+id/topGlobalFragment"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Primero" />
+        android:title="Top Global" />
     <item
-        android:id="@+id/secondFragment"
+        android:id="@+id/topAmigosFragment"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Primero" />
+        android:title="Top Amigos" />
     <item
-        android:id="@+id/thirdFragment"
+        android:id="@+id/escanearFragment"
         android:icon="@android:drawable/ic_input_add"
-        android:title="Tercero" />
+        android:title="Escanear" />
+    <item
+        android:id="@+id/categorizarFragment"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Categorizar" />
+    <item
+        android:id="@+id/amigosFragment"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Amigos" />
 </menu>
