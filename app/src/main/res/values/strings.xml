@@ -8,7 +8,6 @@
     <string name="login_button">Iniciar Sesion</string>
     <string name="password_hint">Distingue entre mayúsculas y minúsculas</string>
     <string name="email_hint">ejemplo@correo.com</string>
-<<<<<<< HEAD
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -18,7 +17,6 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-=======
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -69,5 +67,4 @@
     <string name="email_hint">alguien@mail.com</string>
     <string name="cancel">Cancelar</string>
     <string name="button_recuperar_contrasenia">Recuperar contraseña</string>
->>>>>>> 5dffa0e4a0af8a649b42cf7cb8f8cd44ecdffd44
 </resources>

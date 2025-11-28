@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
     <!-- Cambiado el parent a Theme.AppCompat para ser compatible con AppCompatActivity -->
     <style name="Theme.GreenQuest" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:backdropColor">@color/fondo_primario</item>
         <item name="android:textColor">@color/texto_normal</item>
         <item name="android:textColorHint">@color/texto_normal</item>
         <item name="android:hint"></item>
-=======
 
-    <style name="Theme.GreenQuest" parent="android:Theme.Material.Light.NoActionBar" />
-    <!-- Base application theme. -->
-    <style name="Base.Theme.GreenQuest" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
->>>>>>> 5dffa0e4a0af8a649b42cf7cb8f8cd44ecdffd44
     </style>
 </resources>
