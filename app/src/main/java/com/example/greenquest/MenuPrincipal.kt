@@ -20,7 +20,7 @@ class MenuPrincipal : AppCompatActivity() {
 
     private val categorizarFragment = CategorizarFragment()
 
-    private val amigosFragment = TopAmigosFragment()
+    private val amigosFragment = AmigosFragment()
 
     private lateinit var binding: ActivityToolbarBinding
 
