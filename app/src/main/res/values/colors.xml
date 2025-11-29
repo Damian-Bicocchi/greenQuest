@@ -15,5 +15,12 @@
     <color name="recuadros_input_text">#6D7089</color>
     <color name="bottom_navigation_background">#8087A2</color>
     <color name="bottom_navigation_item_active">#AC96D6</color>
-    <color name="texto_navegacion">#181926</color>
+    <color name="texto_oscuro">#181926</color>
+    <color name="fila_usuario_normal">#6E738D</color>
+    <color name="fila_usuario_oro">#FBBC05</color>
+    <color name="fila_usuario_plata">#EEEEEE</color>
+    <color name="fila_usuario_bronce">#CE8946</color>
+    <color name="contenedor_puntos">#ED8796</color>
+
+
 </resources>

@@ -34,8 +34,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLogin"
-        android:layout_width="299dp"
-        android:layout_height="273dp"
+        android:layout_width="326dp"
+        android:layout_height="313dp"
         android:layout_margin="32dp"
         android:background="@color/fondo_secundario"
         app:cardCornerRadius="16dp"
@@ -59,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
-                android:text="@string/email_text" />
+                android:text="@string/email_text"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/email_input"
@@ -70,7 +71,7 @@
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/texto_normal"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -78,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:text="@string/password_text"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/password_input"
@@ -89,7 +90,7 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColor="@color/texto_normal"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/iniciar_sesion_button"
@@ -98,6 +99,7 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/accent_color"
                 android:text="@string/login_button" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -110,7 +112,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/recuperar_contraseña"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/registrar_cuenta"
@@ -118,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/registrar_cuenta"
-                    android:textSize="14sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>
