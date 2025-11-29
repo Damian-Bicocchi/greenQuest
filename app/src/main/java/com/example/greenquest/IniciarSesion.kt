@@ -22,12 +22,12 @@ class IniciarSesion : ComponentActivity() {
         binding = ActivityIniciarSesionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val recuperarContrasena = binding.recuperarContraseA
+        val recuperarContrasena = binding.linkRecuperarContrasenia
         val recuperartextoSubrayado = SpannableString("Recuperar contraseña")
         recuperartextoSubrayado.setSpan(UnderlineSpan(), 0, recuperartextoSubrayado.length, 0)
         recuperarContrasena.text = recuperartextoSubrayado
 
-        val registrarCuenta = binding.registrarCuenta
+        val registrarCuenta = binding.linkRegistrarCuenta
         val registrartextoSubrayado = SpannableString("Registrar cuenta")
         registrartextoSubrayado.setSpan(UnderlineSpan(), 0, registrartextoSubrayado.length, 0)
         registrarCuenta.text = registrartextoSubrayado
@@ -37,7 +37,8 @@ class IniciarSesion : ComponentActivity() {
         }
 
         recuperarContrasena.setOnClickListener {
-            Toast.makeText(this,"Aca va la funcionalidad para recuperar la contraseña", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, recuperar_contrasenia::class.java)
+            startActivity(intent)
         }
 
         val intent = Intent(this, MenuPrincipal::class.java)
