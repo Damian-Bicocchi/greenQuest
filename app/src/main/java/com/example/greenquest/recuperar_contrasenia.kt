@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,15 +29,13 @@ class recuperar_contrasenia : AppCompatActivity() {
                 mensajeError.text = "Debe ingresar un correo válido"
             } else {
                 mensajeError.visibility = View.INVISIBLE
-
-                // Redirigimos a la activity
                 val intent = Intent(this, restablecer_contrasenia::class.java)
                 startActivity(intent)
             }
         }
         val cancelar = findViewById<View>(R.id.btn_cancelar)
         cancelar.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, IniciarSesion::class.java)
             startActivity(intent)
         }
     }
