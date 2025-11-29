@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
-        android:importantForContentCapture=""
         android:text="@string/inicio_sesion"
         android:textColor="@color/texto_normal"
         android:textSize="24sp"
@@ -131,6 +130,29 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/recuperar_contraseña"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/recuperar_contraseña"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/registrar_cuenta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/registrar_cuenta"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </LinearLayout>
 

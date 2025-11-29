@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenQuest">
         <activity
+            android:name=".MenuPrincipal"
+            android:exported="false" />
+        <activity
+            android:name=".IniciarSesion"
             android:name=".restablecer_contrasenia"
             android:exported="false" />
         <activity
