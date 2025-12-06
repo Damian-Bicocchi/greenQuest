@@ -75,4 +75,7 @@
     <string name="label_repita_restablecer_contrasenia">Repita su nueva contraseña</string>
     <string name="button_restablecer_contrasenia">Establecer nueva contraseña</string>
 
+    <string name="label_registrar_cuenta">Registrar cuenta</string>
+    <string name="bienvenido_registrar_cuenta">¡Bienvenido a GreenQuest!</string>
+
 </resources>
