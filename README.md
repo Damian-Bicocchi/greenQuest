@@ -1,3 +1,5 @@
+# greenQuest
+Repositorio de la aplicación de gamificación "greenQuest"
 # Grupo_5
 
 * Bicocchi Damián
