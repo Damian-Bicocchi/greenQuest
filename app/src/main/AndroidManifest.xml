@@ -18,26 +18,20 @@
         <activity
             android:name=".restablecer_contrasenia"
             android:exported="false" />
-
         <activity
             android:name=".recuperar_contrasenia"
             android:exported="false" />
-
+        <activity
             android:name=".IniciarSesion"
-            android:exported="true">  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MenuPrincipal"
             android:exported="false" />
-
-        <activity
-            android:name=".recuperar_contrasenia"
-            android:exported="false" />
-
-        <activity android:name=".restablecer_contrasenia"
-            android:exported="false" />
-        </application>
+    </application>
 
 </manifest>

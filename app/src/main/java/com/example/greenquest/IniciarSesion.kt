@@ -33,7 +33,8 @@ class IniciarSesion : ComponentActivity() {
         registrarCuenta.text = registrartextoSubrayado
 
         registrarCuenta.setOnClickListener {
-            Toast.makeText(this,"Aca va la funcionalidad para registrar una cuenta", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, registrar_cuenta::class.java)
+            startActivity(intent)
         }
 
         recuperarContrasena.setOnClickListener {
