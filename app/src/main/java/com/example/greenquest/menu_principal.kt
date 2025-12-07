@@ -12,7 +12,7 @@ import com.example.greenquest.fragments.TopAmigosFragment
 import com.example.greenquest.fragments.TopGlobalFragment
 import com.google.android.material.navigation.NavigationBarView
 
-class MenuPrincipal : AppCompatActivity() {
+class menu_principal : AppCompatActivity() {
 
     private val topGlobalFragment = TopGlobalFragment()
     private val TopAmigosFragment = TopAmigosFragment()
@@ -64,6 +64,7 @@ class MenuPrincipal : AppCompatActivity() {
             else -> false
         }
     }
+
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

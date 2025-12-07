@@ -7,10 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import com.example.greenquest.databinding.ActivityIniciarSesionBinding
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
-import android.widget.Toast
-import androidx.core.text.set
 
-class IniciarSesion : ComponentActivity() {
+class iniciar_sesion : ComponentActivity() {
 
     private lateinit var binding: ActivityIniciarSesionBinding
 
@@ -33,6 +31,8 @@ class IniciarSesion : ComponentActivity() {
         registrarCuenta.text = registrartextoSubrayado
 
         registrarCuenta.setOnClickListener {
+
+
             val intent = Intent(this, registrar_cuenta::class.java)
             startActivity(intent)
         }
@@ -42,7 +42,7 @@ class IniciarSesion : ComponentActivity() {
             startActivity(intent)
         }
 
-        val intent = Intent(this, MenuPrincipal::class.java)
+        val intent = Intent(this, menu_principal::class.java)
 
         val botonIniciarSesion = binding.iniciarSesionButton
         botonIniciarSesion.setOnClickListener {
