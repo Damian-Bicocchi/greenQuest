@@ -16,7 +16,7 @@ class InicioSesionModel: ViewModel() {
             return@liveData
         }
 
-        if (api.login(Request(mail, password)).access != null) {
+        if (api.login(Request(mail, password))!= null) {
             emit("OK")
         } else {
             emit("Usuario o contraseña incorrectos")

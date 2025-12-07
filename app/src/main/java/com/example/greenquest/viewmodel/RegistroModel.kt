@@ -3,9 +3,10 @@ package com.example.greenquest.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.greenquest.ChequeosUsuario
+
+import com.example.greenquest.apiParameters.ApiError
 import com.example.greenquest.repository.UsuarioRepository
-import retrofit2.HttpException
+import com.google.gson.Gson
 
 class RegistroViewModel : ViewModel() {
 
@@ -13,6 +14,7 @@ class RegistroViewModel : ViewModel() {
 
     fun registrar(email: String, password: String, confirm: String) = liveData {
 
+        // 1️⃣ Validaciones locales
         if (!ChequeosUsuario.esValidoCorreo(email)) {
             emit("Email inválido, debe contener '@' y un dominio")
             return@liveData
@@ -23,16 +25,36 @@ class RegistroViewModel : ViewModel() {
             return@liveData
         }
 
-        // Intentamos registrar directamente en el servidor
-        val response = repository.signup(email, password)
-        // Si el servidor devuelve objeto de signup exitoso (ajustar según implementación del backend)
-        Log.println(Log.ASSERT, "RegistroViewModel", "Signup response: $response")
-        if(response.access== null){
-            emit("Error en el registro, el usuario ya existe o datos inválidos")
-            return@liveData
+        try {
+            // 2️⃣ Llamada al backend
+            val response = repository.signup(email, password)
+
+            if (response.isSuccessful) {
+
+                emit("Registro exitoso ✅")
+            } else {
+
+                val errorJson = response.errorBody()?.string()
+                val apiError = Gson().fromJson(errorJson, ApiError::class.java)
+
+                when {
+                    apiError.username != null ->
+                        emit(apiError.username.first())
+
+                    apiError.password != null ->
+                        emit(apiError.password.first())
+
+                    apiError.non_field_errors != null ->
+                        emit(apiError.non_field_errors.first())
+
+                    else ->
+                        emit("Error desconocido del servidor")
+                }
+            }
+
+        } catch (e: Exception) {
+            Log.e("RegistroViewModel", e.message.toString())
+            emit("Error de conexión con el servidor")
         }
-        emit("OK")
-
-
     }
 }
