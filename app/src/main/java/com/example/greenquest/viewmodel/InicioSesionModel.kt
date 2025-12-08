@@ -11,15 +11,22 @@ class InicioSesionModel: ViewModel() {
 
     fun  iniciarSesion(mail: String,password: String ) = liveData {
 
-        if (mail.isEmpty() || password.isEmpty()) {
+        if (!ChequeosUsuario.camposCompletos(mail,password)) {
             emit("Rellene todos los campos")
             return@liveData
         }
 
-        if (api.login(Request(mail, password))!= null) {
-            emit("OK")
-        } else {
-            emit("Usuario o contraseña incorrectos")
+        try{
+
+            val response = api.login(Request(mail,password))
+            if(response.isSuccessful){
+                emit("OK")
+            }else{
+                emit("Credenciales incorrectas")
+            }
+
+        }catch (e: Exception){
+            emit("Error de conexion")
         }
 
     }

@@ -14,7 +14,11 @@ class RegistroViewModel : ViewModel() {
 
     fun registrar(email: String, password: String, confirm: String) = liveData {
 
-        // 1️⃣ Validaciones locales
+        if (!ChequeosUsuario.camposCompletos(email, password, confirm)) {
+            emit("Rellene todos los campos")
+            return@liveData
+        }
+
         if (!ChequeosUsuario.esValidoCorreo(email)) {
             emit("Email inválido, debe contener '@' y un dominio")
             return@liveData
@@ -30,8 +34,8 @@ class RegistroViewModel : ViewModel() {
             val response = repository.signup(email, password)
 
             if (response.isSuccessful) {
+                emit("OK")
 
-                emit("Registro exitoso ✅")
             } else {
 
                 val errorJson = response.errorBody()?.string()
@@ -39,7 +43,7 @@ class RegistroViewModel : ViewModel() {
 
                 when {
                     apiError.username != null ->
-                        emit(apiError.username.first())
+                        emit("Ya existe un usuario con el correo ingresado")
 
                     apiError.password != null ->
                         emit(apiError.password.first())

@@ -14,4 +14,13 @@ object ChequeosUsuario {
     fun esValidoConfirmarContraseña(contraseña: String, confirmar: String): Boolean {
         return contraseña == confirmar
     }
+
+    fun camposCompletos(vararg campos: String): Boolean {
+        for (campo in campos) {
+            if (campo.isBlank()) {
+                return false
+            }
+        }
+        return true
+    }
 }
