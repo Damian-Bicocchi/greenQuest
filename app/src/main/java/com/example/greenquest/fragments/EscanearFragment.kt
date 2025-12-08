@@ -1,33 +1,62 @@
 package com.example.greenquest.fragments
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.greenquest.R
+import androidx.core.content.ContextCompat
+import java.util.concurrent.ExecutorService
+import android.Manifest
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.OptIn
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalGetImage
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
+import androidx.camera.core.ImageProxy
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
+import java.util.concurrent.Executors
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ThirdFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EscanearFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+   private lateinit var cameraExecutor: ExecutorService
+   private lateinit var previewView: PreviewView
+   private lateinit var informativeMessage: TextView
+   private lateinit var qrScanner: BarcodeScanner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        )
+        { isGranted: Boolean ->
+            if (isGranted) {
+                startCamera()
+                informativeMessage.visibility = View.INVISIBLE
+            } else {
+                informativeMessage.text = "No se obtuvo el permiso para acceder a la cámara"
+                informativeMessage.visibility = View.VISIBLE
+            }
+
         }
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        cameraExecutor = Executors.newSingleThreadExecutor()
+        qrScanner = BarcodeScanning.getClient()
+
+
+
     }
 
     override fun onCreateView(
@@ -38,23 +67,92 @@ class EscanearFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_escanear, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ThirdFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EscanearFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        previewView = view.findViewById(R.id.qr_camara)
+        informativeMessage = view.findViewById(R.id.qr_mensaje_error)
+
+    }
+
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+            // Preview
+            val preview = Preview.Builder()
+                .setTargetResolution(android.util.Size(1280, 720)) // Use android.util.Size
+                .build().also {
+                    it.setSurfaceProvider(previewView.surfaceProvider)
                 }
-            }
+
+            val imageAnalizer = ImageAnalysis.Builder()
+                .setTargetResolution(android.util.Size(1280, 720))
+                .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, { imageProxy -> processImageProxy(imageProxy)})
+                }
+
+            // Select back camera as a default
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            cameraProvider.bindToLifecycle(
+                this, cameraSelector, preview, imageAnalizer
+            )
+
+        }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    @OptIn(ExperimentalGetImage::class)
+    private fun processImageProxy(imageProxy: ImageProxy){
+        val mediaImage = imageProxy.image
+        if (mediaImage != null){
+            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+            qrScanner.process(image)
+                .addOnSuccessListener { barcodes ->
+                    for (barcode in barcodes){
+                        handleQrCode(barcode = barcode)
+                    }
+                }
+                .addOnFailureListener {
+                    informativeMessage.text = "No se pudo detectar correctamente el Qr"
+                }
+                .addOnCompleteListener {
+                    imageProxy.close()
+                }
+        }
+
+    }
+
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(
+            requireContext(), it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun handleQrCode(barcode: Barcode){
+        Toast.makeText(context, "Se pudo escanear el qr", Toast.LENGTH_LONG).show()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
+
+
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance() = EscanearFragment()
+
+        private const val REQUEST_CODE_PERMISSIONS = 10
+
+        private val REQUIRED_PERMISSIONS =
+            mutableListOf (
+                Manifest.permission.CAMERA,
+            ).toTypedArray()
     }
 }

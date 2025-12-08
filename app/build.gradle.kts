@@ -72,7 +72,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
 
-    val camerax_version = "1.3.3"
+    val camerax_version = "1.5.1"
     implementation("androidx.camera:camera-core:${camerax_version}")
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
