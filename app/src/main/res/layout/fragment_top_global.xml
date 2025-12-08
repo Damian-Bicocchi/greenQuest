@@ -8,15 +8,15 @@
     <include layout="@layout/activity_adapter" />
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/text_global"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:layout_marginTop="34dp"
-        android:textColor="@color/texto_normal"
-        android:textSize="35sp"
+        android:gravity="center_horizontal"
         android:text="Fragmento Top Global"
+        android:textColor="@color/texto_normal"
 
-        />
+        android:textSize="35sp" />
 
 
 </FrameLayout>

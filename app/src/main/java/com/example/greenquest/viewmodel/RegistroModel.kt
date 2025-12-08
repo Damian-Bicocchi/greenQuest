@@ -10,8 +10,6 @@ import com.google.gson.Gson
 
 class RegistroViewModel : ViewModel() {
 
-    private val repository = UsuarioRepository()
-
     fun registrar(email: String, password: String, confirm: String) = liveData {
 
         if (!ChequeosUsuario.camposCompletos(email, password, confirm)) {
@@ -31,7 +29,7 @@ class RegistroViewModel : ViewModel() {
 
         try {
             // 2️⃣ Llamada al backend
-            val response = repository.signup(email, password)
+            val response = UsuarioRepository.signup(email, password)
 
             if (response.isSuccessful) {
                 emit("OK")

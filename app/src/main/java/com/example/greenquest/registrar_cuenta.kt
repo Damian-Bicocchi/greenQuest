@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.viewmodel.RegistroViewModel
 import com.example.greenquest.databinding.ActivityRegistrarCuentaBinding
 
-
 class registrar_cuenta : AppCompatActivity() {
 
     private lateinit var viewModel: RegistroViewModel
