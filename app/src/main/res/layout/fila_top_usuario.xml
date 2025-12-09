@@ -19,10 +19,11 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/rankingUsuario"
-            android:layout_width="150dp"
-            android:layout_height="14dp"
-            android:layout_marginStart="72dp"
+            android:id="@+id/nombre_usuario"
+            android:layout_width="153dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="4dp"
             android:text="TextView"
             android:textColor="@color/texto_oscuro"
             android:textSize="12sp"
@@ -30,18 +31,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/numeroEnElTop"
-            android:layout_width="150dp"
-            android:layout_height="13dp"
+            android:id="@+id/rankingUsuario"
+            android:layout_width="152dp"
+            android:layout_height="15dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:text="TextView"
             android:textColor="@color/texto_oscuro"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.041"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imagenUsuario"
-            app:layout_constraintTop_toBottomOf="@+id/rankingUsuario" />
+            app:layout_constraintTop_toBottomOf="@+id/nombre_usuario" />
 
         <ImageView
             android:id="@+id/imagenUsuario"
@@ -52,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintVertical_bias="0.666"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <FrameLayout

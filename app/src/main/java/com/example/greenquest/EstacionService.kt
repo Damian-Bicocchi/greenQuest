@@ -1,6 +1,5 @@
 package com.example.greenquest
 
-import com.example.greenquest.apiParameters.LoginResponse
 import com.example.greenquest.apiParameters.Request
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import retrofit2.Response
@@ -14,4 +13,7 @@ interface EstacionService {
 
     @POST(Constants.PATH_API + "signup/")
     suspend fun signup(@Body body: Request): Response<AuthSuccessResponse>
+
+    @POST(Constants.PATH_API + "logout/")
+    suspend fun logout(@Body token: String): Response<Unit>
 }

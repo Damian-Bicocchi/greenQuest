@@ -1,23 +1,20 @@
-package com.example.greenquest
+package com.example.greenquest.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
-import com.example.greenquest.databinding.ActivityIniciarSesionBinding
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.room.*
-import com.example.greenquest.database.AppDatabase
+import com.example.greenquest.databinding.ActivityIniciarSesionBinding
+import com.example.greenquest.ui.menu_principal
+import com.example.greenquest.ui.registrar_cuenta
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.viewmodel.InicioSesionModel
-import com.example.greenquest.viewmodel.RegistroViewModel
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executor
-
 
 class iniciar_sesion : ComponentActivity() {
 
@@ -28,17 +25,19 @@ class iniciar_sesion : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*val chequeo = lifecycleScope.launch {
-            if (usuarioLocalExiste()) {
-                startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
+        val chequeo = lifecycleScope.launch {
+            val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
+            if(usuarioLocal != null){
+                if (UsuarioRepository.login(usuarioLocal.userName.toString(), usuarioLocal.password.toString()).isSuccessful) {
+                    startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
+                    finish()
+                    return@launch
+                }
             }
-            finish()
-            return@launch
+
         }
-        */
 
         enableEdgeToEdge()
-
 
         viewModel = ViewModelProvider(this).get(InicioSesionModel::class.java)
         binding = ActivityIniciarSesionBinding.inflate(layoutInflater)
@@ -62,16 +61,16 @@ class iniciar_sesion : ComponentActivity() {
             val intent = Intent(this, recuperar_contrasenia::class.java)
             startActivity(intent)
         }
+        botonIniciarSesion.setOnClickListener {
+            chequeoIniciarSesion()
+        }
 
 
 
 
     }
 
-    private suspend fun usuarioLocalExiste(): Boolean {
-        val usuario = UsuarioRepository.obtenerUsuarioLocal()
-        return usuario != null
-    }
+
 
     private fun chequeoIniciarSesion() {
         val userName = binding.emailInput.text.toString()
@@ -96,7 +95,5 @@ class iniciar_sesion : ComponentActivity() {
         return spannableString
     }
 
-    private fun crearVista(){
 
-    }
 }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.AdapterUsuarios
 import com.example.greenquest.R
-import com.example.greenquest.Usuario
+import com.example.greenquest.User
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,16 +27,18 @@ class TopAmigosFragment : Fragment() {
     private var param2: String? = null
 
     private val usuarios = listOf(
-        Usuario("Amigo1", 150,"none"),
-        Usuario("Amigo2", 120,"none"),
-        Usuario("Amigo3", 100,"none"),
-        Usuario("Amigo4", 80,"none"),
-        Usuario("Amigo5", 60,"none"),
-        Usuario("Amigo6", 50,"none"),
-        Usuario("Amigo7", 40,"none"),
-        Usuario("Amigo8", 30,"none"),
-        Usuario("Amigo9", 20,"none"),
-        Usuario("Amigo10", 10,"none")
+        User(userName = "Amigo1", puntos = 150, imagen = "none", uid = 1, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo2", puntos = 150, imagen = "none", uid = 2, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo3", puntos = 150, imagen = "none", uid = 3, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo4", puntos = 150, imagen = "none", uid = 4, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo5", puntos = 150, imagen = "none", uid = 5, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo6", puntos = 150, imagen = "none", uid = 6, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo7", puntos = 150, imagen = "none", uid = 7, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo8", puntos = 150, imagen = "none", uid = 8, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo9", puntos = 150, imagen = "none", uid = 9, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo10", puntos = 150, imagen = "none", uid = 10, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo111", puntos = 150, imagen = "none", uid = 11, password = null, accessToken = null, refreshToken = null),
+
     )
 
 
