@@ -32,7 +32,11 @@ class TopAmigosFragment : Fragment() {
         Usuario("Amigo3", 100,"none"),
         Usuario("Amigo4", 80,"none"),
         Usuario("Amigo5", 60,"none"),
-        Usuario("Amigo6", 50,"none")
+        Usuario("Amigo6", 50,"none"),
+        Usuario("Amigo7", 40,"none"),
+        Usuario("Amigo8", 30,"none"),
+        Usuario("Amigo9", 20,"none"),
+        Usuario("Amigo10", 10,"none")
     )
 
 

@@ -23,8 +23,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerTopAmigos"
-        android:layout_width="361dp"
-        android:layout_height="662dp"
+        android:layout_width="366dp"
+        android:layout_height="625dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

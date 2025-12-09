@@ -13,7 +13,7 @@ class restablecer_contrasenia : AppCompatActivity() {
         setContentView(R.layout.activity_restablecer_contrasenia)
         val cancelar = findViewById<View>(R.id.btn_cancelar)
         cancelar.setOnClickListener {
-            val intent = Intent(this, IniciarSesion::class.java)
+            val intent = Intent(this, iniciar_sesion::class.java)
             startActivity(intent)
         }
     }
