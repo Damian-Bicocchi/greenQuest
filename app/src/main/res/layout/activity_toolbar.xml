@@ -18,8 +18,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:elevation ="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         app:menu="@menu/bottom_navigation"
         app:labelVisibilityMode="selected"
         style="@style/BottomNavitation"

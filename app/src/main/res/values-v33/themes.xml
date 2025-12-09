@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.GreenQuest" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:backdropColor">@color/fondo_primario</item>
+        <item name="android:textColor">@color/texto_normal</item>
+        <item name="android:textColorHint">@color/texto_normal</item>
+        <item name="android:hint"></item>
+    </style>
+</resources>
