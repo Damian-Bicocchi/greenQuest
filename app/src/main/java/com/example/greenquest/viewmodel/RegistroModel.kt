@@ -10,9 +10,9 @@ import com.google.gson.Gson
 
 class RegistroViewModel : ViewModel() {
 
-    fun registrar(email: String, password: String, confirm: String) = liveData {
+    fun registrar(email: String, contraseña: String, confirm: String) = liveData {
 
-        if (!ChequeosUsuario.camposCompletos(email, password, confirm)) {
+        if (!ChequeosUsuario.camposCompletos(email, contraseña, confirm)) {
             emit("Rellene todos los campos")
             return@liveData
         }
@@ -22,14 +22,18 @@ class RegistroViewModel : ViewModel() {
             return@liveData
         }
 
-        if (!ChequeosUsuario.esValidoConfirmarContraseña(password, confirm)) {
+        if (!ChequeosUsuario.esValidoFormatoContraseña(contraseña)) {
+            emit("Contraseña inválida, debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número")
+            return@liveData
+        }
+        if (!ChequeosUsuario.esValidoConfirmarContraseña(contraseña, confirm)) {
             emit("Contraseña inválida, debe coincidir en ambos campos y tener al menos 8 caracteres")
             return@liveData
         }
 
         try {
             // 2️⃣ Llamada al backend
-            val response = UsuarioRepository.signup(email, password)
+            val response = UsuarioRepository.signup(email, contraseña)
 
             if (response.isSuccessful) {
                 emit("OK")

@@ -7,7 +7,7 @@ object ChequeosUsuario {
     }
 
     fun esValidoFormatoContraseña(contraseña: String): Boolean {
-        val regex = Regex("^(?=.*[0-9])[0-9A-Za-z!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]{8,}$")
+        val regex = Regex("^(?=.*[0-9])(?=.*[a-z]*)(?=.*[A-Z]).{8,}$")
         return regex.matches(contraseña)
     }
 
