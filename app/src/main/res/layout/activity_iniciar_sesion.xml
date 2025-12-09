@@ -74,7 +74,7 @@
                 android:inputType="textEmailAddress"
                 android:textColor="@color/texto_normal"
                 android:textColorHint="@color/texto_normal"
-                android:textSize="20sp" />
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/label_contrasenia"
@@ -94,17 +94,20 @@
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
                 android:textColorHint="@color/texto_normal"
-                android:textSize="20sp" />
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/iniciar_sesion_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginBottom="24dp"
+                android:background="@drawable/shape"
+                android:backgroundTint="@color/accent_color"
                 android:gravity="center"
-                android:background="@color/accent_color"
+                android:includeFontPadding="true"
                 android:text="@string/login_button"
-                android:textSize="24sp"/>
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
