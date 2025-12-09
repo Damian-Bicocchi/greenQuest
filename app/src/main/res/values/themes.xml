@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Cambiado el parent a Theme.AppCompat para ser compatible con AppCompatActivity -->
-    <style name="Theme.GreenQuest" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.GreenQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:backdropColor">@color/fondo_primario</item>
         <item name="android:textColor">@color/texto_normal</item>
         <item name="android:textColorHint">@color/texto_normal</item>
@@ -10,7 +10,8 @@
 
     <style name="BottomNavitation">
         <item name="android:background" >@color/bottom_navigation_background</item>
-        <item name="itemIconTint">@color/bottom_navigation_item_active</item>
+        <item name="itemIconTint">@color/texto_oscuro</item>
         <item name="itemTextColor">@color/texto_oscuro</item>
+
     </style>
 </resources>

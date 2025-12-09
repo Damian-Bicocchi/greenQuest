@@ -5,8 +5,10 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"/>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".GreenQuestApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,11 +25,12 @@
         <activity
             android:name=".restablecer_contrasenia"
             android:exported="false" />
+
         <activity
             android:name=".recuperar_contrasenia"
             android:exported="false" />
         <activity
-            android:name=".IniciarSesion"
+            android:name=".iniciar_sesion"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".menu_principal"
             android:exported="false" />
     </application>
 

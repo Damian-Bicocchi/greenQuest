@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class recuperar_contrasenia : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +32,7 @@ class recuperar_contrasenia : AppCompatActivity() {
         }
         val cancelar = findViewById<View>(R.id.btn_cancelar)
         cancelar.setOnClickListener {
-            val intent = Intent(this, IniciarSesion::class.java)
+            val intent = Intent(this, iniciar_sesion::class.java)
             startActivity(intent)
         }
     }

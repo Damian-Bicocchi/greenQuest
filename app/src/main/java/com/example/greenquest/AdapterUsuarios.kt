@@ -22,16 +22,17 @@ class AdapterUsuarios(val usuarios: List<Usuario>): RecyclerView.Adapter<Adapter
         holder.puntosUsuario.text = "${usuario.puntos} " +
                 "puntos"
         // cambiar color según posición
-        if (position+1 == 1) {
-            val oro = holder.view.context.getColor(R.color.fila_usuario_oro)
-            holder.view.setBackgroundColor(oro)
-        } else if (position+1 == 2) {
-            val plata = holder.view.context.getColor(R.color.fila_usuario_plata)
-            holder.view.setBackgroundColor(plata)
-        } else if (position+1 == 3) {
-            val bronce = holder.view.context.getColor(R.color.fila_usuario_bronce)
-            holder.view.setBackgroundColor(bronce)
+        val card = holder.view as androidx.cardview.widget.CardView
+
+        val ctx = holder.view.context
+        val color = when (position) {
+            0 -> ctx.getColor(R.color.fila_usuario_oro)
+            1 -> ctx.getColor(R.color.fila_usuario_plata)
+            2 -> ctx.getColor(R.color.fila_usuario_bronce)
+            else -> ctx.getColor(R.color.fila_usuario_normal)
         }
+
+        card.setCardBackgroundColor(color)
         //cargar imagen si es necesario
     }
 
