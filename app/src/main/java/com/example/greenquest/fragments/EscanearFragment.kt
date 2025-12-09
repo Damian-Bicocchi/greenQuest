@@ -10,6 +10,7 @@ import com.example.greenquest.R
 import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import android.Manifest
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,11 +23,13 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import com.example.greenquest.ResiduoInfo
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.Executors
+import kotlinx.serialization.json.Json
 
 
 class EscanearFragment : Fragment() {
@@ -121,6 +124,8 @@ class EscanearFragment : Fragment() {
                 }
                 .addOnCompleteListener {
                     imageProxy.close()
+                    Log.d("greenQuestProcessImageProxy", "Cierro")
+
                 }
         }
 
@@ -132,7 +137,16 @@ class EscanearFragment : Fragment() {
     }
 
     private fun handleQrCode(barcode: Barcode){
-        Toast.makeText(context, "Se pudo escanear el qr", Toast.LENGTH_LONG).show()
+        val jsonString : String? = barcode.displayValue
+
+        try {
+            // Parsear el JSON
+            val productInfo: ResiduoInfo? = jsonString?.let { Json.decodeFromString(it) }
+
+            // Post
+        } catch (e: Exception) {
+            println("Error al parsear JSON: ${e.message}")
+        }
     }
 
 
