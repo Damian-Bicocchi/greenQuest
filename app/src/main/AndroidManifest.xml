@@ -7,6 +7,7 @@
 
 
     <application
+        android:name=".GreenQuestApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,16 +19,7 @@
         android:theme="@style/Theme.GreenQuest">
 
         <activity
-            android:name=".registrar_cuenta"
-            android:exported="false" />
-        <activity
-            android:name=".restablecer_contrasenia"
-            android:exported="false" />
-        <activity
-            android:name=".recuperar_contrasenia"
-            android:exported="false" />
-        <activity
-            android:name=".IniciarSesion"
+            android:name=".LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +27,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".ui.registrar_cuenta"
+            android:exported="false" />
+        <activity
+            android:name=".ui.restablecer_contrasenia"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.recuperar_contrasenia"
+            android:exported="false" />
+        <activity
+            android:name=".ui.iniciar_sesion"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.menu_principal"
             android:exported="false" />
     </application>
 

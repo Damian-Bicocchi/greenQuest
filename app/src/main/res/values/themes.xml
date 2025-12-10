@@ -9,7 +9,7 @@
 
     <style name="BottomNavitation">
         <item name="android:background" >@color/bottom_navigation_background</item>
-        <item name="itemIconTint">@color/bottom_navigation_item_active</item>
+        <item name="itemIconTint">@color/texto_oscuro</item>
         <item name="itemTextColor">@color/texto_oscuro</item>
     </style>
 </resources>

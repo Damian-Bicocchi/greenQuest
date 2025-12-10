@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/recyclerTopAmigos"
-        android:layout_width="361dp"
-        android:layout_height="662dp"
+        android:layout_width="366dp"
+        android:layout_height="625dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

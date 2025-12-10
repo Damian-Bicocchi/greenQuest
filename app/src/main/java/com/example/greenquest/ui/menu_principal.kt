@@ -1,9 +1,10 @@
-package com.example.greenquest
+package com.example.greenquest.ui
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.AmigosFragment
 import com.example.greenquest.fragments.CategorizarFragment
@@ -12,7 +13,7 @@ import com.example.greenquest.fragments.TopAmigosFragment
 import com.example.greenquest.fragments.TopGlobalFragment
 import com.google.android.material.navigation.NavigationBarView
 
-class MenuPrincipal : AppCompatActivity() {
+class menu_principal : AppCompatActivity() {
 
     private val topGlobalFragment = TopGlobalFragment()
     private val TopAmigosFragment = TopAmigosFragment()
@@ -20,7 +21,7 @@ class MenuPrincipal : AppCompatActivity() {
 
     private val categorizarFragment = CategorizarFragment()
 
-    private val amigosFragment = TopAmigosFragment()
+    private val amigosFragment = AmigosFragment()
 
     private lateinit var binding: ActivityToolbarBinding
 
@@ -64,6 +65,7 @@ class MenuPrincipal : AppCompatActivity() {
             else -> false
         }
     }
+
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
