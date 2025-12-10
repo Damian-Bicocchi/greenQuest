@@ -23,11 +23,15 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.ResiduoInfo
+import com.example.greenquest.RetrofitInstance
+import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import kotlinx.serialization.json.Json
 
@@ -115,8 +119,10 @@ class EscanearFragment : Fragment() {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
             qrScanner.process(image)
                 .addOnSuccessListener { barcodes ->
-                    for (barcode in barcodes){
-                        handleQrCode(barcode = barcode)
+                    for (barcode in barcodes) {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            handleQrCode(barcode = barcode)
+                        }
                     }
                 }
                 .addOnFailureListener {
@@ -136,19 +142,58 @@ class EscanearFragment : Fragment() {
             requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun handleQrCode(barcode: Barcode){
+    private suspend fun handleQrCode(barcode: Barcode){
         val jsonString : String? = barcode.displayValue
 
         try {
             // Parsear el JSON
             val productInfo: ResiduoInfo? = jsonString?.let { Json.decodeFromString(it) }
+            val idResiduo : String = productInfo?.id_residuo ?: ""
 
+            if (idResiduo.isBlank()) {
+                informativeMessage.text = "El QR no pudo ser leído correctamente"
+                return
+            }
+            try {
+                val request = ReclamarResiduoRequest(idResiduo = idResiduo)
+                val response = RetrofitInstance.api.residuoReclamar(request)
+
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    when {
+                        body?.message != null -> {
+                            // Obtener datos de la respuesta (ejemplo)
+                            body.message
+
+                            datosEscaneo = DatosEscaneo()
+                            // Crear fragmento con múltiples argumentos
+                            val fragment = EscaneadoExitoso.newInstance(d)
+
+                            // Realizar transacción
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.fragment_container, fragment)
+                                .addToBackStack("escaneado_exitoso")
+                                .commit()
+                        }
+                        body?.error != null -> {
+                            // Error del servidor (aunque HTTP 200)
+                            informativeMessage.text = body.error
+                        }
+                        else -> {
+                            informativeMessage.text = "El servidor no reacciona. Reintente"
+                        }
+                    }
+                } else {
+                    informativeMessage.text = "El servidor no reacciona. Reintente"
+                }
+            } catch (e: Exception) {
+                informativeMessage.text = e.toString()
+            }
             // Post
         } catch (e: Exception) {
             println("Error al parsear JSON: ${e.message}")
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -158,12 +203,6 @@ class EscanearFragment : Fragment() {
 
 
     companion object {
-
-        @JvmStatic
-        fun newInstance() = EscanearFragment()
-
-        private const val REQUEST_CODE_PERMISSIONS = 10
-
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
                 Manifest.permission.CAMERA,
