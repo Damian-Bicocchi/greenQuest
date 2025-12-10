@@ -24,7 +24,7 @@ class LauncherActivity: ComponentActivity() {
                     usuarioLocal.password!!
                 )
 
-                if (response.isSuccessful) {
+                if (response != null) {
                     startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 } else {
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))

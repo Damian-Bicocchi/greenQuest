@@ -27,6 +27,15 @@ object UsuarioRepository {
         return api.login(Request(username, password))
     }
 
+    suspend fun logout(accessToken: String): Result<Unit> {
+        try {
+            val result = api.logout(accessToken)
+        }catch (e: HttpException) {
+            return Result.failure(e)
+        }
+        return Result.success(Unit)
+    }
+
 
     suspend fun obtenerUsuarioLocal(): User? =
         withContext(Dispatchers.IO) {

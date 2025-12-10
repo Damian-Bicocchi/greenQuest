@@ -52,8 +52,15 @@ class TopGlobalFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launch {
                 val usuario = UsuarioRepository.obtenerUsuarioLocal()
                 UsuarioRepository.eliminarUsuarioLocal(usuario!!)
-                Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(requireContext(), iniciar_sesion::class.java))
+                val response = UsuarioRepository.logout(usuario.accessToken.toString())
+                if(response.isSuccess){
+                    Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(requireContext(), iniciar_sesion::class.java))
+                } else {
+                    Toast.makeText(requireContext(), "Error al cerrar sesión ${response.toString()}", Toast.LENGTH_SHORT).show()
+                }
+
+
             }
         }
 
