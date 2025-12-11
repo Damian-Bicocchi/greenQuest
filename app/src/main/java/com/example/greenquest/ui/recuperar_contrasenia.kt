@@ -19,12 +19,12 @@ class recuperar_contrasenia : AppCompatActivity() {
 
         val restablecerContrasenia = findViewById<View>(R.id.btn_recuperar)
         restablecerContrasenia.setOnClickListener {
-            val inputEmail = findViewById<EditText>(R.id.input_email)
+            val inputusername = findViewById<EditText>(R.id.input_username)
             val mensajeError = findViewById<TextView>(R.id.mensaje_error)
 
-            val emailTexto = inputEmail.text.toString().trim()
+            val usernameTexto = inputusername.text.toString().trim()
 
-            if (emailTexto.isEmpty()) {
+            if (usernameTexto.isEmpty()) {
                 mensajeError.visibility = View.VISIBLE
                 mensajeError.text = "Debe ingresar un correo válido"
             } else {

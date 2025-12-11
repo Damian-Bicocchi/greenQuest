@@ -73,7 +73,7 @@ class iniciar_sesion : ComponentActivity() {
 
 
     private fun chequeoIniciarSesion() {
-        val userName = binding.emailInput.text.toString()
+        val userName = binding.labelUsername.text.toString()
         val password = binding.passwordInput.text.toString()
 
         viewModel.iniciarSesion(userName, password).observe(this) { resultado ->

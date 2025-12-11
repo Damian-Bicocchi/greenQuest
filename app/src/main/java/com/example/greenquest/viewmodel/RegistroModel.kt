@@ -13,15 +13,15 @@ import javax.crypto.SecretKey
 
 class RegistroViewModel : ViewModel() {
 
-    fun registrar(email: String, contraseña: String, confirm: String) = liveData {
+    fun registrar(username: String, contraseña: String, confirm: String) = liveData {
 
-        if (!ChequeosUsuario.camposCompletos(email, contraseña, confirm)) {
+        if (!ChequeosUsuario.camposCompletos(username, contraseña, confirm)) {
             emit("Rellene todos los campos")
             return@liveData
         }
 
-        if (!ChequeosUsuario.esValidoCorreo(email)) {
-            emit("Email inválido, debe contener '@' y un dominio")
+        if (!ChequeosUsuario.esValidoUsername(username)) {
+            emit("username inválido, debe tener entre 3 y 20 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos")
             return@liveData
         }
 
@@ -36,7 +36,7 @@ class RegistroViewModel : ViewModel() {
 
         try {
 
-            val response = UsuarioRepository.signup(email, contraseña)
+            val response = UsuarioRepository.signup(username, contraseña)
 
             if (response.isSuccessful) {
                 emit("OK")
