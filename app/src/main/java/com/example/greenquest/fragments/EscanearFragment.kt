@@ -162,17 +162,15 @@ class EscanearFragment : Fragment() {
                     val body = response.body()
                     when {
                         body?.message != null -> {
-                            // Obtener datos de la respuesta (ejemplo)
-                            body.message
-
-                            datosEscaneo = DatosEscaneo()
-                            // Crear fragmento con múltiples argumentos
-                            val fragment = EscaneadoExitoso.newInstance(d)
-
-                            // Realizar transacción
-                            supportFragmentManager.beginTransaction()
-                                .replace(R.id.fragment_container, fragment)
-                                .addToBackStack("escaneado_exitoso")
+                            val datosEscaneo = productInfo?.let {
+                                DatosEscaneo(
+                                    tipoResiduo = it.tipo_residuo,
+                                    puntos = productInfo.puntaje
+                                )
+                            }
+                            val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo!!)
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.frame_container, fragment)
                                 .commit()
                         }
                         body?.error != null -> {
