@@ -20,14 +20,16 @@ class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsu
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        val usuario = usuarios[position]
-        holder.nombreUsuario.text = usuario.userName
-        holder.rankingUsuarios.text= "Ranking #${position + 1}"
-        holder.puntosUsuario.text = "${usuario.puntos} " + "puntos"
-        // cambiar color según posición
-        val card = holder.view as androidx.cardview.widget.CardView
 
+        val usuario = usuarios[position]
+
+        holder.nombreUsuario.text = usuario.userName
+        holder.rankingUsuarios.text = "Ranking #${position + 1}"
+        holder.puntosUsuario.text = "${usuario.puntos} puntos"
+
+        val card = holder.view as androidx.cardview.widget.CardView
         val ctx = holder.view.context
+
         val color = when (position) {
             0 -> ctx.getColor(R.color.fila_usuario_oro)
             1 -> ctx.getColor(R.color.fila_usuario_plata)
@@ -36,7 +38,6 @@ class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsu
         }
 
         card.setCardBackgroundColor(color)
-        //cargar imagen si es necesario
     }
 
     override fun getItemCount(): Int {

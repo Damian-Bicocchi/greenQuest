@@ -27,17 +27,17 @@ class TopAmigosFragment : Fragment() {
     private var param2: String? = null
 
     private val usuarios = listOf(
-        User(userName = "Amigo1", puntos = 150, imagen = "none", uid = 1, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo2", puntos = 150, imagen = "none", uid = 2, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo3", puntos = 150, imagen = "none", uid = 3, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo4", puntos = 150, imagen = "none", uid = 4, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo5", puntos = 150, imagen = "none", uid = 5, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo6", puntos = 150, imagen = "none", uid = 6, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo7", puntos = 150, imagen = "none", uid = 7, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo8", puntos = 150, imagen = "none", uid = 8, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo9", puntos = 150, imagen = "none", uid = 9, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo10", puntos = 150, imagen = "none", uid = 10, password = null, accessToken = null, refreshToken = null),
-        User(userName = "Amigo111", puntos = 150, imagen = "none", uid = 11, password = null, accessToken = null, refreshToken = null),
+        User(userName = "Amigo1", puntos = 150, imagen = "none", uid = 1, password = null),
+        User(userName = "Amigo2", puntos = 150, imagen = "none", uid = 2, password = null),
+        User(userName = "Amigo3", puntos = 150, imagen = "none", uid = 3, password = null),
+        User(userName = "Amigo4", puntos = 150, imagen = "none", uid = 4, password = null),
+        User(userName = "Amigo5", puntos = 150, imagen = "none", uid = 5, password = null),
+        User(userName = "Amigo6", puntos = 150, imagen = "none", uid = 6, password = null),
+        User(userName = "Amigo7", puntos = 150, imagen = "none", uid = 7, password = null),
+        User(userName = "Amigo8", puntos = 150, imagen = "none", uid = 8, password = null),
+        User(userName = "Amigo9", puntos = 150, imagen = "none", uid = 9, password = null),
+        User(userName = "Amigo10", puntos = 150, imagen = "none", uid = 10, password = null),
+        User(userName = "Amigo111", puntos = 150, imagen = "none", uid = 11, password = null),
 
     )
 

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.R
+import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.databinding.FragmentTopGlobalBinding
 import com.example.greenquest.ui.iniciar_sesion
 import com.example.greenquest.repository.UsuarioRepository
@@ -46,23 +47,31 @@ class TopGlobalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             val user = UsuarioRepository.obtenerUsuarioLocal()
-            binding.textGlobal.text = user?.userName ?: "Invitado"
-        }
-        binding.cerrarSesion.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                val usuario = UsuarioRepository.obtenerUsuarioLocal()
-                UsuarioRepository.eliminarUsuarioLocal(usuario!!)
-                val response = UsuarioRepository.logout(usuario.accessToken.toString())
-                if(response.isSuccess){
-                    Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(requireContext(), iniciar_sesion::class.java))
+            Log.d("TopGlobalFragment", "Usuario obtenido: $user")
+            binding.textGlobal.text =
+                if (user != null) {
+                    "${user.userName} con id ${user.uid}"
                 } else {
-                    Toast.makeText(requireContext(), "Error al cerrar sesión ${response.toString()}", Toast.LENGTH_SHORT).show()
+                    "Invitado con id N/A"
                 }
-
-
-            }
         }
+            binding.cerrarSesion.setOnClickListener {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val usuario = UsuarioRepository.obtenerUsuarioLocal()
+                    val response = UsuarioRepository.logout()
+
+                    if(response.isSuccess){
+                        TokenDataStoreProvider.get().clearAllTokens()
+                        UsuarioRepository.eliminarUsuarioLocal(usuario!!)
+                        Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(requireContext(), iniciar_sesion::class.java))
+                    } else {
+                        Toast.makeText(requireContext(), "Error al cerrar sesión ${response.toString()}", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+            }
 
         }
 
