@@ -1,11 +1,23 @@
 package com.example.greenquest
 
 import android.app.Application
+import android.content.Context
+import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import androidx.room.migration.Migration
 import com.example.greenquest.database.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class GreenQuestApp : Application() {
+
+
 
     companion object {
         lateinit var instance: GreenQuestApp
@@ -15,23 +27,25 @@ class GreenQuestApp : Application() {
     lateinit var database: AppDatabase
         private set
 
+    lateinit var tokenManager: TokenManager
+        private set
+
     override fun onCreate() {
         super.onCreate()
         instance = this
 
-        val MIGRATION1_2  = object : Migration(1,2){
-            override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE User ADD COLUMN puntos INTEGER DEFAULT 0")
-                database.execSQL("ALTER TABLE User ADD COLUMN imagen TEXT DEFAULT NULL")
-            }
-        }
+        TokenDataStoreProvider.init(this)
 
+
+        // 3️⃣ Inicializar Room
         database = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java,
             "usuarios-db"
-        ).addMigrations(MIGRATION1_2)
+        )
+            .fallbackToDestructiveMigration()
             .build()
     }
+
 }
 

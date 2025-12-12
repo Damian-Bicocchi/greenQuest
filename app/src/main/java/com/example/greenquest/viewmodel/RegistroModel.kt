@@ -48,7 +48,7 @@ class RegistroViewModel : ViewModel() {
 
                 when {
                     apiError.username != null ->
-                        emit("Ya existe un usuario con el correo ingresado")
+                        emit("Ya existe un usuario con el nombre de usuario ingresado")
 
                     apiError.password != null ->
                         emit(apiError.password.first())

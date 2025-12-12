@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.databinding.ActivityIniciarSesionBinding
 import com.example.greenquest.ui.menu_principal
 import com.example.greenquest.ui.registrar_cuenta
@@ -26,13 +27,12 @@ class iniciar_sesion : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val chequeo = lifecycleScope.launch {
-            val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
-            if(usuarioLocal != null){
-                if (UsuarioRepository.login(usuarioLocal.userName.toString(), usuarioLocal.password.toString()).isSuccessful) {
-                    startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
-                    finish()
-                    return@launch
-                }
+            val token = TokenDataStoreProvider.get().getAccessToken()
+
+            if (!token.isNullOrEmpty()) {
+                startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
+                finish()
+                return@launch
             }
 
         }
@@ -73,7 +73,7 @@ class iniciar_sesion : ComponentActivity() {
 
 
     private fun chequeoIniciarSesion() {
-        val userName = binding.labelUsername.text.toString()
+        val userName = binding.usernameInput.text.toString()
         val password = binding.passwordInput.text.toString()
 
         viewModel.iniciarSesion(userName, password).observe(this) { resultado ->
