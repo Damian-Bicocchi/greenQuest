@@ -9,14 +9,13 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.room.*
-import com.example.greenquest.database.AppDatabase
 import com.example.greenquest.repository.UsuarioRepository
+import com.example.greenquest.ui.menu_principal
+import com.example.greenquest.ui.recuperar_contrasenia
+import com.example.greenquest.ui.registrar_cuenta
 import com.example.greenquest.viewmodel.InicioSesionModel
-import com.example.greenquest.viewmodel.RegistroViewModel
-import kotlinx.coroutines.launch
-import java.util.concurrent.Executor
+
 
 
 class iniciar_sesion : ComponentActivity() {
@@ -74,7 +73,7 @@ class iniciar_sesion : ComponentActivity() {
     }
 
     private fun chequeoIniciarSesion() {
-        val userName = binding.emailInput.text.toString()
+        val userName = binding.usernameInput.text.toString()
         val password = binding.passwordInput.text.toString()
 
         viewModel.iniciarSesion(userName, password).observe(this) { resultado ->

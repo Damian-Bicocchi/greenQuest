@@ -41,6 +41,7 @@
         <activity
             android:name=".ui.menu_principal"
             android:exported="false" />
+
     </application>
 
 </manifest>

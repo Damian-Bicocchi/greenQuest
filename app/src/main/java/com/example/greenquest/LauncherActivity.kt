@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.*
 import androidx.lifecycle.*
+import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.repository.UsuarioRepository.obtenerUsuarioLocal
 import com.example.greenquest.ui.iniciar_sesion
@@ -30,7 +31,8 @@ class LauncherActivity: ComponentActivity() {
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
                 }
             } else {
-                startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
+                // NO ACEPTAR ESTE CAMBIO EN UN MERGE
+                startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
             }
 
             finish()

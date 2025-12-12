@@ -29,7 +29,7 @@ object UsuarioRepository {
 
     suspend fun logout(accessToken: String): Result<Unit> {
         try {
-            val result = api.logout(accessToken)
+            api.logout(accessToken)
         }catch (e: HttpException) {
             return Result.failure(e)
         }

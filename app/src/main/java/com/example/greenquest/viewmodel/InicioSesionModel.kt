@@ -11,7 +11,7 @@ import com.example.greenquest.repository.UsuarioRepository
 class InicioSesionModel: ViewModel() {
     private val api = RetrofitInstance.api
 
-    fun  iniciarSesion(userName: String,password: String ) = liveData {
+    fun iniciarSesion(userName: String,password: String ) = liveData {
 
         if (!ChequeosUsuario.camposCompletos(userName,password)) {
             emit("Rellene todos los campos")

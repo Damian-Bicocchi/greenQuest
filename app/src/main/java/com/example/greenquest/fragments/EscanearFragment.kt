@@ -23,17 +23,13 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.lifecycle.lifecycleScope
-import com.example.greenquest.ResiduoInfo
-import com.example.greenquest.RetrofitInstance
-import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
+import androidx.lifecycle.ViewModelProvider
+import com.example.greenquest.viewmodel.EscanearModel
+import com.example.greenquest.viewmodel.ScanState
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
-import kotlinx.serialization.json.Json
 
 
 class EscanearFragment : Fragment() {
@@ -41,6 +37,7 @@ class EscanearFragment : Fragment() {
    private lateinit var previewView: PreviewView
    private lateinit var informativeMessage: TextView
    private lateinit var qrScanner: BarcodeScanner
+   private lateinit var escanearModel: EscanearModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,14 +59,13 @@ class EscanearFragment : Fragment() {
         cameraExecutor = Executors.newSingleThreadExecutor()
         qrScanner = BarcodeScanning.getClient()
 
-
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        escanearModel = ViewModelProvider(this).get(EscanearModel::class.java)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_escanear, container, false)
     }
@@ -80,6 +76,7 @@ class EscanearFragment : Fragment() {
         previewView = view.findViewById(R.id.qr_camara)
         informativeMessage = view.findViewById(R.id.qr_mensaje_error)
 
+        observeViewModel()
     }
 
     private fun startCamera() {
@@ -92,7 +89,7 @@ class EscanearFragment : Fragment() {
             val preview = Preview.Builder()
                 .setTargetResolution(android.util.Size(1280, 720)) // Use android.util.Size
                 .build().also {
-                    it.setSurfaceProvider(previewView.surfaceProvider)
+                    it.surfaceProvider = previewView.surfaceProvider
                 }
 
             val imageAnalizer = ImageAnalysis.Builder()
@@ -117,79 +114,8 @@ class EscanearFragment : Fragment() {
         val mediaImage = imageProxy.image
         if (mediaImage != null){
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-            qrScanner.process(image)
-                .addOnSuccessListener { barcodes ->
-                    for (barcode in barcodes) {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            handleQrCode(barcode = barcode)
-                        }
-                    }
-                }
-                .addOnFailureListener {
-                    informativeMessage.text = "No se pudo detectar correctamente el Qr"
-                }
-                .addOnCompleteListener {
-                    imageProxy.close()
-                    Log.d("greenQuestProcessImageProxy", "Cierro")
-
-                }
-        }
-
-    }
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            requireContext(), it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private suspend fun handleQrCode(barcode: Barcode){
-        val jsonString : String? = barcode.displayValue
-
-        try {
-            // Parsear el JSON
-            val productInfo: ResiduoInfo? = jsonString?.let { Json.decodeFromString(it) }
-            val idResiduo : String = productInfo?.id_residuo ?: ""
-
-            if (idResiduo.isBlank()) {
-                informativeMessage.text = "El QR no pudo ser leído correctamente"
-                return
-            }
-            try {
-                val request = ReclamarResiduoRequest(idResiduo = idResiduo)
-                val response = RetrofitInstance.api.residuoReclamar(request)
-
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    when {
-                        body?.message != null -> {
-                            val datosEscaneo = productInfo?.let {
-                                DatosEscaneo(
-                                    tipoResiduo = it.tipo_residuo,
-                                    puntos = productInfo.puntaje
-                                )
-                            }
-                            val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo!!)
-                            parentFragmentManager.beginTransaction()
-                                .replace(R.id.frame_container, fragment)
-                                .commit()
-                        }
-                        body?.error != null -> {
-                            // Error del servidor (aunque HTTP 200)
-                            informativeMessage.text = body.error
-                        }
-                        else -> {
-                            informativeMessage.text = "El servidor no reacciona. Reintente"
-                        }
-                    }
-                } else {
-                    informativeMessage.text = "El servidor no reacciona. Reintente"
-                }
-            } catch (e: Exception) {
-                informativeMessage.text = e.toString()
-            }
-            // Post
-        } catch (e: Exception) {
-            println("Error al parsear JSON: ${e.message}")
+            escanearModel.processImage(image = image)
+            imageProxy.close()
         }
     }
 
@@ -198,12 +124,29 @@ class EscanearFragment : Fragment() {
         cameraExecutor.shutdown()
     }
 
+    private fun observeViewModel() {
 
+        escanearModel.scanState.observe(viewLifecycleOwner) { state ->
+            when (state) {
 
-    companion object {
-        private val REQUIRED_PERMISSIONS =
-            mutableListOf (
-                Manifest.permission.CAMERA,
-            ).toTypedArray()
+                is ScanState.QRDetected -> {
+                    // Mover UI, navegar, etc.
+                    Log.e("greenquest", "HEY DEBERIA APARECER UN TOAST")
+                    Toast.makeText(requireContext(), "Hola muy buen qr", Toast.LENGTH_LONG).show()
+                    informativeMessage.text = "QR detectado: ${state.payload.id_residuo}"
+                }
+
+                is ScanState.Error -> {
+                    Toast.makeText(requireContext(), "Malardo", Toast.LENGTH_LONG)
+
+                    informativeMessage.text = state.message
+                }
+
+                ScanState.Idle -> {
+                    Toast.makeText(requireContext(), "ah no hace una bosta", Toast.LENGTH_LONG)
+
+                }
+            }
+        }
     }
 }

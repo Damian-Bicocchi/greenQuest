@@ -1,29 +1,17 @@
 package com.example.greenquest.fragments
 
 import android.os.Bundle
-import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.greenquest.R
-import com.example.greenquest.TipoResiduo
-import kotlinx.android.parcel.Parcelize
+import com.example.greenquest.database.DatosEscaneo
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 private const val ARG_DATOS = "datos_escaneo"
-
-@Parcelize
-data class DatosEscaneo(
-
-    val tipoResiduo: TipoResiduo,
-    val puntos: Int,
-
-) : Parcelable
-
 
 
 class EscaneadoExitoso : Fragment() {
@@ -33,6 +21,7 @@ class EscaneadoExitoso : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.d("greenQuestFragment", "HEre it is")
         return inflater.inflate(R.layout.fragment_escaneado_exitoso, container, false)
     }
 
