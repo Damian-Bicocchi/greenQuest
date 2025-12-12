@@ -17,7 +17,7 @@ interface EstacionService {
     @POST(Constants.PATH_API + "signup/")
     suspend fun signup(@Body body: Request): Response<AuthSuccessResponse>
 
-    @POST(Constants.PATH_API + "residuos/reclamar/")
+    @POST(Constants.PATH_API + "residuo/reclamar/")
     suspend fun residuoReclamar(@Body body: ReclamarResiduoRequest): ReclamarResiduoGenericResponse
 
 
