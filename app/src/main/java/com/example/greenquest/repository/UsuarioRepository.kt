@@ -2,10 +2,7 @@ package com.example.greenquest.repository
 
 import android.util.Log
 import com.example.greenquest.GreenQuestApp
-import com.example.greenquest.apiParameters.LoginResponse
-import com.example.greenquest.apiParameters.SingupResponse
 import com.example.greenquest.RetrofitInstance
-import com.example.greenquest.Usuario
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
 import retrofit2.HttpException
@@ -29,6 +26,16 @@ object UsuarioRepository {
     suspend fun login(username: String, password: String): Response<AuthSuccessResponse> {
         return api.login(Request(username, password))
     }
+
+    suspend fun logout(accessToken: String): Result<Unit> {
+        try {
+            val result = api.logout(accessToken)
+        }catch (e: HttpException) {
+            return Result.failure(e)
+        }
+        return Result.success(Unit)
+    }
+
 
     suspend fun obtenerUsuarioLocal(): User? =
         withContext(Dispatchers.IO) {

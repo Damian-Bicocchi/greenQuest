@@ -29,7 +29,9 @@ class InicioSesionModel: ViewModel() {
                         userName = userName,
                         password = password,
                         accessToken = response.body()!!.access,
-                        refreshToken = response.body()!!.refresh
+                        refreshToken = response.body()!!.refresh,
+                        puntos = 0,
+                        imagen = null
                     )
                 )
             }else{

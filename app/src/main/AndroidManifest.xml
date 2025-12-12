@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"/>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".GreenQuestApp"
@@ -18,19 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenQuest">
-
         <activity
-            android:name=".registrar_cuenta"
-            android:exported="false" />
-        <activity
-            android:name=".restablecer_contrasenia"
-            android:exported="false" />
-
-        <activity
-            android:name=".recuperar_contrasenia"
-            android:exported="false" />
-        <activity
-            android:name=".iniciar_sesion"
+            android:name=".LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +26,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".menu_principal"
+            android:name=".ui.registrar_cuenta"
+            android:exported="false" />
+        <activity
+            android:name=".ui.restablecer_contrasenia"
+            android:exported="false" />
+        <activity
+            android:name=".ui.recuperar_contrasenia"
+            android:exported="false" />
+        <activity
+            android:name=".ui.iniciar_sesion"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.menu_principal"
             android:exported="false" />
     </application>
 

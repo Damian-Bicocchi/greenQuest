@@ -5,5 +5,3 @@ data class ApiError(
     val password: List<String>? = null,
     val non_field_errors: List<String>? = null
 )
-
-
