@@ -24,6 +24,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
+import com.example.greenquest.database.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.viewmodel.ScanState
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -38,6 +39,12 @@ class EscanearFragment : Fragment() {
    private lateinit var informativeMessage: TextView
    private lateinit var qrScanner: BarcodeScanner
    private lateinit var escanearModel: EscanearModel
+
+    private var errorToast: Toast? = null
+    private var lastErrorMessage: String? = null
+
+    @OptIn(ExperimentalGetImage::class)
+    private var isProcessing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,13 +117,31 @@ class EscanearFragment : Fragment() {
     }
 
     @OptIn(ExperimentalGetImage::class)
-    private fun processImageProxy(imageProxy: ImageProxy){
-        val mediaImage = imageProxy.image
-        if (mediaImage != null){
-            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-            escanearModel.processImage(image = image)
+    private fun processImageProxy(imageProxy: ImageProxy) {
+
+        if (isProcessing) {
             imageProxy.close()
+            return
         }
+
+        val mediaImage = imageProxy.image
+        if (mediaImage == null) {
+            imageProxy.close()
+            return
+        }
+
+        isProcessing = true
+
+        val image = InputImage.fromMediaImage(
+            mediaImage,
+            imageProxy.imageInfo.rotationDegrees
+        )
+
+        escanearModel.processImage(image)
+            .addOnCompleteListener {
+                isProcessing = false
+                imageProxy.close()
+            }
     }
 
     override fun onDestroy() {
@@ -131,20 +156,40 @@ class EscanearFragment : Fragment() {
 
                 is ScanState.QRDetected -> {
                     // Mover UI, navegar, etc.
-                    Log.e("greenquest", "HEY DEBERIA APARECER UN TOAST")
-                    Toast.makeText(requireContext(), "Hola muy buen qr", Toast.LENGTH_LONG).show()
-                    informativeMessage.text = "QR detectado: ${state.payload.id_residuo}"
+
+                    val datosEscaneo = DatosEscaneo(
+                        tipoResiduo = state.payload.tipo_residuo,
+                        puntos = state.payload.puntaje
+                    )
+
+
+                    val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
+
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+
+
                 }
 
                 is ScanState.Error -> {
-                    Toast.makeText(requireContext(), "Malardo", Toast.LENGTH_LONG)
+                    if (state.message != lastErrorMessage) {
+                        errorToast?.cancel()
 
-                    informativeMessage.text = state.message
+                        errorToast = Toast.makeText(
+                            requireContext(),
+                            state.message,
+                            Toast.LENGTH_LONG
+                        )
+                        errorToast?.show()
+
+                        lastErrorMessage = state.message
+                    }
                 }
 
                 ScanState.Idle -> {
-                    Toast.makeText(requireContext(), "ah no hace una bosta", Toast.LENGTH_LONG)
-
+                    Unit
                 }
             }
         }

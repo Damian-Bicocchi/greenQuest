@@ -1,6 +1,5 @@
 package com.example.greenquest
 
-import com.example.greenquest.apiParameters.LoginResponse
 import com.example.greenquest.apiParameters.Request
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse

@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.ScannerRepository
+import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,8 +23,8 @@ class EscanearModel: ViewModel() {
     val scanState: LiveData<ScanState> = _scanState
 
 
-    fun processImage(image: InputImage) {
-        qrScanner.process(image)
+    fun processImage(image: InputImage): Task<List<Barcode>> {
+        return qrScanner.process(image)
             .addOnSuccessListener { barcodes ->
                 viewModelScope.launch {
                     for (barcode in barcodes){
@@ -35,7 +37,8 @@ class EscanearModel: ViewModel() {
 
                             if (response.error.isNullOrEmpty()){
                                 withContext(Dispatchers.Main) {
-                                    Log.e("greenQuest", "payload tiene id " + payload.id_residuo)
+                                    Log.e("greenQuest",
+                                        "payload tiene id " + payload.id_residuo)
                                     _scanState.value = ScanState.QRDetected(payload)
                                 }
                             } else {
@@ -53,7 +56,8 @@ class EscanearModel: ViewModel() {
                     }
                 }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
+                Log.e("QRScanner", e.toString())
 
                 _scanState.value = ScanState.Error("No se pudo leer el código QR")
             }

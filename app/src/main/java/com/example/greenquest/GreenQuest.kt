@@ -2,16 +2,12 @@ package com.example.greenquest
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
-import androidx.room.migration.Migration
 import com.example.greenquest.database.AppDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

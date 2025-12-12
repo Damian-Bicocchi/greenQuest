@@ -42,7 +42,7 @@ object UsuarioRepository {
         }
     }
 
-    suspend fun refreshToken()
+    suspend fun refreshToken() {TODO()}
 
     suspend fun getUserProfile(): UserInfoResponse {
         return api.getUserData()
