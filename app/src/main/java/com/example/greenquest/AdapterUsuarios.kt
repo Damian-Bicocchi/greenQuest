@@ -2,11 +2,14 @@ package com.example.greenquest
 
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterUsuarios(val usuarios: List<Usuario>): RecyclerView.Adapter<AdapterUsuarios.viewHolder>() {
+class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsuarios.viewHolder>() {
 
     class viewHolder(val view: android.view.View): RecyclerView.ViewHolder(view) {
         val rankingUsuarios = view.findViewById<android.widget.TextView>(R.id.rankingUsuario)
         val puntosUsuario = view.findViewById<android.widget.TextView>(R.id.puntosUsuario)
+
+        val nombreUsuario = view.findViewById<android.widget.TextView>(R.id.nombre_usuario)
+
         val imagenUsuario = view.findViewById<android.widget.ImageView>(R.id.imagenUsuario)
     }
 
@@ -17,14 +20,16 @@ class AdapterUsuarios(val usuarios: List<Usuario>): RecyclerView.Adapter<Adapter
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        val usuario = usuarios[position]
-        holder.rankingUsuarios.text = "Ranking #${position + 1}"
-        holder.puntosUsuario.text = "${usuario.puntos} " +
-                "puntos"
-        // cambiar color según posición
-        val card = holder.view as androidx.cardview.widget.CardView
 
+        val usuario = usuarios[position]
+
+        holder.nombreUsuario.text = usuario.userName
+        holder.rankingUsuarios.text = "Ranking #${position + 1}"
+        holder.puntosUsuario.text = "${usuario.puntos} puntos"
+
+        val card = holder.view as androidx.cardview.widget.CardView
         val ctx = holder.view.context
+
         val color = when (position) {
             0 -> ctx.getColor(R.color.fila_usuario_oro)
             1 -> ctx.getColor(R.color.fila_usuario_plata)
@@ -33,7 +38,6 @@ class AdapterUsuarios(val usuarios: List<Usuario>): RecyclerView.Adapter<Adapter
         }
 
         card.setCardBackgroundColor(color)
-        //cargar imagen si es necesario
     }
 
     override fun getItemCount(): Int {

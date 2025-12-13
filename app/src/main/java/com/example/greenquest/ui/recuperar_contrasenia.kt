@@ -1,4 +1,4 @@
-package com.example.greenquest
+package com.example.greenquest.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.greenquest.R
 
 class recuperar_contrasenia : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +17,10 @@ class recuperar_contrasenia : AppCompatActivity() {
 
         val restablecerContrasenia = findViewById<View>(R.id.btn_recuperar)
         restablecerContrasenia.setOnClickListener {
-            val inputEmail = findViewById<EditText>(R.id.input_email)
+            val inputUsername = findViewById<EditText>(R.id.input_username)
             val mensajeError = findViewById<TextView>(R.id.mensaje_error)
 
-            val emailTexto = inputEmail.text.toString().trim()
+            val emailTexto = inputUsername.text.toString().trim()
 
             if (emailTexto.isEmpty()) {
                 mensajeError.visibility = View.VISIBLE

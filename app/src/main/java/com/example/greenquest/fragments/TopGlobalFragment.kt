@@ -1,15 +1,19 @@
 package com.example.greenquest.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.R
+import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.databinding.FragmentTopGlobalBinding
+import com.example.greenquest.ui.iniciar_sesion
 import com.example.greenquest.repository.UsuarioRepository
 import kotlinx.coroutines.launch
 
@@ -44,10 +48,32 @@ class TopGlobalFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             val user = UsuarioRepository.obtenerUsuarioLocal()
             Log.d("TopGlobalFragment", "Usuario obtenido: $user")
-            binding.textGlobal.text = user?.userName ?: "Invitado"
+            binding.textGlobal.text =
+                if (user != null) {
+                    "${user.userName} con id ${user.uid}"
+                } else {
+                    "Invitado con id N/A"
+                }
         }
+            binding.cerrarSesion.setOnClickListener {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val usuario = UsuarioRepository.obtenerUsuarioLocal()
+                    val response = UsuarioRepository.logout()
 
-    }
+                    if(response.isSuccess){
+                        TokenDataStoreProvider.get().clearAllTokens()
+                        UsuarioRepository.eliminarUsuarioLocal(usuario!!)
+                        Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(requireContext(), iniciar_sesion::class.java))
+                    } else {
+                        Toast.makeText(requireContext(), "Error al cerrar sesión ${response.toString()}", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+            }
+
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

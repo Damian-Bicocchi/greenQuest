@@ -13,41 +13,39 @@
         android:id="@+id/inicio_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
-        android:importantForContentCapture=""
+        android:layout_marginTop="120dp"
         android:text="@string/inicio_sesion"
         android:textColor="@color/texto_normal"
-        android:textSize="24sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/descripcion_inicio_sesion"
-        android:layout_width="277dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_width="290dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
         android:text="@string/descripcion_inicio_sesion"
         android:textAlignment="center"
         android:textColor="@color/texto_secundario"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inicio_sesion" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="360dp"
+        android:layout_height="319dp"
         android:layout_margin="32dp"
         android:background="@color/fondo_secundario"
+        android:minHeight="360dp"
         app:cardCornerRadius="16dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descripcion_inicio_sesion"
-        app:layout_constraintVertical_bias="0.337"
+        app:layout_constraintTop_toBottomOf="@id/descripcion_inicio_sesion"
         app:layout_constraintWidth_percent="0.9">
 
         <LinearLayout
@@ -55,35 +53,41 @@
             android:layout_height="match_parent"
             android:background="@color/fondo_secundario"
             android:orientation="vertical"
-            android:padding="24dp"> <TextView
-            android:id="@+id/label_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/email_text"
-            android:textColor="@color/texto_normal"
-            android:textSize="16sp" />
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/label_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:paddingTop="3dp"
+                android:text="@string/username_text"
+                android:textColor="@color/texto_normal"
+                android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/email_input"
+                android:id="@+id/username_input"
+                Type="textusernameAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:autofillHints="username"
                 android:background="@drawable/edittext"
-                android:hint="@string/email_hint"
-                android:inputType="textEmailAddress"
+                android:hint="@string/username_hint"
+                android:inputType="text|textNoSuggestions"
                 android:textColor="@color/texto_normal"
                 android:textColorHint="@color/texto_normal"
-                android:textSize="13dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/label_contrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:paddingTop="3dp"
                 android:text="@string/password_text"
                 android:textColor="@color/texto_normal"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/password_input"
@@ -93,45 +97,46 @@
                 android:background="@drawable/edittext"
                 android:hint="@string/password_hint"
                 android:inputType="textPassword"
+                android:paddingTop="3dp"
                 android:textColorHint="@color/texto_normal"
-                android:textSize="13sp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/iniciar_sesion_button"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape"
                 android:backgroundTint="@color/accent_color"
                 android:gravity="center"
                 android:includeFontPadding="true"
                 android:text="@string/login_button"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:cornerRadius="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/link_recuperar_contrasenia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:clickable="true"
                     android:text="@string/link_text_recuperar_contrasenia"
                     android:textColor="@color/texto_normal"
-                    android:textSize="16sp"
-                    android:clickable="true"
-                    android:layout_marginRight="24dp" />
+                    android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/link_registrar_cuenta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/link_text_registrar_cuenta"
                     android:textColor="@color/texto_normal"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </LinearLayout>
