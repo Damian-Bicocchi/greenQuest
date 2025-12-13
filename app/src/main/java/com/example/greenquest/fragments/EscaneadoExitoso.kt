@@ -48,7 +48,10 @@ class EscaneadoExitoso : Fragment() {
         }
 
         buttonDenunciar.setOnClickListener {
-            Toast.makeText(requireContext(), "No implementado", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                "No implementado",
+                Toast.LENGTH_LONG).show()
 
         }
 
