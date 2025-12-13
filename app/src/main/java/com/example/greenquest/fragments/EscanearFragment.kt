@@ -10,6 +10,7 @@ import com.example.greenquest.R
 import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import android.Manifest
+import android.content.Context
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +25,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.database.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.viewmodel.ScanState
@@ -37,6 +39,8 @@ class EscanearFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private var cameraProvider: ProcessCameraProvider? = null
 
+    private var camaraIniciada = false
+
     private var qrAlreadyDetected = false
     private lateinit var previewView: PreviewView
     private lateinit var informativeMessage: TextView
@@ -49,23 +53,30 @@ class EscanearFragment : Fragment() {
     @OptIn(ExperimentalGetImage::class)
     private var isProcessing = false
 
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                startCamera()
+            } else {
+                Toast.makeText(requireContext(), "Permiso de cámara requerido", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        )
-        { isGranted: Boolean ->
-            if (isGranted) {
-                startCamera()
-                informativeMessage.visibility = View.INVISIBLE
-            } else {
-                informativeMessage.text = "No se obtuvo el permiso para acceder a la cámara"
-                informativeMessage.visibility = View.VISIBLE
-            }
-
+        if (ContextCompat.checkSelfPermission(
+            requireContext(),
+                Manifest.permission.CAMERA
+        ) != PackageManager.PERMISSION_GRANTED
+        ){
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
-        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+
+
         cameraExecutor = Executors.newSingleThreadExecutor()
         qrScanner = BarcodeScanning.getClient()
 
@@ -76,8 +87,17 @@ class EscanearFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         escanearModel = ViewModelProvider(this)[EscanearModel::class.java]
+
+        if (ContextCompat.checkSelfPermission(
+            requireContext(),
+                Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+        ){
+            startCamera()
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_escanear, container, false)
+        return inflater.inflate(
+            R.layout.fragment_escanear, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,11 +116,25 @@ class EscanearFragment : Fragment() {
         startCamera()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraProvider?.unbindAll()
+        cameraProvider = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        camaraIniciada = false
+        cameraProvider?.unbindAll()
+    }
+
 
     private fun startCamera() {
+        if (camaraIniciada) return
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
+            camaraIniciada = true
             cameraProvider = cameraProviderFuture.get()
 
             // Preview
@@ -115,7 +149,8 @@ class EscanearFragment : Fragment() {
                 .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, { imageProxy -> processImageProxy(imageProxy)})
+                    it.setAnalyzer(cameraExecutor, {
+                        imageProxy -> processImageProxy(imageProxy)})
                 }
 
             // Deteniene todos los usos de la camara, para evitar mayor uso de recursos
@@ -157,11 +192,7 @@ class EscanearFragment : Fragment() {
                 isProcessing = false
                 imageProxy.close()
             }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
     }
 
     private fun observeViewModel() {

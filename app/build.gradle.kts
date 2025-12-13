@@ -108,6 +108,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    implementation(platform("androidx.compose:compose-bom:2025.12.00"))
+
 }
 
 kapt {
