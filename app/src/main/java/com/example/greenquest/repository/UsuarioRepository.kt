@@ -47,10 +47,10 @@ object UsuarioRepository {
     suspend fun refreshToken(): Result<RefreshResponse> {
         val refresh = TokenDataStoreProvider.get().getRefreshToken()
             ?: throw Exception("No refresh token available")
-        return try{
+        return try {
             val response = api.refreshToken(RefreshRequest(refresh))
             Result.success(response)
-        }catch (e: HttpException){
+        } catch (e: HttpException) {
             Log.d("UsuarioRepository", "Error al refrescar token: ${e.printStackTrace()}")
             Result.failure(e)
         }

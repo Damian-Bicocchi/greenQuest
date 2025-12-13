@@ -78,4 +78,10 @@
     <string name="label_registrar_cuenta">Registrar cuenta</string>
     <string name="bienvenido_registrar_cuenta">¡Bienvenido a GreenQuest!</string>
 
+
+    <string name="hint_scan_qr">Centrá el código QR en el recuadro</string>
+    <string name="button_escanear_qr">Escanear</string>
+    <string name="button_denunciar_categoria">Denunciar categoría incorrecta</string>
+    <string name="button_continuar">Continuar</string>
+
 </resources>
