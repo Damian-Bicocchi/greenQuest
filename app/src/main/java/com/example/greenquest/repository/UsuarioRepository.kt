@@ -1,14 +1,19 @@
 package com.example.greenquest.repository
 
-
+import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
+import retrofit2.HttpException
 import retrofit2.Response
+import com.example.greenquest.database.AppDatabase
+
 import com.example.greenquest.User
 import com.example.greenquest.apiParameters.LogoutRequest
+import com.example.greenquest.apiParameters.RefreshRequest
+import com.example.greenquest.apiParameters.RefreshResponse
 import com.example.greenquest.apiParameters.UserInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -39,7 +44,18 @@ object UsuarioRepository {
         }
     }
 
-    suspend fun refreshToken() {TODO()}
+    suspend fun refreshToken(): Result<RefreshResponse> {
+        val refresh = TokenDataStoreProvider.get().getRefreshToken()
+            ?: throw Exception("No refresh token available")
+        return try {
+            val response = api.refreshToken(RefreshRequest(refresh))
+            Result.success(response)
+        } catch (e: HttpException) {
+            Log.d("UsuarioRepository", "Error al refrescar token: ${e.printStackTrace()}")
+            Result.failure(e)
+        }
+
+    }
 
     suspend fun getUserProfile(): UserInfoResponse {
         return api.getUserData()

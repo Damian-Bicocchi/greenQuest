@@ -33,7 +33,7 @@ object ScannerRepository {
         if (idResiduo.isBlank()) {
             return ReclamarResiduoGenericResponse(
                 "",
-                "Residuo no encontrado"
+                "Residuo trado"
             )
         }
 

@@ -1,9 +1,11 @@
 package com.example.greenquest
 
 import com.example.greenquest.apiParameters.RefreshRequest
+import com.example.greenquest.repository.UsuarioRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
+import okhttp3.Response
 import okhttp3.Route
 
 
@@ -22,23 +24,21 @@ class TokenAuthenticator(
         } ?: return null
 
         val refreshResponse = runBlocking {
-            api.refreshToken(RefreshRequest(refreshToken))
+            UsuarioRepository.refreshToken()
         }
 
-        if (!refreshResponse.isSuccessful) {
+        if (!refreshResponse.isSuccess) {
             runBlocking { tokenStore.clearAllTokens() }
             return null
         }
 
-        val newAccess = refreshResponse.body()!!.access
-
         runBlocking {
-            tokenStore.saveAccessToken(newAccess)
+            tokenStore.saveAccessToken(refreshResponse.toString())
         }
 
         // Reintentar request original con nuevo token
         return response.request.newBuilder()
-            .header("Authorization", "Bearer $newAccess")
+            .header("Authorization", "Bearer ${refreshResponse.toString()}")
             .build()
     }
 

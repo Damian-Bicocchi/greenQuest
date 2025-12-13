@@ -19,21 +19,22 @@ class LauncherActivity: ComponentActivity() {
             val usuarioLocal = obtenerUsuarioLocal()
 
             if (usuarioLocal != null) {
-                val response = UsuarioRepository.login(
-                    usuarioLocal.userName!!,
-                    usuarioLocal.password!!
-                )
+               try{
+                    val response = UsuarioRepository.login(
+                        usuarioLocal.userName!!,
+                        usuarioLocal.password!!
+                    )
 
-                if (response != null) {
-                    startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
-                } else {
+                    if (response.isSuccessful) {
+                        startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
+                    } else {
+                        startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
+                    }
+                } catch (e: Exception){
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
                 }
             } else {
-                // NO ACEPTAR ESTE CAMBIO EN UN MERGE
-                //startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
-
             }
 
             finish()

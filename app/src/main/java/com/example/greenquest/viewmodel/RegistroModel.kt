@@ -3,9 +3,12 @@ package com.example.greenquest.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+
 import com.example.greenquest.apiParameters.ApiError
 import com.example.greenquest.repository.UsuarioRepository
 import com.google.gson.Gson
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 
 
 class RegistroViewModel : ViewModel() {
