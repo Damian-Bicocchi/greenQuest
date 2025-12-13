@@ -9,7 +9,6 @@ import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.*
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.ui.menu_principal
 import com.example.greenquest.ui.recuperar_contrasenia

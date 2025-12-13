@@ -29,10 +29,12 @@ class EscaneadoExitoso : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
         val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
+        // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
         datos?.let {
             view.findViewById<TextView>(
-                R.id.label_resumen_residuo).text = "Reciclaste: " + it.tipoResiduo
+                R.id.label_resumen_residuo).text = "Reciclaste: ${it.tipoResiduo}"
             view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = "¡Felicidades! Sumaste " + it.puntos + " puntos"
         }
 

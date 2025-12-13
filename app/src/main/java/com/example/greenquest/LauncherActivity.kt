@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.*
 import androidx.lifecycle.*
-import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.repository.UsuarioRepository.obtenerUsuarioLocal
 import com.example.greenquest.ui.iniciar_sesion

@@ -1,15 +1,12 @@
 package com.example.greenquest.repository
 
-import android.util.Log
+
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
-import retrofit2.HttpException
 import retrofit2.Response
-import com.example.greenquest.database.AppDatabase
-
 import com.example.greenquest.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.UserInfoResponse

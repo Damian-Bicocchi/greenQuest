@@ -10,8 +10,6 @@ import com.example.greenquest.R
 import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import android.Manifest
-import android.content.Context
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,7 +23,6 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.greenquest.database.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.viewmodel.ScanState
