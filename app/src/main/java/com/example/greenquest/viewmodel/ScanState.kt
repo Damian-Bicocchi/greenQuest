@@ -7,4 +7,8 @@ sealed class ScanState {
     data class QRDetected(val payload: QrPayloadResiduo) : ScanState()
     data class Error(val message: String) : ScanState()
 
+    data class HappyError(val message: String) : ScanState()
+
+    data class QrException(val message: String) : ScanState()
+
 }

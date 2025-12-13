@@ -37,29 +37,28 @@ class EscanearModel: ViewModel() {
 
                             if (response.error.isNullOrEmpty()){
                                 withContext(Dispatchers.Main) {
-                                    Log.e("greenQuest",
-                                        "payload tiene id " + payload.id_residuo)
                                     _scanState.value = ScanState.QRDetected(payload)
                                 }
                             } else {
                                 withContext(Dispatchers.Main) {
-                                    Log.e("greenQuest", "El response tiene error" + response.error + "mensaje " + response.message)
-                                    _scanState.value = ScanState.Error(response.error)
+                                    Log.e("greenQuest", response.error)
+                                    _scanState.value = ScanState.HappyError(response.error)
                                 }
                             }
                         } catch (e : Exception){
                             withContext(Dispatchers.Main) {
                                 Log.e("greenQuest", "La excepcion fue " + e.message)
-                                _scanState.value = ScanState.Error("Hubo un error inesperado")
+                                _scanState.value = ScanState.QrException("Hubo un error inesperado")
                             }
                         }
                     }
                 }
             }
             .addOnFailureListener { e ->
-                Log.e("QRScanner", e.toString())
+                Log.e("greenQuest", e.toString())
+                _scanState.value = ScanState.QrException("ERROR INESPERADO")
 
-                _scanState.value = ScanState.Error("No se pudo leer el código QR")
+
             }
 
     }

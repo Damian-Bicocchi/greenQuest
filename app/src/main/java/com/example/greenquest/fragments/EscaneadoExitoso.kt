@@ -30,7 +30,8 @@ class EscaneadoExitoso : Fragment() {
 
         val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
         datos?.let {
-            view.findViewById<TextView>(R.id.label_resumen_residuo).text = "Reciclaste: " + it.tipoResiduo
+            view.findViewById<TextView>(
+                R.id.label_resumen_residuo).text = "Reciclaste: " + it.tipoResiduo
             view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = "¡Felicidades! Sumaste " + it.puntos + " puntos"
         }
     }

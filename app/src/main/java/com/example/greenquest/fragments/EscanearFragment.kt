@@ -34,11 +34,14 @@ import java.util.concurrent.Executors
 
 
 class EscanearFragment : Fragment() {
-   private lateinit var cameraExecutor: ExecutorService
-   private lateinit var previewView: PreviewView
-   private lateinit var informativeMessage: TextView
-   private lateinit var qrScanner: BarcodeScanner
-   private lateinit var escanearModel: EscanearModel
+    private lateinit var cameraExecutor: ExecutorService
+    private var cameraProvider: ProcessCameraProvider? = null
+
+    private var qrAlreadyDetected = false
+    private lateinit var previewView: PreviewView
+    private lateinit var informativeMessage: TextView
+    private lateinit var qrScanner: BarcodeScanner
+    private lateinit var escanearModel: EscanearModel
 
     private var errorToast: Toast? = null
     private var lastErrorMessage: String? = null
@@ -72,7 +75,7 @@ class EscanearFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        escanearModel = ViewModelProvider(this).get(EscanearModel::class.java)
+        escanearModel = ViewModelProvider(this)[EscanearModel::class.java]
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_escanear, container, false)
     }
@@ -86,15 +89,23 @@ class EscanearFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        qrAlreadyDetected = false
+        lastErrorMessage = ""
+        startCamera()
+    }
+
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get()
 
             // Preview
             val preview = Preview.Builder()
-                .setTargetResolution(android.util.Size(1280, 720)) // Use android.util.Size
+                .setTargetResolution(android.util.Size(1280, 720))
                 .build().also {
                     it.surfaceProvider = previewView.surfaceProvider
                 }
@@ -107,10 +118,14 @@ class EscanearFragment : Fragment() {
                     it.setAnalyzer(cameraExecutor, { imageProxy -> processImageProxy(imageProxy)})
                 }
 
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            cameraProvider.bindToLifecycle(
-                this, cameraSelector, preview, imageAnalizer
+            // Deteniene todos los usos de la camara, para evitar mayor uso de recursos
+            cameraProvider?.unbindAll()
+
+            cameraProvider?.bindToLifecycle(
+                viewLifecycleOwner,
+                CameraSelector.DEFAULT_BACK_CAMERA
+                , preview,
+                imageAnalizer
             )
 
         }, ContextCompat.getMainExecutor(requireContext()))
@@ -150,18 +165,19 @@ class EscanearFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-
         escanearModel.scanState.observe(viewLifecycleOwner) { state ->
             when (state) {
-
                 is ScanState.QRDetected -> {
-                    // Mover UI, navegar, etc.
+                    // return@observe hace que se salga del lambda pero NO de observeViewModel
+                    if (qrAlreadyDetected) return@observe
+                    qrAlreadyDetected = true
+
+                    cameraProvider?.unbindAll()
 
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipo_residuo,
                         puntos = state.payload.puntaje
                     )
-
 
                     val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
 
@@ -169,29 +185,38 @@ class EscanearFragment : Fragment() {
                         .replace(R.id.frame_container, fragment)
                         .addToBackStack(null)
                         .commit()
-
-
+                }
+                
+                is ScanState.HappyError -> {
+                    showToastError("¡Oh no! " + state.message)
                 }
 
                 is ScanState.Error -> {
-                    if (state.message != lastErrorMessage) {
-                        errorToast?.cancel()
-
-                        errorToast = Toast.makeText(
-                            requireContext(),
-                            state.message,
-                            Toast.LENGTH_LONG
-                        )
-                        errorToast?.show()
-
-                        lastErrorMessage = state.message
-                    }
+                    showToastError("❌\u200B " + state.message)
+                }
+                is ScanState.QrException -> {
+                    showToastError("ERROR FATAL " + state.message)
                 }
 
                 ScanState.Idle -> {
                     Unit
                 }
             }
+        }
+    }
+
+    private fun showToastError(message: String) {
+        if (message != lastErrorMessage) {
+            errorToast?.cancel()
+
+            errorToast = Toast.makeText(
+                requireContext(),
+                message,
+                Toast.LENGTH_LONG
+            )
+            errorToast?.show()
+
+            lastErrorMessage = message
         }
     }
 }

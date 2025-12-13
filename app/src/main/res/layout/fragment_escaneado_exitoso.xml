@@ -6,26 +6,27 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-
+    <include layout="@layout/activity_adapter" />
+    tipi
 
     <TextView
         android:id="@+id/qr_mensaje_felicidades"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="29dp"
-        android:minHeight="40dp"
-        android:gravity="center"
-        android:textColor="@color/texto_oscuro"
         android:background="@color/texto_verde"
+        android:gravity="center"
+        android:minHeight="40dp"
+        android:textColor="@color/texto_oscuro"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:visibility="invisible"
-        tools:text="¡Felicidades! Sumaste N puntos"
-        tools:visibility="visible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/layout_centro_denunciar"
+        tools:layout_editor_absoluteY="74dp"
+        tools:text="¡Felicidades! Sumaste N puntos"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
