@@ -1,9 +1,10 @@
-package com.example.greenquest
+package com.example.greenquest.ui
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.AmigosFragment
 import com.example.greenquest.fragments.CategorizarFragment

@@ -1,18 +1,15 @@
 package com.example.greenquest.repository
 
-import android.util.Log
+
 import com.example.greenquest.GreenQuestApp
-import com.example.greenquest.apiParameters.LoginResponse
-import com.example.greenquest.apiParameters.SingupResponse
 import com.example.greenquest.RetrofitInstance
-import com.example.greenquest.Usuario
+import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
-import retrofit2.HttpException
 import retrofit2.Response
-import com.example.greenquest.database.AppDatabase
-
 import com.example.greenquest.User
+import com.example.greenquest.apiParameters.LogoutRequest
+import com.example.greenquest.apiParameters.UserInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -30,6 +27,24 @@ object UsuarioRepository {
         return api.login(Request(username, password))
     }
 
+    suspend fun logout(): Result<Unit> {
+        val refresh = TokenDataStoreProvider.get().getRefreshToken()
+            ?: return Result.failure(Exception("No refresh token"))
+        return try {
+            api.logout(LogoutRequest(refresh))
+            TokenDataStoreProvider.get().clearAllTokens()
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun refreshToken() {TODO()}
+
+    suspend fun getUserProfile(): UserInfoResponse {
+        return api.getUserData()
+    }
+
     suspend fun obtenerUsuarioLocal(): User? =
         withContext(Dispatchers.IO) {
             userDao.getFirtUser()
@@ -44,5 +59,7 @@ object UsuarioRepository {
         withContext(Dispatchers.IO) {
             userDao.delete(user)
     }
+
+
 }
 

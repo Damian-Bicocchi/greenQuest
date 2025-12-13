@@ -74,22 +74,23 @@
             android:padding="20dp">
 
             <TextView
-                android:id="@+id/label_email"
+                android:id="@+id/label_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/label_input_email"
+                android:text="@string/label_input_username"
                 android:textColor="@color/texto_normal"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/input_email"
+                android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_border"
-                android:hint="@string/email_hint"
+                android:hint="@string/username_hint"
                 android:paddingHorizontal="12dp"
-                android:inputType="textEmailAddress"
+                android:inputType="text|textNoSuggestions"
+                android:autofillHints="username"
                 android:textColor="@color/texto_normal"
                 android:textColorHint="@color/texto_secundario"
                 android:textSize="16sp"/>

@@ -1,9 +1,9 @@
 object ChequeosUsuario {
 
-    fun esValidoCorreo(correo: String): Boolean {
-        val regex = Regex("[a-zA-Z0-9._]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}")
+    fun esValidoUsername(username: String): Boolean {
+        val regex = Regex("^[a-zA-Z0-9._-]{3,20}$")
 
-        return regex.matches(correo)
+        return regex.matches(username)
     }
 
     fun esValidoFormatoContraseña(contraseña: String): Boolean {
