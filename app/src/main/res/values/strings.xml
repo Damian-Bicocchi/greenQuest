@@ -3,11 +3,11 @@
     <string name="inicio_sesion">Iniciar Sesion</string>
     <string name="descripcion_inicio_sesion">Ingresa tus credenciales para empezar
         a sumar puntos por reciclar</string>
-    <string name="email_text">Correo electronico</string>
+    <string name="username_text">Nombre de Usuario</string>
     <string name="password_text">Contraseña</string>
     <string name="login_button">Iniciar Sesion</string>
     <string name="password_hint">Distingue entre mayúsculas y minúsculas</string>
-    <string name="email_hint">ejemplo@correo.com</string>
+    <string name="username_hint">Nombre de usuario</string>
 
     <string name="link_text_recuperar_contrasenia">Recuperar contraseña</string>
     <string name="link_text_registrar_cuenta">Registrar cuenta</string>
@@ -57,7 +57,7 @@
 
     <string name="title_recuperar_contrasenia">Recuperar contraseña</string>
     <string name="description_recuperar_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
-    <string name="label_input_email">Ingrese su correo electrónico</string>
+    <string name="label_input_username">Ingrese su correo electrónico</string>
 
     <string name="cancel">Cancelar</string>
     <string name="button_recuperar_contrasenia">Recuperar contraseña</string>
@@ -81,6 +81,8 @@
 
     <string name="hint_scan_qr">Centrá el código QR en el recuadro</string>
     <string name="button_escanear_qr">Escanear</string>
+    <string name="button_denunciar_categoria">Denunciar categoría incorrecta</string>
+    <string name="button_continuar">Continuar</string>
     <string name="rankingGeneralButton">General</string>
     <string name="rankingCategorizedButton">Por Tipo</string>
 </resources>

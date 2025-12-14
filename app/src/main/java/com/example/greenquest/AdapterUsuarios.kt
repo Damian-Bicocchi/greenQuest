@@ -30,7 +30,6 @@ class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsu
         holder.nombreUsuario.text = usuario.userName
         holder.rankingUsuarios.text= "Ranking #${position + 1}"
         holder.puntosUsuario.text = "${usuario.puntos}\npuntos"
-        // cambiar color según posición
         val card = holder.view as CardView
 
         val ctx = holder.view.context
@@ -42,7 +41,6 @@ class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsu
         }
 
         card.setCardBackgroundColor(color)
-        //cargar imagen si es necesario
     }
 
     override fun getItemCount(): Int {

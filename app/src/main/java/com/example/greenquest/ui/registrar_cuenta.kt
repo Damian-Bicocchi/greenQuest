@@ -31,15 +31,15 @@ class registrar_cuenta : AppCompatActivity() {
         }
 
         botonRegistrarCuenta.setOnClickListener {
-            val email = binding.registroEmailInput.text.toString()
+            val username = binding.registroUsernameInput.text.toString()
             val password = binding.registroPasswordInput.text.toString()
             val confirm = binding.registroRepeatPasswordInput.text.toString()
-            registrarCuenta(email, password, confirm)
+            registrarCuenta(username, password, confirm)
         }
 
     }
-    private fun registrarCuenta(email: String, password: String, confirm: String) {
-        viewModel.registrar( email, password ,confirm).observe(this) { resultado ->
+    private fun registrarCuenta(username: String, password: String, confirm: String) {
+        viewModel.registrar( username, password ,confirm).observe(this) { resultado ->
             if (resultado == "OK") {
                 Toast.makeText(this, "Registro exitoso. Por favor, inicie sesión.", Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, iniciar_sesion::class.java))
