@@ -3,34 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/activity_adapter"></include>
-    <!-- TODO: Update blank fragment layout -->
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_global"
-        android:layout_width="412dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Fragmento Top Global"
-        android:textColor="@color/texto_normal"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+    <include
+        layout="@layout/activity_adapter"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/cerrar_sesion"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/rankingSelector"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="268dp"
-        android:text="Cerrar Sesion"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_group_background"
+        app:checkedButton="@id/generalRanking"
+        app:selectionRequired="true"
+        app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_global" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/generalRanking"
+            style="@style/Theme.GreenQuest.ButtonGroupButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/rankingGeneralButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/categorizedRanking"
+            style="@style/Theme.GreenQuest.ButtonGroupButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/rankingCategorizedButton" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <LinearLayout
+        android:id="@+id/rankingList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rankingSelector" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

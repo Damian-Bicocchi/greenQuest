@@ -81,4 +81,6 @@
 
     <string name="hint_scan_qr">Centrá el código QR en el recuadro</string>
     <string name="button_escanear_qr">Escanear</string>
+    <string name="rankingGeneralButton">General</string>
+    <string name="rankingCategorizedButton">Por Tipo</string>
 </resources>

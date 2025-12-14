@@ -1,17 +1,15 @@
 package com.example.greenquest.viewmodel
 
+import ChequeosUsuario
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-
 import com.example.greenquest.apiParameters.ApiError
 import com.example.greenquest.repository.UsuarioRepository
 import com.google.gson.Gson
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 
 
-class RegistroViewModel : ViewModel() {
+class RegistroModel : ViewModel() {
 
     fun registrar(email: String, contraseña: String, confirm: String) = liveData {
 
@@ -47,17 +45,13 @@ class RegistroViewModel : ViewModel() {
                 val apiError = Gson().fromJson(errorJson, ApiError::class.java)
 
                 when {
-                    apiError.username != null ->
-                        emit("Ya existe un usuario con el correo ingresado")
+                    apiError.username != null -> emit("Ya existe un usuario con el correo ingresado")
 
-                    apiError.password != null ->
-                        emit(apiError.password.first())
+                    apiError.password != null -> emit(apiError.password.first())
 
-                    apiError.non_field_errors != null ->
-                        emit(apiError.non_field_errors.first())
+                    apiError.non_field_errors != null -> emit(apiError.non_field_errors.first())
 
-                    else ->
-                        emit("Error desconocido del servidor")
+                    else -> emit("Error desconocido del servidor")
                 }
             }
 

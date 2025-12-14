@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Cambiado el parent a Theme.AppCompat para ser compatible con AppCompatActivity -->
-    <style name="Theme.GreenQuest" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.GreenQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textColor">@color/texto_normal</item>
         <item name="android:textColorHint">@color/texto_normal</item>
-        <item name="android:hint"></item>
+        <item name="materialButtonStyle">@style/Widget.GreenQuest.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.GreenQuest.Button.Outlined</item>
+    </style>
+
+    <style name="Theme.GreenQuest.ButtonGroupButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="strokeColor">@color/fondo_secundario</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textColor">@color/button_group_text_selector</item>
+        <item name="backgroundTint">@color/button_group_background_selector</item>
+    </style>
+
+    <style name="Widget.GreenQuest.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/accent_color</item>
+        <item name="android:textColor">@color/texto_oscuro</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.GreenQuest.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/accent_color</item>
+        <item name="cornerRadius">8dp</item>
     </style>
 
     <style name="BottomNavitation">

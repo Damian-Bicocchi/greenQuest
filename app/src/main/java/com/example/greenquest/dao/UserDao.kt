@@ -8,7 +8,7 @@ interface UserDao {
     fun getAll(): List<User>
 
     @Query("SELECT * FROM user LIMIT 1")
-    fun getFirtUser(): User?
+    fun getFirstUser(): User?
 
     @Delete
     fun delete(user: User)

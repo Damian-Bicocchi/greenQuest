@@ -49,6 +49,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.databinding.runtime)
     val room_version = "2.8.4"
 
 
@@ -71,6 +72,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.annotation)
+    implementation("androidx.databinding:viewbinding:8.13.1")
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.activity)
