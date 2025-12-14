@@ -34,5 +34,5 @@ interface EstacionService {
     suspend fun  getUserData(): UserInfoResponse
 
     @POST(Constants.PATH_API +"token/refresh/")
-    suspend fun refreshToken(@Body body: RefreshRequest): Response<RefreshResponse>
+    suspend fun refreshToken(@Body body: RefreshRequest): RefreshResponse
 }

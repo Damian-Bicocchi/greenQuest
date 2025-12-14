@@ -7,10 +7,22 @@ import kotlinx.serialization.Serializable
 enum class TipoResiduo(val nombre: String) {
     @SerialName("Papel")
     PAPEL("Papel"),
+
     @SerialName("Basura")
     BASURA("Basura"),
+
     @SerialName("Plastico")
     PLASTICO("Plástico"),
+
+    @SerialName("Metal")
+    METAL("Metal"),
+
+    @SerialName("Vidrio")
+    VIDRIO("Vidrio"),
+
+    @SerialName("Carton")
+    CARTON("Carton"),
+
     @SerialName("Desconocido")
     DESCONOCIDO("Desconocido")
 }

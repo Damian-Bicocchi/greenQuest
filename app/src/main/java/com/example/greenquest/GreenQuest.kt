@@ -10,6 +10,7 @@ import com.example.greenquest.database.AppDatabase
 
 
 
+
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class GreenQuestApp : Application() {
 

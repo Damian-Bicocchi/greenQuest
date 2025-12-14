@@ -6,17 +6,16 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/activity_adapter" />
-    tipi
+    <include layout="@layout/activity_adapter"/>
 
     <TextView
         android:id="@+id/qr_mensaje_felicidades"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
+        android:layout_marginHorizontal="21dp"
         android:background="@color/texto_verde"
         android:gravity="center"
-        android:minHeight="40dp"
+        android:padding="9dp"
         android:textColor="@color/texto_oscuro"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -24,69 +23,69 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/layout_centro_denunciar"
-        tools:layout_editor_absoluteY="74dp"
+        android:layout_marginBottom="16dp"
         tools:text="¡Felicidades! Sumaste N puntos"
         tools:visibility="visible" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout_centro_denunciar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/acento_de_fondo"
-        app:layout_constraintTop_toBottomOf="@id/qr_mensaje_felicidades"
-        android:id="@+id/layout_centro_denunciar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/fondo_secundario"
+        app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        >
-        <TextView
-            android:id="@+id/label_resumen_residuo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Reciclaste: "
-            android:textColor="@color/texto_normal"
-            android:textSize="20sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.75"
 
-        <Button
-            android:id="@+id/button_denunciar_categoria"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/acento_de_fondo"
-            android:textColor="@color/texto_oscuro"
-            android:text="@string/button_denunciar_categoria"
-            app:layout_constraintTop_toBottomOf="@id/label_resumen_residuo"
-            android:paddingBottom="2sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/button_qr_exitoso_continuar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/accent_color"
-            android:textColor="@color/texto_oscuro"
-            android:text="@string/button_continuar"
-            app:layout_constraintTop_toBottomOf="@id/button_denunciar_categoria"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/fondo_secundario"
+            android:orientation="vertical"
+            android:padding="21dp">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/label_resumen_residuo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Reciclaste: "
+                android:textColor="@color/texto_normal"
+                android:textSize="24sp"/>
 
+            <Button
+                android:id="@+id/button_denunciar_categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/acento_de_fondo"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="12dp"
+                android:text="@string/button_denunciar_categoria"
+                android:textColor="@color/texto_oscuro"
+                android:layout_gravity="center_horizontal"
+                app:cornerRadius="20dp" />
 
+            <Button
+                android:id="@+id/button_qr_exitoso_continuar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@color/accent_color"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="12dp"
+                android:text="@string/button_continuar"
+                android:textColor="@color/texto_oscuro"
+                app:cornerRadius="20dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

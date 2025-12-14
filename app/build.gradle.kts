@@ -3,8 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization") version "1.9.0"
-    id("kotlin-kapt") // ✅ NECESARIO PARA ROOM
+    id("kotlin-kapt")
     id("kotlin-parcelize")
+
 }
 
 android {
@@ -50,7 +51,8 @@ android {
 
 dependencies {
 
-
+    implementation(libs.androidx.datastore.core)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.jupiter)
     val room_version = "2.8.4"
 
@@ -61,6 +63,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.2.0")
     implementation("androidx.datastore:datastore-preferences-rxjava3:1.2.0")
+    implementation("androidx.datastore:datastore:1.2.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
