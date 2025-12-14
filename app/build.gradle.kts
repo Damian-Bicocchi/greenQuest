@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit.jupiter)
-    testImplementation(libs.junit.jupiter)
     implementation(libs.androidx.databinding.runtime)
     val room_version = "2.8.4"
 

@@ -34,7 +34,10 @@ class LauncherActivity: ComponentActivity() {
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
                 }
             } else {
+                // NO ACEPTAR ESTE CAMBIO EN UN MERGE
+                //startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
+
             }
 
             finish()

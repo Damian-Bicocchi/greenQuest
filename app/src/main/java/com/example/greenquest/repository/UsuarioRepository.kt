@@ -6,9 +6,7 @@ import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
-import retrofit2.HttpException
 import retrofit2.Response
-
 import com.example.greenquest.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.RankingEntry
@@ -18,6 +16,7 @@ import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 object UsuarioRepository {
     private val api = RetrofitInstance.api
