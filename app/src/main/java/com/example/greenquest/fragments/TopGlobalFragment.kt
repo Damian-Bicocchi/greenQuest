@@ -66,6 +66,7 @@ class TopGlobalFragment : Fragment() {
                         Toast.makeText(requireContext(), "Sesión cerrada", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(requireContext(), iniciar_sesion::class.java))
                     } else {
+                        Log.e("greenQuest", response.toString())
                         Toast.makeText(requireContext(), "Error al cerrar sesión ${response.toString()}", Toast.LENGTH_SHORT).show()
                     }
 

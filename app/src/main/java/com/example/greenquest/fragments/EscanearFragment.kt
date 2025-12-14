@@ -40,7 +40,7 @@ class EscanearFragment : Fragment() {
 
     private var qrAlreadyDetected = false
     private lateinit var previewView: PreviewView
-    private lateinit var informativeMessage: TextView
+
     private lateinit var qrScanner: BarcodeScanner
     private lateinit var escanearModel: EscanearModel
 
@@ -101,7 +101,7 @@ class EscanearFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         previewView = view.findViewById(R.id.qr_camara)
-        informativeMessage = view.findViewById(R.id.qr_mensaje_error)
+
 
         observeViewModel()
     }
