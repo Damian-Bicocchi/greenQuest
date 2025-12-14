@@ -7,11 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.databinding.ActivityRegistrarCuentaBinding
-import com.example.greenquest.viewmodel.RegistroModel
+import com.example.greenquest.viewmodel.RegistroViewModel
 
 class registrar_cuenta : AppCompatActivity() {
 
-    private lateinit var viewModel: RegistroModel
+    private lateinit var viewModel: RegistroViewModel
     private lateinit var binding: ActivityRegistrarCuentaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +21,7 @@ class registrar_cuenta : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        viewModel = ViewModelProvider(this).get(RegistroModel::class.java)
+        viewModel = ViewModelProvider(this).get(RegistroViewModel::class.java)
 
         val botonRegistrarCuenta = binding.registrarCuentaButton
         val botonCancelar = binding.cancelarRegistro

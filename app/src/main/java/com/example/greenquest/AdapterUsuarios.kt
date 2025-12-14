@@ -16,7 +16,7 @@ class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsu
 
         val nombreUsuario = view.findViewById<TextView>(R.id.nombre_usuario)
 
-        val imagenUsuario = view.findViewById<ImageView>(R.id.imagenUsuario)
+        val imagenUsuario = view.findViewById<TextView>(R.id.placeholderImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {

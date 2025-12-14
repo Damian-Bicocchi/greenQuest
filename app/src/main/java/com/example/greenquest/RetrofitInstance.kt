@@ -12,7 +12,7 @@ object RetrofitInstance {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
+        .baseUrl(Constants.BASEURLCELU)
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
