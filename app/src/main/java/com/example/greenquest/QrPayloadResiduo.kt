@@ -1,5 +1,6 @@
 package com.example.greenquest
 
+import com.example.greenquest.apiParameters.TipoResiduo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

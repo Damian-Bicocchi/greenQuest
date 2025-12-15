@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 class TokenDataStore (private val dataStore: DataStore<Preferences>): TokenManager {
     companion object {

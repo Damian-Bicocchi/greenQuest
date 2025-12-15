@@ -10,12 +10,12 @@ import com.example.greenquest.fragments.AmigosFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.fragments.TopAmigosFragment
-import com.example.greenquest.fragments.TopGlobalFragment
+import com.example.greenquest.fragments.TopGlobal
 import com.google.android.material.navigation.NavigationBarView
 
 class menu_principal : AppCompatActivity() {
 
-    private val topGlobalFragment = TopGlobalFragment()
+    private val topGlobalFragment = TopGlobal()
     private val TopAmigosFragment = TopAmigosFragment()
     private val escanearFragment = EscanearFragment()
 

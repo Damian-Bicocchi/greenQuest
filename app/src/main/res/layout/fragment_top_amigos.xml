@@ -6,28 +6,15 @@
     android:layout_height="match_parent">
     <include layout="@layout/activity_adapter"></include>
 
-
-    <TextView
-        android:id="@+id/text_top_amigos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Top Amigos Fragment"
-        android:textColor="@color/texto_normal"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052" />
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:id="@+id/recyclerTopAmigos"
         android:layout_width="366dp"
         android:layout_height="625dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.552" />
+        app:layout_constraintVertical_bias="0.5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

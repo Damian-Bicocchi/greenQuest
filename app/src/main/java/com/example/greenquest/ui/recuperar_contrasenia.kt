@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.greenquest.R
-import com.example.greenquest.ui.iniciar_sesion
-import com.example.greenquest.ui.restablecer_contrasenia
 
 class recuperar_contrasenia : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +17,12 @@ class recuperar_contrasenia : AppCompatActivity() {
 
         val restablecerContrasenia = findViewById<View>(R.id.btn_recuperar)
         restablecerContrasenia.setOnClickListener {
-            val inputusername = findViewById<EditText>(R.id.input_username)
+            val inputUsername = findViewById<EditText>(R.id.input_username)
             val mensajeError = findViewById<TextView>(R.id.mensaje_error)
 
-            val usernameTexto = inputusername.text.toString().trim()
+            val emailTexto = inputUsername.text.toString().trim()
 
-            if (usernameTexto.isEmpty()) {
+            if (emailTexto.isEmpty()) {
                 mensajeError.visibility = View.VISIBLE
                 mensajeError.text = "Debe ingresar un correo válido"
             } else {
