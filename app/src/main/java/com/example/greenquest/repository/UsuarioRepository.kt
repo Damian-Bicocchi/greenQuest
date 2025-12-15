@@ -20,16 +20,17 @@ import retrofit2.HttpException
 
 object UsuarioRepository {
     private val api = RetrofitInstance.api
+    private val authApi = RetrofitInstance.authApi
     private val userDao by lazy {
         GreenQuestApp.instance.database.userDao()
     }
 
     suspend fun signup(username: String, password: String): Response<AuthSuccessResponse> {
-        return api.signup(Request(username, password))
+        return authApi.signup(Request(username, password))
     }
 
     suspend fun login(username: String, password: String): Response<AuthSuccessResponse> {
-        return api.login(Request(username, password))
+        return authApi.login(Request(username, password))
     }
 
     suspend fun logout(): Result<Unit> {
@@ -42,19 +43,6 @@ object UsuarioRepository {
         } catch (e: Exception) {
             Result.failure(e)
         }
-    }
-
-    suspend fun refreshToken(): Result<RefreshResponse> {
-        val refresh = TokenDataStoreProvider.get().getRefreshToken()
-            ?: throw Exception("No refresh token available")
-        return try {
-            val response = api.refreshToken(RefreshRequest(refresh))
-            Result.success(response)
-        } catch (e: HttpException) {
-            Log.d("UsuarioRepository", "Error al refrescar token: ${e.printStackTrace()}")
-            Result.failure(e)
-        }
-
     }
 
     suspend fun getUserProfile(): UserInfoResponse {

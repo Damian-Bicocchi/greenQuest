@@ -8,19 +8,26 @@ class AuthInterceptor(
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = runBlocking {
+        val originalRequest = chain.request()
+        val accessToken = runBlocking {
             tokenDataStore.getAccessToken()
         }
+        return if (accessToken != null) {
+            val requestBuilder =
+                originalRequest.newBuilder().header("Authorization", "Bearer $accessToken")
 
-        val request = if (!token.isNullOrEmpty()) {
-            chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer $token")
-                .build()
+            // Por si fuera el caso de que haya más Headers (No pasa).
+            originalRequest.headers.forEach { (name, value) ->
+                if (name != "Authorization") {
+                    requestBuilder.header(name, value)
+                }
+            }
+
+            chain.proceed(requestBuilder.build())
         } else {
-            chain.request()
+            // Si no hay token, proceder sin él
+            chain.proceed(originalRequest)
         }
-
-        return chain.proceed(request)
     }
 }
 

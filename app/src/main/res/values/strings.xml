@@ -85,4 +85,10 @@
     <string name="button_continuar">Continuar</string>
     <string name="rankingGeneralButton">General</string>
     <string name="rankingCategorizedButton">Por Tipo</string>
+    <string name="categoryCarton">Carton</string>
+    <string name="categoryPlastico">Plástico</string>
+    <string name="categoryVidrio">Vidrio</string>
+    <string name="categoryMetal">Metal</string>
+    <string name="categoryPapel">Papel</string>
+    <string name="category_select_hint">Elige un tipo...</string>
 </resources>
