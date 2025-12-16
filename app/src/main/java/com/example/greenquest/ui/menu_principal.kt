@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
-import com.example.greenquest.fragments.AmigosFragment
+import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.fragments.TopAmigosFragment
@@ -21,7 +21,7 @@ class menu_principal : AppCompatActivity() {
 
     private val categorizarFragment = CategorizarFragment()
 
-    private val amigosFragment = AmigosFragment()
+    private val miPefilFragment = MiPerfilFragment()
 
     private lateinit var binding: ActivityToolbarBinding
 
@@ -43,7 +43,7 @@ class menu_principal : AppCompatActivity() {
                 true
             }
 
-            R.id.topAmigosFragment -> {
+            R.id.topGlobalFragment -> {
                 loadFragment(TopAmigosFragment)
                 true
             }
@@ -57,8 +57,8 @@ class menu_principal : AppCompatActivity() {
                 loadFragment(categorizarFragment)
                 true
             }
-            R.id.amigosFragment -> {
-                loadFragment(amigosFragment)
+            R.id.miPefilFragment -> {
+                loadFragment(miPefilFragment)
                 true
             }
 

@@ -91,4 +91,6 @@
     <string name="categoryMetal">Metal</string>
     <string name="categoryPapel">Papel</string>
     <string name="category_select_hint">Elige un tipo...</string>
+    <string name="cerrar_sesion_button">Cerrar sesión</string>
+    <string name="mi_pefil">Mi perfil</string>
 </resources>
