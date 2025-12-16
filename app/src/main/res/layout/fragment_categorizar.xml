@@ -17,6 +17,6 @@
         android:layout_marginTop="34dp"
         android:textColor="@color/texto_normal"
         android:textSize="35sp"
-        android:text="Fragmento Categorizar" />
+        android:text="Fragmento Categorizar (En construcción)" />
 
 </FrameLayout>

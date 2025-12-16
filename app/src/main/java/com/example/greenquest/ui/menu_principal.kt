@@ -43,7 +43,7 @@ class menu_principal : AppCompatActivity() {
                 true
             }
 
-            R.id.topGlobalFragment -> {
+            R.id.topAmigosFragment -> {
                 loadFragment(TopAmigosFragment)
                 true
             }
