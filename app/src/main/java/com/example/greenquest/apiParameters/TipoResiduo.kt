@@ -1,23 +1,25 @@
 package com.example.greenquest.apiParameters
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-enum class TipoResiduo(val value: String) {
-    @SerializedName("Carton")
-    CARTON("Carton"),
+@Serializable
+enum class TipoResiduo {
+    @SerialName("Carton")
+    CARTON,
 
-    @SerializedName("Plastico")
-    PLASTICO("Plastico"),
+    @SerialName("Plastico")
+    PLASTICO,
 
-    @SerializedName("Vidrio")
-    VIDRIO("Vidrio"),
+    @SerialName("Vidrio")
+    VIDRIO,
 
-    @SerializedName("Metal")
-    METAL("Metal"),
+    @SerialName("Metal")
+    METAL,
 
-    @SerializedName("Papel")
-    PAPEL("Papel"),
+    @SerialName("Papel")
+    PAPEL,
 
-    @SerializedName("Basura")
-    BASURA("Basura") // Categoría válida, pero no da puntos.
+    @SerialName("Basura")
+    BASURA
 }

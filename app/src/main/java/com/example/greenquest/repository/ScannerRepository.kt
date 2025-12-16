@@ -1,5 +1,6 @@
 package com.example.greenquest.repository
 
+import android.util.Log
 import com.example.greenquest.QrPayloadResiduo
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.apiParameters.TipoResiduo
@@ -19,7 +20,8 @@ object ScannerRepository {
             productInfo = jsonString?.let {
                 Json.decodeFromString(it)
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.e("greenquest", e.toString())
             productInfo = QrPayloadResiduo(
                 "", -1, TipoResiduo.BASURA
             )
@@ -54,8 +56,9 @@ object ScannerRepository {
                     val json = JSONObject(errorBody ?: "")
                     json.optString("error", "Error desconocido")
                 } catch (e: Exception) {
-                    "Error desconocido"
+                    e.toString()
                 }
+                Log.e("greenquest", errorMessage)
 
                 ReclamarResiduoGenericResponse("", errorMessage)
             }

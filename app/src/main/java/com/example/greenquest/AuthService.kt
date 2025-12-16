@@ -9,12 +9,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("login/")
+    @POST("/api/login/")
     suspend fun login(@Body body: Request): Response<AuthSuccessResponse>
 
-    @POST("signup/")
+    @POST("/api/signup/")
     suspend fun signup(@Body body: Request): Response<AuthSuccessResponse>
 
-    @POST("token/refresh/")
+    @POST("/api/token/refresh/")
     suspend fun refreshToken(@Body body: RefreshRequest): Response<RefreshResponse>
 }
