@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenQuest">
+
         <activity
             android:name=".LauncherActivity"
             android:exported="true">
@@ -30,6 +31,7 @@
         <activity
             android:name=".ui.restablecer_contrasenia"
             android:exported="false" />
+
         <activity
             android:name=".ui.recuperar_contrasenia"
             android:exported="false" />
