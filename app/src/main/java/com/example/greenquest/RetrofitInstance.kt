@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
-    private val builder = Retrofit.Builder().baseUrl(Constants.BASEURLLOCAL)
+    private val builder = Retrofit.Builder().baseUrl(Constants.BASEURLEMULADOR)
         .addConverterFactory(GsonConverterFactory.create())
 
     val authApi: AuthService = builder.build().create(AuthService::class.java)
