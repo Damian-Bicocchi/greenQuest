@@ -21,7 +21,7 @@ class RegistroViewModel : ViewModel() {
         }
 
         if (!ChequeosUsuario.esValidoUsername(username)) {
-            emit("username inválido, debe tener entre 3 y 20 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos")
+            emit("Nombre de usuario inválido, debe tener entre 3 y 20 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos")
             return@liveData
         }
 
@@ -30,7 +30,7 @@ class RegistroViewModel : ViewModel() {
             return@liveData
         }
         if (!ChequeosUsuario.esValidoConfirmarContraseña(contraseña, confirm)) {
-            emit("Contraseña inválida, debe coincidir en ambos campos y tener al menos 8 caracteres")
+            emit("Las contraseñas no coinciden")
             return@liveData
         }
 

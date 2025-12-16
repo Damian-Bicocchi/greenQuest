@@ -8,14 +8,11 @@ import kotlinx.coroutines.launch
 
 class MiPerfilViewModel: ViewModel() {
 
-    fun cerrarSesion() {
-        viewModelScope.launch{
-            val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
-            if (usuarioLocal != null) {
-                UsuarioRepository.eliminarUsuarioLocal(usuarioLocal)
-            }
-            UsuarioRepository.logout()
-
+    suspend fun cerrarSesion(): Result<Unit> {
+        val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
+        if (usuarioLocal != null) {
+            UsuarioRepository.eliminarUsuarioLocal(usuarioLocal)
         }
+        return UsuarioRepository.logout()
     }
 }

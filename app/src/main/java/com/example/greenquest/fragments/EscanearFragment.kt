@@ -153,12 +153,23 @@ class EscanearFragment : Fragment() {
             // Deteniene todos los usos de la camara, para evitar mayor uso de recursos
             cameraProvider?.unbindAll()
 
-            cameraProvider?.bindToLifecycle(
-                viewLifecycleOwner,
-                CameraSelector.DEFAULT_BACK_CAMERA
-                , preview,
-                imageAnalizer
-            )
+            val camaraTrasera = CameraSelector.DEFAULT_BACK_CAMERA
+            if (cameraProvider?.hasCamera(camaraTrasera) == true){
+                cameraProvider?.bindToLifecycle(
+                    viewLifecycleOwner,
+                    CameraSelector.DEFAULT_BACK_CAMERA
+                    , preview,
+                    imageAnalizer
+                )
+            } else {
+                cameraProvider?.bindToLifecycle(
+                    viewLifecycleOwner,
+                    CameraSelector.DEFAULT_FRONT_CAMERA
+                    , preview,
+                    imageAnalizer
+                )
+            }
+
 
         }, ContextCompat.getMainExecutor(requireContext()))
     }
