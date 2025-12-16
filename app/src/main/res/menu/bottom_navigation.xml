@@ -21,9 +21,9 @@
         android:icon="@drawable/trash_outline"
         android:title="Categorizar" />
     <item
-        android:id="@+id/amigosFragment"
+        android:id="@+id/miPefilFragment"
         android:icon="@drawable/people_outline"
-        android:title="Amigos"
+        android:title="@string/mi_pefil"
 
         />
 </menu>
