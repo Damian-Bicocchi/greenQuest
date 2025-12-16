@@ -12,7 +12,7 @@ enum class TipoResiduo(val nombre: String) {
     BASURA("Basura"),
 
     @SerialName("Plastico")
-    PLASTICO("Plástico"),
+    PLASTICO("Plastico"),
 
     @SerialName("Metal")
     METAL("Metal"),
