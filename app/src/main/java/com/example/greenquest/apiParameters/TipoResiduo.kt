@@ -1,7 +1,9 @@
 package com.example.greenquest.apiParameters
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.SerialDescriptor
 
 @Serializable
 enum class TipoResiduo {
@@ -21,5 +23,8 @@ enum class TipoResiduo {
     PAPEL,
 
     @SerialName("Basura")
-    BASURA
+    BASURA;
+
+    @OptIn(ExperimentalSerializationApi::class)
+    override fun toString() = serializer().descriptor.getElementName(ordinal)
 }

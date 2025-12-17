@@ -14,16 +14,14 @@ import com.example.greenquest.fragments.TopGlobal
 import com.google.android.material.navigation.NavigationBarView
 
 class menu_principal : AppCompatActivity() {
-
-    private val topGlobalFragment = TopGlobal()
-    private val TopAmigosFragment = TopAmigosFragment()
-    private val escanearFragment = EscanearFragment()
-
-    private val categorizarFragment = CategorizarFragment()
-
-    private val miPefilFragment = MiPerfilFragment()
-
     private lateinit var binding: ActivityToolbarBinding
+    private var topGlobalFragment: TopGlobal? = null
+    private var topAmigosFragment: TopAmigosFragment? = null
+    private var escanearFragment: EscanearFragment? = null
+    private var categorizarFragment: CategorizarFragment? = null
+    private var miPefilFragment : MiPerfilFragment? = null
+
+    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,43 +31,70 @@ class menu_principal : AppCompatActivity() {
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
         navigation.setOnItemSelectedListener { item -> onNavigationItemSelectedListener(item) }
-        loadFragment(topGlobalFragment)
+
+        if (savedInstanceState == null) {
+            topGlobalFragment = TopGlobal()
+            showFragment(topGlobalFragment!!)
+            navigation.selectedItemId = R.id.topGlobalFragment
+        }
     }
 
     private val onNavigationItemSelectedListener: (MenuItem) -> Boolean = { item ->
         when (item.itemId) {
             R.id.topGlobalFragment -> {
-                loadFragment(topGlobalFragment)
+                if (topGlobalFragment == null) {
+                    topGlobalFragment = TopGlobal()
+                }
+                showFragment(topGlobalFragment!!)
                 true
             }
-
             R.id.topAmigosFragment -> {
-                loadFragment(TopAmigosFragment)
+                if (topAmigosFragment == null) {
+                    topAmigosFragment = TopAmigosFragment()
+                }
+                showFragment(topAmigosFragment!!)
                 true
             }
-
             R.id.escanearFragment -> {
-                loadFragment(escanearFragment)
+                if (escanearFragment == null) {
+                    escanearFragment = EscanearFragment()
+                }
+                showFragment(escanearFragment!!)
                 true
             }
-
-            R.id.categorizarFragment-> {
-                loadFragment(categorizarFragment)
+            R.id.categorizarFragment -> {
+                if (categorizarFragment == null) {
+                    categorizarFragment = CategorizarFragment()
+                }
+                showFragment(categorizarFragment!!)
                 true
             }
             R.id.miPefilFragment -> {
-                loadFragment(miPefilFragment)
+                if (miPefilFragment == null) {
+                    miPefilFragment = MiPerfilFragment()
+                }
+                showFragment(miPefilFragment!!)
                 true
             }
-
             else -> false
         }
     }
 
+    private fun showFragment(fragment: Fragment) {
+        if (fragment == currentFragment) return
 
-    private fun loadFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_container, fragment)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            currentFragment?.let { hide(it) }
+
+            if (fragment.isAdded) {
+                show(fragment)
+            } else {
+                add(R.id.frame_container, fragment)
+            }
+
+            commit()
+        }
+
+        currentFragment = fragment
     }
 }
