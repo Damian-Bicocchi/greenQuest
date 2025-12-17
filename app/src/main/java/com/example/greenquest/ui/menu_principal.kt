@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
-import com.example.greenquest.fragments.AmigosFragment
+import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.fragments.TopAmigosFragment
@@ -19,7 +19,7 @@ class menu_principal : AppCompatActivity() {
     private var topAmigosFragment: TopAmigosFragment? = null
     private var escanearFragment: EscanearFragment? = null
     private var categorizarFragment: CategorizarFragment? = null
-    private var amigosFragment: AmigosFragment? = null
+    private var miPefilFragment : MiPerfilFragment? = null
 
     private var currentFragment: Fragment? = null
 
@@ -69,11 +69,11 @@ class menu_principal : AppCompatActivity() {
                 showFragment(categorizarFragment!!)
                 true
             }
-            R.id.amigosFragment -> {
-                if (amigosFragment == null) {
-                    amigosFragment = AmigosFragment()
+            R.id.miPefilFragment -> {
+                if (miPefilFragment == null) {
+                    miPefilFragment = MiPerfilFragment()
                 }
-                showFragment(amigosFragment!!)
+                showFragment(miPefilFragment!!)
                 true
             }
             else -> false
@@ -97,5 +97,4 @@ class menu_principal : AppCompatActivity() {
 
         currentFragment = fragment
     }
-
 }

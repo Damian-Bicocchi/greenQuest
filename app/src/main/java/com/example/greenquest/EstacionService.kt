@@ -1,15 +1,11 @@
 package com.example.greenquest
 
-import com.example.greenquest.apiParameters.Request
-import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.PuntosUsuario
 import com.example.greenquest.apiParameters.RankingEntry
-import com.example.greenquest.apiParameters.RefreshRequest
-import com.example.greenquest.apiParameters.RefreshResponse
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import retrofit2.Response
@@ -34,7 +30,7 @@ interface EstacionService {
     @GET("ranking/semanal/")
     suspend fun rankingWeekly(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
 
-    @GET("api/ranking/posicion/")
+    @GET("ranking/posicion/")
     suspend fun rankingPosition(
         @Query("id_user") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
     ): PosicionRanking

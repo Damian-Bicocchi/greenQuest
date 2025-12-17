@@ -7,8 +7,6 @@ import androidx.lifecycle.liveData
 import com.example.greenquest.apiParameters.ApiError
 import com.example.greenquest.repository.UsuarioRepository
 import com.google.gson.Gson
-import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 
 
 class RegistroViewModel : ViewModel() {
@@ -21,16 +19,19 @@ class RegistroViewModel : ViewModel() {
         }
 
         if (!ChequeosUsuario.esValidoUsername(username)) {
-            emit("username inválido, debe tener entre 3 y 20 caracteres y solo puede contener letras, números, puntos, guiones y guiones bajos")
+            emit("El nombre de usuario solo puede contener letras, números, puntos, guiones y guiones bajos")
             return@liveData
         }
-
+        if(!ChequeosUsuario.esValidoCantidadCaracteresUsername(username)){
+            emit("El nombre de usuario debe tener entre 3 y 20 caracteres")
+            return@liveData
+        }
         if (!ChequeosUsuario.esValidoFormatoContraseña(contraseña)) {
-            emit("Contraseña inválida, debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número")
+            emit("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número")
             return@liveData
         }
         if (!ChequeosUsuario.esValidoConfirmarContraseña(contraseña, confirm)) {
-            emit("Contraseña inválida, debe coincidir en ambos campos y tener al menos 8 caracteres")
+            emit("Las contraseñas no coinciden")
             return@liveData
         }
 
