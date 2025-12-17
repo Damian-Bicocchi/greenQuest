@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Cambiado el parent a Theme.AppCompat para ser compatible con AppCompatActivity -->
     <style name="Theme.GreenQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:textColor">@color/texto_normal</item>
         <item name="android:textColorHint">@color/texto_normal</item>
         <item name="materialButtonStyle">@style/Widget.GreenQuest.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.GreenQuest.Button.Outlined</item>
+        <item name="popupMenuStyle">@style/Widget.GreenQuest.PopupMenu</item>
     </style>
 
-    <style name="Theme.GreenQuest.Selector" parent="Widget.Material3.AutoCompleteTextView.FilledBox">
+    <style name="Widget.GreenQuest.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:popupBackground">@drawable/selector_background</item>
     </style>
 
     <style name="Theme.GreenQuest.ButtonGroupToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

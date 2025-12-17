@@ -6,6 +6,7 @@ import androidx.activity.*
 import androidx.lifecycle.*
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.ui.iniciar_sesion
+import com.example.greenquest.ui.menu_principal
 import kotlinx.coroutines.*
 
 class LauncherActivity: ComponentActivity() {
@@ -22,7 +23,7 @@ class LauncherActivity: ComponentActivity() {
                 startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
             } else {
                 try{
-                    startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
+                    startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 } catch (_: Exception){
                     usuarioLocal.let { UsuarioRepository.eliminarUsuarioLocal(it) }
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
