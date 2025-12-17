@@ -13,8 +13,9 @@ import kotlinx.coroutines.launch
 class TopGlobalViewModel : ViewModel() {
     private val _ranking = MutableStateFlow<List<RankingEntry>>(emptyList())
     val ranking: StateFlow<List<RankingEntry>> = _ranking.asStateFlow()
+    var tipoResiduo: TipoResiduo? = null
 
-    fun obtenerRanking(tipoResiduo: TipoResiduo? = null) {
+    fun obtenerRanking() {
         viewModelScope.launch {
             val ranking = UsuarioRepository.rankingWeekly(tipoResiduo)
             _ranking.value = ranking

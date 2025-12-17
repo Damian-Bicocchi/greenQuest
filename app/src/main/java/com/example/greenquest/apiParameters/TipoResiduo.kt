@@ -19,5 +19,9 @@ enum class TipoResiduo(val value: String) {
     PAPEL("Papel"),
 
     @SerializedName("Basura")
-    BASURA("Basura") // Categoría válida, pero no da puntos.
+    BASURA("Basura"); // Categoría válida, pero no da puntos
+
+    override fun toString(): String {
+        return value
+    }
 }

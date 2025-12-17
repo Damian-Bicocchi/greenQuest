@@ -90,5 +90,5 @@
     <string name="categoryVidrio">Vidrio</string>
     <string name="categoryMetal">Metal</string>
     <string name="categoryPapel">Papel</string>
-    <string name="category_select_hint">Elige un tipo...</string>
+    <string name="category_select_hint">Tipo</string>
 </resources>

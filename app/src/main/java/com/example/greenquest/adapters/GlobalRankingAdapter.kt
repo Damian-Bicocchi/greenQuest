@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.RankingEntry
+import java.util.Locale.getDefault
 
-class GlobalRankingAdapter(private var dataset: List<RankingEntry>) : RecyclerView.Adapter<GlobalRankingAdapter.ViewHolder>() {
+class GlobalRankingAdapter(private var dataset: List<RankingEntry>) :
+    RecyclerView.Adapter<GlobalRankingAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val cardView: CardView = view.findViewById(R.id.cardItem)
         val placeholderView: TextView = view.findViewById(R.id.placeholderImage)
         val usernameView: TextView = view.findViewById(R.id.nombre_usuario)
         val rankingView: TextView = view.findViewById(R.id.rankingUsuario)
@@ -31,10 +35,20 @@ class GlobalRankingAdapter(private var dataset: List<RankingEntry>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.placeholderView.text = dataset[position].username.subSequence(0,1)
+        holder.cardView.setBackgroundResource(
+            when (position) {
+                0 -> R.color.fila_usuario_oro
+                1 -> R.color.fila_usuario_plata
+                2 -> R.color.fila_usuario_bronce
+                else -> R.color.fila_usuario_normal
+            }
+        )
+        holder.placeholderView.text = dataset[position].username.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString()
+        }.subSequence(0, 1)
         holder.usernameView.text = dataset[position].username
         holder.rankingView.text = "Ranking #${position + 1}"
-        holder.scoreView.text = "${dataset[position].totalPuntos}\npuntos"
+        holder.scoreView.text = "${dataset[position].total_puntos}\npuntos"
     }
 
     override fun getItemCount() = dataset.size
