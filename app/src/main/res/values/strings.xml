@@ -93,4 +93,7 @@
     <string name="category_select_hint">Tipo</string>
     <string name="cerrar_sesion_button">Cerrar sesión</string>
     <string name="mi_pefil">Mi perfil</string>
+    <string name="logros_conseguidos">Logros conseguidos</string>
+    <string name="logros_faltantes">Logros faltantes</string>
+    <string name="marcos_perfil">Marcos de perfil</string>
 </resources>

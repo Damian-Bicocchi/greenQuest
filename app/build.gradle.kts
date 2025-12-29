@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.cardview)
     testImplementation(libs.junit.jupiter)
     implementation(libs.androidx.databinding.runtime)
     val room_version = "2.8.4"
