@@ -40,7 +40,6 @@ class EscanearFragment : Fragment() {
 
     private var qrAlreadyDetected = false
     private lateinit var previewView: PreviewView
-
     private lateinit var qrScanner: BarcodeScanner
     private lateinit var escanearModel: EscanearModel
 
@@ -57,14 +56,14 @@ class EscanearFragment : Fragment() {
             if (granted) {
                 startCamera()
             } else {
-                Toast.makeText(requireContext(), "Permiso de cámara requerido", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    "Permiso de cámara requerido", Toast.LENGTH_LONG).show()
             }
         }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (ContextCompat.checkSelfPermission(
             requireContext(),
                 Manifest.permission.CAMERA
@@ -72,8 +71,6 @@ class EscanearFragment : Fragment() {
         ){
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
-
-
         cameraExecutor = Executors.newSingleThreadExecutor()
         qrScanner = BarcodeScanning.getClient()
 
@@ -99,10 +96,7 @@ class EscanearFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         previewView = view.findViewById(R.id.qr_camara)
-
-
         observeViewModel()
     }
 
@@ -152,7 +146,6 @@ class EscanearFragment : Fragment() {
 
             // Deteniene todos los usos de la camara, para evitar mayor uso de recursos
             cameraProvider?.unbindAll()
-
             val camaraTrasera = CameraSelector.DEFAULT_BACK_CAMERA
             if (cameraProvider?.hasCamera(camaraTrasera) == true){
                 cameraProvider?.bindToLifecycle(
@@ -169,38 +162,30 @@ class EscanearFragment : Fragment() {
                     imageAnalizer
                 )
             }
-
-
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
     @OptIn(ExperimentalGetImage::class)
     private fun processImageProxy(imageProxy: ImageProxy) {
-
         if (isProcessing) {
             imageProxy.close()
             return
         }
-
         val mediaImage = imageProxy.image
         if (mediaImage == null) {
             imageProxy.close()
             return
         }
-
         isProcessing = true
-
         val image = InputImage.fromMediaImage(
             mediaImage,
             imageProxy.imageInfo.rotationDegrees
         )
-
         escanearModel.processImage(image)
             .addOnCompleteListener {
                 isProcessing = false
                 imageProxy.close()
             }
-
     }
 
     private fun observeViewModel() {
@@ -210,16 +195,12 @@ class EscanearFragment : Fragment() {
                     // return@observe hace que se salga del lambda pero NO de observeViewModel
                     if (qrAlreadyDetected) return@observe
                     qrAlreadyDetected = true
-
                     cameraProvider?.unbindAll()
-
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipo_residuo,
                         puntos = state.payload.puntaje
                     )
-
                     val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
-
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment)
                         .addToBackStack(null)
@@ -229,14 +210,12 @@ class EscanearFragment : Fragment() {
                 is ScanState.HappyError -> {
                     showToastError("¡Oh no! " + state.message)
                 }
-
                 is ScanState.Error -> {
                     showToastError("❌\u200B " + state.message)
                 }
                 is ScanState.QrException -> {
                     showToastError("ERROR FATAL " + state.message)
                 }
-
                 ScanState.Idle -> {
                     Unit
                 }

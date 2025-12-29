@@ -66,6 +66,7 @@ object UsuarioRepository {
         return rank?.posicion ?: Int.MIN_VALUE
     }
 
+    @Deprecated("No se usa en ningún momento en greenQuest")
     suspend fun score(tipoResiduo: TipoResiduo? = null): Int {
         return api.score().puntos
     }
@@ -83,6 +84,17 @@ object UsuarioRepository {
     suspend fun eliminarUsuarioLocal(user: User) =
         withContext(Dispatchers.IO) {
             userDao.delete(user)
+    }
+
+    suspend fun getPuntaje(): Int =
+        withContext(Dispatchers.IO){
+            userDao.getFirstUser()!!.puntos
+    }
+
+    suspend fun addPuntaje(addPuntos : Int){
+        withContext(Dispatchers.IO){
+
+        }
     }
 }
 
