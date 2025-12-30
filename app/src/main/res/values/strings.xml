@@ -96,4 +96,5 @@
     <string name="logros_conseguidos">Logros conseguidos</string>
     <string name="logros_faltantes">Logros faltantes</string>
     <string name="marcos_perfil">Marcos de perfil</string>
+    <string name="descripcion_hint">Usuario sin descripcion</string>
 </resources>

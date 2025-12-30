@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.R
+import com.example.greenquest.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.ui.iniciar_sesion
@@ -26,6 +27,7 @@ class MiPerfilFragment : Fragment() {
     private var param2: String? = null
     private val viewModel: MiPerfilViewModel by viewModels()
 
+    private lateinit var usuario : User
     private lateinit var binding: FragmentMiPerfilBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,14 @@ class MiPerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
+        lifecycleScope.launch {
+            usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+            binding.usernameEditperfil.setText(usuario.userName.toString())
+            binding.usernameEditperfil.setEnabled(false)
+            binding.descripcionEditperfil.setEnabled(false)
+
+        }
+
         val botonCerrarSesion = binding.cerrarSesionButton
         botonCerrarSesion.setOnClickListener {
             lifecycleScope.launch {

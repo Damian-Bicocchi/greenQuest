@@ -10,27 +10,18 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:text="@string/mi_pefil"
-        android:textColor="@color/texto_normal"
-        android:textSize="35sp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
-
     <Button
         android:id="@+id/cerrarSesionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="36dp"
         android:text="@string/cerrar_sesion_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -45,42 +36,48 @@
         app:layout_constraintTop_toBottomOf="@+id/button">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/logros_conseguidos_textview"
             android:layout_width="94dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textIsSelectable="true"
             android:text="@string/logros_conseguidos"
             android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/logros_faltantes_textview"
             android:layout_width="103dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textIsSelectable="true"
             android:text="@string/logros_faltantes"
             android:textAlignment="center" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/marcos_perfil_textview"
             android:layout_width="90dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textIsSelectable="true"
             android:text="@string/marcos_perfil"
             android:textAlignment="center" />
+
     </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="373dp"
         android:layout_height="41dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/boton_configiuracion"
         android:text="Configuracion"
         android:textColor="@color/texto_oscuro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="271dp" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="374dp"
         android:layout_height="213dp"
         android:layout_marginTop="4dp"
@@ -93,31 +90,93 @@
         android:id="@+id/constraintLayout"
         android:layout_width="371dp"
         android:layout_height="217dp"
+        android:layout_marginTop="8dp"
         android:background="@color/fondo_secundario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="42dp">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username_editperfil"
+            android:layout_width="172dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeMaxTextSize="16dp"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/edittext"
+            android:hint="@string/username_hint"
+            android:inputType="text|textNoSuggestions"
+            android:textColor="@color/texto_normal"
+            android:textColorHint="@color/texto_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="Nombre de Usuario"
-            tools:layout_editor_absoluteX="234dp"
-            tools:layout_editor_absoluteY="16dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.764"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="52dp"
             android:text="Descripción de perfil"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username_editperfil" />
 
-            tools:layout_editor_absoluteX="234dp"
-            tools:layout_editor_absoluteY="99dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/descripcion_editperfil"
+            android:layout_width="172dp"
+            android:layout_height="89dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeMaxTextSize="16dp"
+            android:autoSizeMinTextSize="10dp"
+            android:background="@drawable/edittext"
+            android:hint="@string/descripcion_hint"
+            android:inputType="textMultiLine"
+            android:textAlignment="viewStart"
+            android:textColor="@color/texto_normal"
+            android:textColorHint="@color/texto_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="163dp"
+            android:layout_height="186dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.483"
+            tools:src="@tools:sample/avatars" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Mi Perfil"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
