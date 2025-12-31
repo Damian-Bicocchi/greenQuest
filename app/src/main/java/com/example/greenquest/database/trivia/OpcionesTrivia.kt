@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "opciones")
 data class OpcionesTrivia(
     @PrimaryKey(autoGenerate = true) val opcionId: Long,
-    @ColumnInfo(name = "option_text") val optionText: String
+    val preguntaCorrespondienteId: Long,
+    val esCorrecta: Boolean
 )
