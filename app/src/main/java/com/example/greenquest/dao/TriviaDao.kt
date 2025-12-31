@@ -25,7 +25,7 @@ interface TriviaDao {
 
     @Transaction
     @Query("SELECT * FROM preguntas WHERE preguntaId = :id")
-    suspend fun obtenerPreguntaConOpcionesPorId(id: Int): PreguntaConOpciones?
+    suspend fun obtenerPreguntaConOpcionesPorId(id: Long): PreguntaConOpciones?
 
     @Update
     suspend fun actualizarPregunta(pregunta: PreguntaTrivia)

@@ -12,13 +12,20 @@ object TriviaRepository {
         return triviaDao.obtenerPreguntaNoRespondidaConOpciones()
     }
 
-    suspend fun marcarComoRespondida(preguntaId: Int) {
+    suspend fun marcarComoRespondida(preguntaId: Long) {
         var preguntaParaActualizar = triviaDao.obtenerPreguntaConOpcionesPorId(preguntaId)
         preguntaParaActualizar?.pregunta?.let {
             it?.answeredQuestion = true
             triviaDao.actualizarPregunta(it)
         }
 
+    }
+
+    suspend fun chequearRespuesta(idPregunta: Long, idRespuesta: Long) : Boolean{
+        val pregunta = triviaDao.obtenerPreguntaConOpcionesPorId(idPregunta) ?: return false
+        val opcion = pregunta.opciones.stream().filter { (opcionId, _, esCorrecta) -> (opcionId == idRespuesta) && esCorrecta}
+
+        return (opcion != null)
     }
 
 

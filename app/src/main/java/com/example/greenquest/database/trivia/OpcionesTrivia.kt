@@ -8,5 +8,6 @@ import androidx.room.PrimaryKey
 data class OpcionesTrivia(
     @PrimaryKey(autoGenerate = true) val opcionId: Long,
     val preguntaCorrespondienteId: Long,
-    val esCorrecta: Boolean
+    val esCorrecta: Boolean,
+    val textoOpcion: String,
 )
