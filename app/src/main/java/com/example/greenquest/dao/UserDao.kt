@@ -1,6 +1,6 @@
 package com.example.greenquest.dao
 import androidx.room.*
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 
 @Dao
 interface UserDao {

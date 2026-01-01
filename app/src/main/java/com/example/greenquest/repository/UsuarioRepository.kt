@@ -7,7 +7,7 @@ import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
 import retrofit2.Response
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.RankingEntry
 import com.example.greenquest.apiParameters.RefreshRequest

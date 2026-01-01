@@ -23,7 +23,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
-import com.example.greenquest.database.DatosEscaneo
+import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.viewmodel.ScanState
 import com.google.mlkit.vision.barcode.BarcodeScanner

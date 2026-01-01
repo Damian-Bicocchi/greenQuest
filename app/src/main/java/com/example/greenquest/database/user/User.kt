@@ -1,5 +1,9 @@
-package com.example.greenquest
-import androidx.room.*
+package com.example.greenquest.database.user
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 @Entity
 data class User(
     @PrimaryKey val uid: Int,
