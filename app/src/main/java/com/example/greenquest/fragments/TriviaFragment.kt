@@ -28,7 +28,7 @@ class TriviaFragment : Fragment() {
     }
 
     private fun showLoading(bool: Boolean) {
-        Log.d("greenQuest","Hola")
+        Log.d("triviaLogging","Pregunta lista para ser mostrada")
     }
 
     private fun showGameFinished() {
@@ -39,10 +39,11 @@ class TriviaFragment : Fragment() {
     }
 
     private fun mostrarPregunta(preguntaConOpciones: PreguntaConOpciones){
+        Log.e("triviaLogging", "Llamaron a mostrar pregunta con ${preguntaConOpciones.pregunta.questionText}")
         binding.triviaPreguntaTexto.text = preguntaConOpciones.pregunta.questionText
 
         binding.containerOpciones.removeAllViews()
-        preguntaConOpciones.opciones.forEachIndexed { index, opcion ->
+        preguntaConOpciones.opciones?.forEachIndexed { index, opcion ->
             val optionView = LayoutInflater.from(requireContext())
                 .inflate(R.layout.opcion_trivia, binding.containerOpciones, false)
 
@@ -96,7 +97,7 @@ class TriviaFragment : Fragment() {
         triviaViewModel.gameState.observe(this) { state ->
             when (state) {
                 EstadoTrivia.CARGANDO -> showLoading(true)
-                EstadoTrivia.MOSTRANDO -> showLoading(false)
+                EstadoTrivia.MOSTRANDO -> {showLoading(false)}
                 EstadoTrivia.FINALIZADO -> showGameFinished()
             }
         }

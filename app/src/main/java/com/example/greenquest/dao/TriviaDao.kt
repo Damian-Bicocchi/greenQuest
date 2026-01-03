@@ -28,7 +28,7 @@ interface TriviaDao {
     suspend fun obtenerPreguntaConOpcionesPorId(id: Long): PreguntaConOpciones?
 
     @Update
-    suspend fun actualizarPregunta(pregunta: PreguntaTrivia)
+    suspend fun actualizarPregunta(pregunta: PreguntaTrivia) : Int
 
     @Insert
     suspend fun insertarPregunta(pregunta: PreguntaTrivia): Long

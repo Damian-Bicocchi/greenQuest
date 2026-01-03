@@ -11,5 +11,5 @@ data class PreguntaConOpciones(
         parentColumn = "preguntaId",
         entityColumn = "preguntaCorrespondienteId"
     )
-    val opciones: List<OpcionesTrivia>
+    val opciones: List<OpcionesTrivia>?
 )

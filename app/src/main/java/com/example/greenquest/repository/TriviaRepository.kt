@@ -10,6 +10,8 @@ import com.example.greenquest.database.trivia.PreguntaTrivia
 import com.example.greenquest.database.trivia.TriviaDataLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import androidx.core.content.edit
+import com.example.greenquest.Prefs
 
 object TriviaRepository {
     private val triviaDao by lazy {
@@ -20,43 +22,49 @@ object TriviaRepository {
 
     private val triviaDataLoader = TriviaDataLoader()
 
-    private lateinit var context: Context
-
     suspend fun inicializarData(context: Context){
-        this.context = context
+        sharedPreferences = context.getSharedPreferences(Prefs(context = context).SHARED_NAME, 0)
+
         withContext(Dispatchers.IO){
-            val versionTriviaApp = sharedPreferences.getInt(DATA_VERSION_KEY, 0)
+            val versionTriviaApp = Prefs(context = context).getTriviaVersion()
             val versionTriviaJson = triviaDataLoader.getJsonVersion(context)
 
             if (versionTriviaApp < versionTriviaJson){
-                cargarDataDeJson()
-
-                sharedPreferences.edit().putInt(DATA_VERSION_KEY, versionTriviaJson).apply()
+                cargarDataDeJson(context = context)
+                Prefs(context = context).saveTriviaVersion(versionTriviaJson)
 
             }
         }
     }
 
-    suspend fun cargarDataDeJson() {
+    suspend fun cargarDataDeJson(context : Context) {
         withContext(Dispatchers.IO) {
             try {
                 val triviaMetadata = triviaDataLoader.loadTriviaDataFromJson(context = context)
 
-                // ACA deberia haber logica para cuando se actualicen las preguntas y ya las haya respondido
-                // 1. Se debe cambiar las clases y la bd para que la pregunta en el json tenga su id, asi poder chequear y no pisar
-                //      el booleano de ya respondido
-                // 2. Chequear el texto de la pregunta antes de actualizarla, pero no funcionaria si cambio el texto en el nuevo json
-
-
                 triviaMetadata.questions.forEach { preguntaJson ->
-
-                    val preguntaId = triviaDao.insertarPregunta(
-                        PreguntaTrivia(
-                            preguntaId = 0,
-                            questionText = preguntaJson.questionText,
-                            answeredQuestion = false
+                    val preguntaBD = triviaDao.obtenerPreguntaConOpcionesPorId(preguntaJson.questionId)
+                    var preguntaId : Long
+                    if (preguntaBD == null){
+                        // No hay pregunta por lo que agregala
+                        preguntaId = triviaDao.insertarPregunta(
+                            PreguntaTrivia(
+                                preguntaId = preguntaJson.questionId,
+                                questionText = preguntaJson.questionText,
+                                answeredQuestion = false
+                            )
                         )
-                    )
+                    } else {
+                        preguntaId = preguntaBD.pregunta.preguntaId
+                        triviaDao.actualizarPregunta(
+                            PreguntaTrivia(
+                                preguntaId = preguntaJson.questionId,
+                                questionText = preguntaJson.questionText,
+                                answeredQuestion = preguntaBD.pregunta.answeredQuestion
+                            )
+                        )
+                        // Si la pregunta ya fue respondida, no le cambies el estado ^
+                    }
 
                     val opciones = preguntaJson.options.mapIndexed { _, opcionJson ->
                         OpcionesTrivia(
@@ -66,29 +74,23 @@ object TriviaRepository {
                             esCorrecta = opcionJson.esCorrecta,
                         )
                     }
-
                     triviaDao.insertarOpciones(opciones)
-
-
                 }
-                Log.e("greenQuest", "Preguntas cargadas")
+                Log.e("triviaLogging", "Preguntas cargadas")
             } catch (e: Exception) {
-                Log.e("greenQuest", "Error cargando datos desde JSON ${e}",)
-
+                Log.e("triviaLogging", "Error cargando datos desde JSON ${e}")
             }
         }
     }
-
-
 
     suspend fun obtenerPreguntaAleatoria(): PreguntaConOpciones? {
         return triviaDao.obtenerPreguntaNoRespondidaConOpciones()
     }
 
     suspend fun marcarComoRespondida(preguntaId: Long) {
-        var preguntaParaActualizar = triviaDao.obtenerPreguntaConOpcionesPorId(preguntaId)
+        val preguntaParaActualizar = triviaDao.obtenerPreguntaConOpcionesPorId(preguntaId)
         preguntaParaActualizar?.pregunta?.let {
-            it?.answeredQuestion = true
+            it.answeredQuestion = true
             triviaDao.actualizarPregunta(it)
         }
 
@@ -96,7 +98,7 @@ object TriviaRepository {
 
     suspend fun chequearRespuesta(idPregunta: Long, idRespuesta: Long) : Boolean{
         val pregunta = triviaDao.obtenerPreguntaConOpcionesPorId(idPregunta) ?: return false
-        val opcion = pregunta.opciones.stream().filter { (opcionId, _, esCorrecta) -> (opcionId == idRespuesta) && esCorrecta}
+        val opcion = pregunta.opciones?.stream()?.filter { (opcionId, _, esCorrecta) -> (opcionId == idRespuesta) && esCorrecta}
 
         return (opcion != null)
     }

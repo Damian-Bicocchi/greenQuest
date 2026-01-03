@@ -14,6 +14,6 @@ class Prefs(val context: Context) {
     }
 
     fun getTriviaVersion(): Int{
-        return storage.getInt(SHARED_TRIVIA_VERSION, 1)
+        return storage.getInt(SHARED_TRIVIA_VERSION, 0)
     }
 }
