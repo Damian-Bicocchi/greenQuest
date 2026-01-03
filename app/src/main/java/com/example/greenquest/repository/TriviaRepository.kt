@@ -28,7 +28,7 @@ object TriviaRepository {
         withContext(Dispatchers.IO){
             val versionTriviaApp = Prefs(context = context).getTriviaVersion()
             val versionTriviaJson = triviaDataLoader.getJsonVersion(context)
-
+            if (versionTriviaJson == -1) return@withContext
             if (versionTriviaApp < versionTriviaJson){
                 cargarDataDeJson(context = context)
                 Prefs(context = context).saveTriviaVersion(versionTriviaJson)
@@ -66,6 +66,8 @@ object TriviaRepository {
                         // Si la pregunta ya fue respondida, no le cambies el estado ^
                     }
 
+                    Log.e("triviaLogging", "Las opciones segun el json son" + preguntaJson.options)
+
                     val opciones = preguntaJson.options.mapIndexed { _, opcionJson ->
                         OpcionesTrivia(
                             opcionId = 0,
@@ -74,6 +76,10 @@ object TriviaRepository {
                             esCorrecta = opcionJson.esCorrecta,
                         )
                     }
+                    Log.d("triviaLogging",
+                        (opciones + "dale esto se cargo en opciones linea 71").toString()
+                    )
+
                     triviaDao.insertarOpciones(opciones)
                 }
                 Log.e("triviaLogging", "Preguntas cargadas")
@@ -84,7 +90,8 @@ object TriviaRepository {
     }
 
     suspend fun obtenerPreguntaAleatoria(): PreguntaConOpciones? {
-        return triviaDao.obtenerPreguntaNoRespondidaConOpciones()
+        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta()
+        return pregunta
     }
 
     suspend fun marcarComoRespondida(preguntaId: Long) {

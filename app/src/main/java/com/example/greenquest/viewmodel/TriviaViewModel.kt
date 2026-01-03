@@ -26,11 +26,9 @@ class TriviaViewModel: ViewModel() {
             val pregunta = TriviaRepository.obtenerPreguntaAleatoria()
 
             if (pregunta != null) {
-                Log.e("triviaLogging", "La pregunta se dio. es ${pregunta.pregunta.questionText}")
                 _preguntaActual.value = pregunta
                 _gameState.value = EstadoTrivia.MOSTRANDO
             } else {
-                Log.e("triviaLogging", "NO HAY PREGUNTAS EN LA BD")
                 _gameState.value = EstadoTrivia.FINALIZADO
             }
         }

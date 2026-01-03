@@ -1,5 +1,6 @@
 package com.example.greenquest.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.R
 import com.example.greenquest.database.trivia.PreguntaConOpciones
@@ -38,30 +41,29 @@ class TriviaFragment : Fragment() {
         binding.botonResponder.visibility = View.INVISIBLE
     }
 
+    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private fun mostrarPregunta(preguntaConOpciones: PreguntaConOpciones){
-        Log.e("triviaLogging", "Llamaron a mostrar pregunta con ${preguntaConOpciones.pregunta.questionText}")
         binding.triviaPreguntaTexto.text = preguntaConOpciones.pregunta.questionText
-
         binding.containerOpciones.removeAllViews()
         preguntaConOpciones.opciones?.forEachIndexed { index, opcion ->
             val optionView = LayoutInflater.from(requireContext())
-                .inflate(R.layout.opcion_trivia, binding.containerOpciones, false)
+                .inflate(R.layout.opcion_trivia,
+                    binding.containerOpciones,
+                    false)
 
 
             val letters = mutableListOf<Char>()
-            // La comilla debe de ser simple
-            for (letra in 'A'..'Z'){
-                letters.addLast(letra)
+            for (letra in 'A'..'Z') {
+                letters.add(letra)
             }
 
-            optionView.findViewById<TextView>(R.id.tv_option_letter).text =
-                letters.getOrElse(index) { (index + 1).toString() } as CharSequence?
-
+            val letraChar: Char = letters.getOrElse(index) { '?' }
+            optionView.findViewById<TextView>(R.id.tv_option_letter).text = letraChar.toString()
 
             optionView.findViewById<TextView>(R.id.tv_option_text).text = opcion.textoOpcion
-
             // Marcar como seleccionada
             optionView.setOnClickListener {
+                Log.d("triviaLogging", "En linea 65")
                 onOptionSelected(opcion.opcionId, optionView)
             }
 
@@ -69,8 +71,14 @@ class TriviaFragment : Fragment() {
             binding.containerOpciones.addView(optionView)
         }
     }
+
     private fun onOptionSelected(opcionId: Long, optionView: View) {
         optionView.setBackgroundColor(0)
+        binding.containerOpciones.children.map {
+            opcion -> opcion.setBackgroundColor(12)
+        }
+
+        Log.d("triviaLogging", "Eligio la opcion ${opcionId}")
         selectedOptionId = opcionId
     }
 
@@ -102,10 +110,7 @@ class TriviaFragment : Fragment() {
             }
         }
 
-        var preguntaSeleccionada = triviaViewModel.loadNextQuestion()
+        triviaViewModel.loadNextQuestion()
     }
 
-
 }
-
-

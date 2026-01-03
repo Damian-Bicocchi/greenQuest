@@ -32,10 +32,10 @@ class TriviaDataLoader() {
                 val jsonString = inputStream.bufferedReader().use { it.readText() }
                 val gson = Gson()
                 val trivia = gson.fromJson(jsonString, TriviaMetadata::class.java)
-                trivia.version
+                return@withContext trivia.version
             } catch (e: Exception) {
                 Log.e("triviaLogging", "hubo error ${e} al parsear el json")
-                -1
+                return@withContext -1
             }
         }
     }
