@@ -19,6 +19,7 @@ class TriviaViewModel: ViewModel() {
     val gameState: LiveData<EstadoTrivia> = _gameState
 
 
+
     fun loadNextQuestion() {
         _gameState.value = EstadoTrivia.CARGANDO
 
@@ -32,5 +33,22 @@ class TriviaViewModel: ViewModel() {
                 _gameState.value = EstadoTrivia.FINALIZADO
             }
         }
+    }
+
+    fun chequearRespuestaCorrecta(idPregunta: Long, idRespuesta: Long){
+        viewModelScope.launch {
+
+            val correcta =  TriviaRepository.chequearRespuesta(
+                idPregunta = idPregunta, idRespuesta = idRespuesta)
+            Log.d("triviaLogging", "Estoy en chequearRespuestaCorrecta y fue ${correcta}")
+
+            if (correcta){
+                _gameState.value = EstadoTrivia.CORRECTO
+            } else {
+                _gameState.value = EstadoTrivia.INCORRECTO
+            }
+        }
+
+
     }
 }

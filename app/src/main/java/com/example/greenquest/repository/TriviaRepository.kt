@@ -18,7 +18,6 @@ object TriviaRepository {
         GreenQuestApp.instance.database.triviaDao()
     }
     private lateinit var sharedPreferences: SharedPreferences
-    private val DATA_VERSION_KEY = "triviaVersion"
 
     private val triviaDataLoader = TriviaDataLoader()
 
@@ -105,9 +104,12 @@ object TriviaRepository {
 
     suspend fun chequearRespuesta(idPregunta: Long, idRespuesta: Long) : Boolean{
         val pregunta = triviaDao.obtenerPreguntaConOpcionesPorId(idPregunta) ?: return false
-        val opcion = pregunta.opciones?.stream()?.filter { (opcionId, _, esCorrecta) -> (opcionId == idRespuesta) && esCorrecta}
+        return pregunta.opciones?.any {
+            opcion ->
+            (opcion.opcionId== idRespuesta) && opcion.esCorrecta
+        } ?: false
 
-        return (opcion != null)
+
     }
 
 

@@ -1,17 +1,16 @@
 package com.example.greenquest.fragments
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
-import com.example.greenquest.R
 import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.databinding.FragmentTriviaBinding
 import com.example.greenquest.states.trivia.EstadoTrivia
@@ -22,6 +21,7 @@ class TriviaFragment : Fragment() {
 
     private lateinit var triviaViewModel: TriviaViewModel
     private var selectedOptionId: Long? = null
+    private var selectedQuestionId: Long? = null
     private var _binding: FragmentTriviaBinding? = null
     private val binding get() = _binding!!
 
@@ -41,34 +41,24 @@ class TriviaFragment : Fragment() {
         binding.botonResponder.visibility = View.INVISIBLE
     }
 
-    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     private fun mostrarPregunta(preguntaConOpciones: PreguntaConOpciones){
         binding.triviaPreguntaTexto.text = preguntaConOpciones.pregunta.questionText
         binding.containerOpciones.removeAllViews()
+        val letters = mutableListOf<Char>()
+        for (letra in 'A'..'Z') {
+            letters.add(letra)
+        }
+        val radioGroup : RadioGroup = binding.containerOpciones
+
+
         preguntaConOpciones.opciones?.forEachIndexed { index, opcion ->
-            val optionView = LayoutInflater.from(requireContext())
-                .inflate(R.layout.opcion_trivia,
-                    binding.containerOpciones,
-                    false)
+            val letraChar = letters.getOrElse(index = index) {'?'}
+            val radioButton = RadioButton(requireContext())
 
-
-            val letters = mutableListOf<Char>()
-            for (letra in 'A'..'Z') {
-                letters.add(letra)
-            }
-
-            val letraChar: Char = letters.getOrElse(index) { '?' }
-            optionView.findViewById<TextView>(R.id.tv_option_letter).text = letraChar.toString()
-
-            optionView.findViewById<TextView>(R.id.tv_option_text).text = opcion.textoOpcion
-            // Marcar como seleccionada
-            optionView.setOnClickListener {
-                Log.d("triviaLogging", "En linea 65")
-                onOptionSelected(opcion.opcionId, optionView)
-            }
-
-            // Agregar al contenedor
-            binding.containerOpciones.addView(optionView)
+            radioButton.id = View.generateViewId()
+            radioButton.text = letraChar + " " + opcion.textoOpcion
+            radioGroup.addView(radioButton)
+            radioButton.setOnClickListener { onOptionSelected(opcion.opcionId, it) }
         }
     }
 
@@ -78,7 +68,7 @@ class TriviaFragment : Fragment() {
             opcion -> opcion.setBackgroundColor(12)
         }
 
-        Log.d("triviaLogging", "Eligio la opcion ${opcionId}")
+
         selectedOptionId = opcionId
     }
 
@@ -95,10 +85,20 @@ class TriviaFragment : Fragment() {
         _binding = null
     }
 
+    fun showEstadoRespuesta(esCorrecta: Boolean){
+        Toast.makeText(requireContext(),
+            "La respuesta es ${esCorrecta}",
+            Toast.LENGTH_LONG).show()
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         triviaViewModel.preguntaActual.observe(this) { pregunta ->
-            pregunta?.let { mostrarPregunta(it) }
+
+            pregunta?.let {
+                selectedQuestionId = pregunta.pregunta.preguntaId
+                this.mostrarPregunta(it) }
         }
 
         // Observar estado del juego
@@ -107,7 +107,15 @@ class TriviaFragment : Fragment() {
                 EstadoTrivia.CARGANDO -> showLoading(true)
                 EstadoTrivia.MOSTRANDO -> {showLoading(false)}
                 EstadoTrivia.FINALIZADO -> showGameFinished()
+                EstadoTrivia.CORRECTO -> showEstadoRespuesta(true)
+                EstadoTrivia.INCORRECTO -> showEstadoRespuesta(false)
             }
+        }
+
+        binding.botonResponder.setOnClickListener {
+            triviaViewModel.chequearRespuestaCorrecta(
+                selectedQuestionId!!,
+                selectedOptionId!!)
         }
 
         triviaViewModel.loadNextQuestion()
