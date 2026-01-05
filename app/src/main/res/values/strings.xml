@@ -93,4 +93,15 @@
     <string name="category_select_hint">Tipo</string>
     <string name="cerrar_sesion_button">Cerrar sesión</string>
     <string name="mi_pefil">Mi perfil</string>
+
+    <string name="title_bottom_ranking">Rankings</string>
+    <string name="title_bottom_store">Tienda</string>
+    <string name="title_bottom_scanner">Escanear</string>
+    <string name="title_bottom_report">Reportar</string>
+    <string name="title_bottom_trivia">Trivia</string>
+
+
+    <string name="button_responder_pregunta">Responder</string>
+    <string name="placeholder_pregunta">Cargando pregunta</string>
+
 </resources>

@@ -1,6 +1,6 @@
 package com.example.greenquest.viewmodel
 
-import com.example.greenquest.QrPayloadResiduo
+import com.example.greenquest.database.escaneo.QrPayloadResiduo
 
 sealed class ScanState {
     object Idle : ScanState()

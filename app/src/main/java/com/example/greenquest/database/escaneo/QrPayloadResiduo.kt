@@ -1,4 +1,4 @@
-package com.example.greenquest
+package com.example.greenquest.database.escaneo
 
 import com.example.greenquest.apiParameters.TipoResiduo
 import kotlinx.serialization.SerialName
@@ -13,4 +13,3 @@ data class QrPayloadResiduo(
     @SerialName("Tipo Residuo")
     val tipo_residuo: TipoResiduo
 )
-
