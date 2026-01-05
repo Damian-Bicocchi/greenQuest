@@ -6,17 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.greenquest.AdapterLogro
+import androidx.navigation.fragment.findNavController
+import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.Logro
 import com.example.greenquest.R
 import com.example.greenquest.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.ui.iniciar_sesion
-import com.example.greenquest.viewmodel.MiPerfilViewModel
+
 import kotlinx.coroutines.launch
 
 
@@ -27,15 +29,13 @@ class MiPerfilFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private val viewModel: MiPerfilViewModel by viewModels()
+
 
     private lateinit var usuario : User
     private lateinit var binding: FragmentMiPerfilBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -47,15 +47,16 @@ class MiPerfilFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
         val recyclerView = binding.logrosRecyclerview
 
         val logros = listOf<Logro>(
-            Logro(R.drawable.trash, "Primer Logro", "Has conseguido tu primer logro!"),
-            Logro(R.drawable.icon_menu, "Explorador", "Has explorado todas las secciones de la app."),
-            Logro(R.drawable.icon_menu, "Amigo de la naturaleza", "Has completado 5 misiones ecológicas." ),
-            Logro(R.drawable.trash, "Reciclador", "Has reciclado 10 objetos diferentes."),
-            Logro(R.drawable.icon_menu, "Campeón del reciclaje", "Has alcanz)ado 100 puntos de reciclaje.")
+            Logro(R.drawable.trash, "Primer Logro", "Has conseguido tu primer logro!",false),
+            Logro(R.drawable.icon_menu, "Explorador", "Has explorado todas las secciones de la app.",false),
+            Logro(R.drawable.icon_menu, "Amigo de la naturaleza", "Has completado 5 misiones ecológicas.",false),
+            Logro(R.drawable.trash, "Reciclador", "Has reciclado 10 objetos diferentes.",false),
+            Logro(R.drawable.icon_menu, "Campeón del reciclaje", "Has alcanz)ado 100 puntos de reciclaje.",true)
         )
         recyclerView.adapter = AdapterLogro(logros)
         lifecycleScope.launch {
@@ -65,21 +66,31 @@ class MiPerfilFragment : Fragment() {
             binding.descripcionEditperfil.setEnabled(false)
 
         }
-        val botonCerrarSesion = binding.cerrarSesionButton
-        botonCerrarSesion.setOnClickListener {
-            lifecycleScope.launch {
-                val res = viewModel.cerrarSesion()
-                if(res.isFailure){
-                    Toast.makeText(context, "Error al cerrar sesión", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(requireContext(), iniciar_sesion::class.java))
-                }
-            }
+
+        binding.configuracionButton.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_container, ConfiguracionFragment())
+                .addToBackStack(null)
+                .commit()
+
         }
+
+        binding.logrosConseguidosTextview.setOnClickListener {
+            Toast.makeText(context, "Has conseguido ${logros.size} logros!", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.logrosFaltantesTextview.setOnClickListener{
+            Toast.makeText(context, "Te faltan ${10 - logros.size} logros para ser un experto!", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.marcosPerfilTextview.setOnClickListener {
+            Toast.makeText(context, "¡Próximamente podrás personalizar tu perfil con marcos exclusivos!", Toast.LENGTH_SHORT).show()
+        }
+
 
         return  binding.root
     }
+
 
     companion object {
         // TODO: Rename and change types and number of parameters

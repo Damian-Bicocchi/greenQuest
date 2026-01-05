@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.AdapterUsuarios
+import com.example.greenquest.adapters.AdapterUsuarios
 import com.example.greenquest.R
 import com.example.greenquest.User
 

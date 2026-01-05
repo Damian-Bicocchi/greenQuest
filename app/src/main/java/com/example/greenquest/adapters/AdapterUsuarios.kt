@@ -1,12 +1,13 @@
-package com.example.greenquest
+package com.example.greenquest.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.greenquest.R
+import com.example.greenquest.User
 
 class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsuarios.viewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.example.greenquest
+package com.example.greenquest.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.greenquest.Logro
+import com.example.greenquest.R
 
 class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterLogro.ViewHolder>(){
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -34,6 +36,13 @@ class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterL
         holder.nombreLogro.text = item.nombre
         holder.descripcionLogro.text = item.descripcion
         holder.imagenLogro.setImageResource(item.imagen)
+        if(!item.obtenido){
+            holder.imagenLogro.alpha = 0.3f
+            holder.nombreLogro.alpha = 0.3f
+            holder.descripcionLogro.alpha = 0.3f
+        } else {
+            holder.imagenLogro.alpha = 1.0f
+        }
 
 
     }
