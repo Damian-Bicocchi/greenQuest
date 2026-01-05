@@ -1,0 +1,106 @@
+{
+  "version": 2,
+  "ultimaActualizacion": "2026-01-03",
+  "preguntas": [
+    {
+      "questionText": "¿En qué contenedor se debe depositar un envase de plástico de yogur?",
+      "questionId": 1,
+      "options": [
+        {"textoOpcion": "Contenedor azul", "esCorrecta": false},
+        {"textoOpcion": "Contenedor amarillo", "esCorrecta": true},
+        {"textoOpcion": "Contenedor verde", "esCorrecta": false},
+        {"textoOpcion": "Contenedor gris", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Qué significan las '3R' de la ecología?",
+      "questionId": 2,
+      "options": [
+        {"textoOpcion": "Recoger, Reutilizar, Reemplazar", "esCorrecta": false},
+        {"textoOpcion": "Reducir, Reutilizar, Reciclar", "esCorrecta": true},
+        {"textoOpcion": "Rehacer, Recoger, Reciclar", "esCorrecta": false},
+        {"textoOpcion": "Reducir, Recargar, Recibir", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Cuál de estos materiales tarda más tiempo en degradarse en la naturaleza?",
+      "questionId": 3,
+      "options": [
+        {"textoOpcion": "Papel", "esCorrecta": false},
+        {"textoOpcion": "Vidrio", "esCorrecta": true},
+        {"textoOpcion": "Cáscara de fruta", "esCorrecta": false},
+        {"textoOpcion": "Madera", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Qué debe tirarse en el contenedor azul?",
+      "questionId": 4,
+      "options": [
+        {"textoOpcion": "Papel y cartón", "esCorrecta": true},
+        {"textoOpcion": "Botellas de vidrio", "esCorrecta": false},
+        {"textoOpcion": "Pilas y baterías", "esCorrecta": false},
+        {"textoOpcion": "Restos de comida", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Cómo se llama el proceso de convertir residuos orgánicos en abono?",
+      "questionId": 5,
+      "options": [
+        {"textoOpcion": "Incineración", "esCorrecta": false},
+        {"textoOpcion": "Compostaje", "esCorrecta": true},
+        {"textoOpcion": "Destilación", "esCorrecta": false},
+        {"textoOpcion": "Fusión", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Cuál es el destino correcto para una bombilla fundida o un termómetro?",
+      "questionId": 6,
+      "options": [
+        {"textoOpcion": "Contenedor gris", "esCorrecta": false},
+        {"textoOpcion": "Contenedor verde", "esCorrecta": false},
+        {"textoOpcion": "Punto limpio o centro de recogida", "esCorrecta": true},
+        {"textoOpcion": "Contenedor amarillo", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Qué tipo de residuos van al contenedor marrón (si está disponible en tu zona)?",
+      "questionId": 7,
+      "options": [
+        {"textoOpcion": "Plásticos biodegradables", "esCorrecta": false},
+        {"textoOpcion": "Residuos orgánicos (restos de alimentos)", "esCorrecta": true},
+        {"textoOpcion": "Telas y ropa vieja", "esCorrecta": false},
+        {"textoOpcion": "Aceite de cocina usado", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Por qué es importante reciclar el aluminio (latas de gaseosa)?",
+      "questionId": 8,
+      "options": [
+        {"textoOpcion": "Porque es un material muy escaso", "esCorrecta": false},
+        {"textoOpcion": "Porque ahorra un 95% de energía comparado con producirlo de cero", "esCorrecta": true},
+        {"textoOpcion": "Porque el aluminio no se puede reutilizar", "esCorrecta": false},
+        {"textoOpcion": "Porque es magnético", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Qué NO se debe tirar nunca al contenedor verde de vidrio?",
+      "questionId": 9,
+      "options": [
+        {"textoOpcion": "Botellas de vino", "esCorrecta": false},
+        {"textoOpcion": "Frascos de perfume", "esCorrecta": false},
+        {"textoOpcion": "Cristal de ventanas o espejos", "esCorrecta": true},
+        {"textoOpcion": "Tarros de mermelada", "esCorrecta": false}
+      ]
+    },
+    {
+      "questionText": "¿Cuál es la principal ventaja de utilizar papel reciclado?",
+      "questionId": 10,
+      "options": [
+        {"textoOpcion": "Es más blanco que el normal", "esCorrecta": false},
+        {"textoOpcion": "Salva árboles y consume menos agua y energía", "esCorrecta": true},
+        {"textoOpcion": "Es imposible de romper", "esCorrecta": false},
+        {"textoOpcion": "No requiere transporte", "esCorrecta": false}
+      ]
+    }
+  ]
+}

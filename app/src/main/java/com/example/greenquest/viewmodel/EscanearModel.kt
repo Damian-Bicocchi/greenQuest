@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greenquest.repository.LogrosRepository
+import com.example.greenquest.repository.MonedasRepository
 import com.example.greenquest.repository.ScannerRepository
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -39,9 +41,14 @@ class EscanearModel: ViewModel() {
                                 withContext(Dispatchers.Main) {
                                     _scanState.value = ScanState.QRDetected(payload)
                                 }
+                                // Agregarle monedas. Tantas monedas como puntajes da
+                                MonedasRepository.addMonedas(payload.puntaje)
+
+                                // Contabilizar para logros
+                                LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
+
                             } else {
                                 withContext(Dispatchers.Main) {
-                                    Log.e("greenQuest", response.error)
                                     _scanState.value = ScanState.HappyError(response.error)
                                 }
                             }

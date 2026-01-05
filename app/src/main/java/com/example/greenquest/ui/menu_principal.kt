@@ -11,6 +11,7 @@ import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.fragments.TopAmigosFragment
 import com.example.greenquest.fragments.TopGlobal
+import com.example.greenquest.fragments.TriviaFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class menu_principal : AppCompatActivity() {
@@ -20,6 +21,8 @@ class menu_principal : AppCompatActivity() {
     private var escanearFragment: EscanearFragment? = null
     private var categorizarFragment: CategorizarFragment? = null
     private var miPefilFragment : MiPerfilFragment? = null
+
+    private var triviaFragment : TriviaFragment? = null
 
     private var currentFragment: Fragment? = null
 
@@ -69,11 +72,11 @@ class menu_principal : AppCompatActivity() {
                 showFragment(categorizarFragment!!)
                 true
             }
-            R.id.miPefilFragment -> {
-                if (miPefilFragment == null) {
-                    miPefilFragment = MiPerfilFragment()
+            R.id.triviaFragment -> {
+                if (triviaFragment == null) {
+                    triviaFragment = TriviaFragment()
                 }
-                showFragment(miPefilFragment!!)
+                showFragment(triviaFragment!!)
                 true
             }
             else -> false
