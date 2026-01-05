@@ -1,7 +1,8 @@
 object ChequeosUsuario {
 
     fun esValidoUsername(username: String): Boolean {
-        val regex = Regex("^[a-zA-Z0-9._-]$")
+        val regex = Regex("^[a-zA-Z0-9._-]+$")
+
 
         return regex.matches(username)
     }

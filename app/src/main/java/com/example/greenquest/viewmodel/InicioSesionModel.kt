@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.Request
 import com.example.greenquest.repository.UsuarioRepository
 

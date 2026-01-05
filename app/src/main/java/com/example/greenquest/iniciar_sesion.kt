@@ -49,7 +49,6 @@ class iniciar_sesion : ComponentActivity() {
         val registrarCuenta = binding.linkRegistrarCuenta
         registrarCuenta.text = subrayarTexto(registrarCuenta.text.toString())
 
-        val botonIniciarSesion = binding.iniciarSesionButton
 
         registrarCuenta.setOnClickListener {
             val intent = Intent(this, registrar_cuenta::class.java)
@@ -66,11 +65,13 @@ class iniciar_sesion : ComponentActivity() {
 
     }
 
+    @Deprecated("Sin uso en greenQuest")
     private suspend fun usuarioLocalExiste(): Boolean {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()
         return usuario != null
     }
 
+    @Deprecated("Sin uso en greenQuest")
     private fun chequeoIniciarSesion() {
         val userName = binding.usernameInput.text.toString()
         val password = binding.passwordInput.text.toString()
@@ -94,7 +95,4 @@ class iniciar_sesion : ComponentActivity() {
         return spannableString
     }
 
-    private fun crearVista(){
-
-    }
 }

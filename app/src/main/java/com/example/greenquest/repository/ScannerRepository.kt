@@ -1,7 +1,7 @@
 package com.example.greenquest.repository
 
 import android.util.Log
-import com.example.greenquest.QrPayloadResiduo
+import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
@@ -23,7 +23,8 @@ object ScannerRepository {
         } catch (e: Exception) {
             Log.e("greenquest", e.toString())
             productInfo = QrPayloadResiduo(
-                "", -1, TipoResiduo.BASURA
+                "", -1,
+                TipoResiduo.BASURA
             )
         }
         return productInfo!!

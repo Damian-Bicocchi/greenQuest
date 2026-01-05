@@ -1,6 +1,6 @@
 package com.example.greenquest.dao
 import androidx.room.*
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 
 @Dao
 interface UserDao {
@@ -15,5 +15,19 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: User)
+
+    @Update
+    suspend fun updateUser(user: User)
+
+    @Transaction
+    suspend fun incrementarPuntos(addPuntos: Int) {
+        if (addPuntos <= 0) return
+        val currentUser = getFirstUser()
+        if (currentUser != null) {
+            val nuevosPuntos = currentUser.puntos + addPuntos
+            currentUser.puntos = nuevosPuntos
+            updateUser(currentUser)
+        }
+    }
 
 }

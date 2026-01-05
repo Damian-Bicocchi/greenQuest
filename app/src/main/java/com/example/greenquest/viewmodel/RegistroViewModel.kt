@@ -19,7 +19,7 @@ class RegistroViewModel : ViewModel() {
         }
 
         if (!ChequeosUsuario.esValidoUsername(username)) {
-            emit("El nombre de usuario solo puede contener letras, números, puntos, guiones y guiones bajos")
+            emit("El nombre de usuario solo puede contener letras, números, '.', '-' y '_")
             return@liveData
         }
         if(!ChequeosUsuario.esValidoCantidadCaracteresUsername(username)){
