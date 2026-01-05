@@ -97,4 +97,15 @@
     <string name="logros_faltantes">Logros faltantes</string>
     <string name="marcos_perfil">Marcos de perfil</string>
     <string name="descripcion_hint">Usuario sin descripcion</string>
+
+    <string name="title_bottom_ranking">Rankings</string>
+    <string name="title_bottom_store">Tienda</string>
+    <string name="title_bottom_scanner">Escanear</string>
+    <string name="title_bottom_report">Reportar</string>
+    <string name="title_bottom_trivia">Trivia</string>
+
+
+    <string name="button_responder_pregunta">Responder</string>
+    <string name="placeholder_pregunta">Cargando pregunta</string>
+
 </resources>

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 
 class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsuarios.viewHolder>() {
 

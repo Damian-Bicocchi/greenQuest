@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.adapters.AdapterUsuarios
 import com.example.greenquest.R
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 
 class TopAmigosFragment : Fragment() {
     override fun onCreateView(

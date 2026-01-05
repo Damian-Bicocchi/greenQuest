@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.example.greenquest.R
-import com.example.greenquest.database.DatosEscaneo
+import com.example.greenquest.database.escaneo.DatosEscaneo
 
 
 private const val ARG_DATOS = "datos_escaneo"

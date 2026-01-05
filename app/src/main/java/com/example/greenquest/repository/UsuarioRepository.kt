@@ -7,7 +7,7 @@ import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
 import com.example.greenquest.apiParameters.Request
 import retrofit2.Response
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.RankingEntry
 import com.example.greenquest.apiParameters.RefreshRequest
@@ -66,6 +66,7 @@ object UsuarioRepository {
         return rank?.posicion ?: Int.MIN_VALUE
     }
 
+    @Deprecated("No se usa en ningún momento en greenQuest")
     suspend fun score(tipoResiduo: TipoResiduo? = null): Int {
         return api.score().puntos
     }
@@ -83,6 +84,17 @@ object UsuarioRepository {
     suspend fun eliminarUsuarioLocal(user: User) =
         withContext(Dispatchers.IO) {
             userDao.delete(user)
+    }
+
+    suspend fun getPuntaje(): Int =
+        withContext(Dispatchers.IO){
+            userDao.getFirstUser()!!.puntos
+    }
+
+    suspend fun addPuntaje(addPuntos : Int){
+        withContext(Dispatchers.IO){
+
+        }
     }
 }
 
