@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import androidx.compose.ui.window.Dialog
 import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.database.trivia.PreguntaConOpciones
