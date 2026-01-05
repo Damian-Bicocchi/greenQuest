@@ -1,6 +1,5 @@
 package com.example.greenquest.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.Logro
 import com.example.greenquest.R
-import com.example.greenquest.User
+import com.example.greenquest.database.user.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.repository.UsuarioRepository
-import com.example.greenquest.ui.iniciar_sesion
 
 import kotlinx.coroutines.launch
 

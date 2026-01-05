@@ -1,6 +1,7 @@
 package com.example.greenquest.ui
 
 import android.os.Bundle
+import android.support.v4.os.IResultReceiver
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -34,7 +35,11 @@ class menu_principal : AppCompatActivity() {
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
         navigation.setOnItemSelectedListener { item -> onNavigationItemSelectedListener(item) }
-
+        val miPerfil = binding.miPerfil
+        miPerfil.setOnClickListener {
+            miPefilFragment = MiPerfilFragment()
+            showFragment(miPefilFragment!!)
+        }
         if (savedInstanceState == null) {
             topGlobalFragment = TopGlobal()
             showFragment(topGlobalFragment!!)
@@ -79,6 +84,7 @@ class menu_principal : AppCompatActivity() {
                 showFragment(triviaFragment!!)
                 true
             }
+
             else -> false
         }
     }
