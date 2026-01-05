@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.greenquest.AdapterLogro
+import com.example.greenquest.Logro
 import com.example.greenquest.R
 import com.example.greenquest.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
@@ -32,6 +34,9 @@ class MiPerfilFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -43,6 +48,16 @@ class MiPerfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
+        val recyclerView = binding.logrosRecyclerview
+
+        val logros = listOf<Logro>(
+            Logro(R.drawable.trash, "Primer Logro", "Has conseguido tu primer logro!"),
+            Logro(R.drawable.icon_menu, "Explorador", "Has explorado todas las secciones de la app."),
+            Logro(R.drawable.icon_menu, "Amigo de la naturaleza", "Has completado 5 misiones ecológicas." ),
+            Logro(R.drawable.trash, "Reciclador", "Has reciclado 10 objetos diferentes."),
+            Logro(R.drawable.icon_menu, "Campeón del reciclaje", "Has alcanz)ado 100 puntos de reciclaje.")
+        )
+        recyclerView.adapter = AdapterLogro(logros)
         lifecycleScope.launch {
             usuario = UsuarioRepository.obtenerUsuarioLocal()!!
             binding.usernameEditperfil.setText(usuario.userName.toString())

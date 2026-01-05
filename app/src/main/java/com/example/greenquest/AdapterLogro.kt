@@ -35,6 +35,7 @@ class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterL
         holder.descripcionLogro.text = item.descripcion
         holder.imagenLogro.setImageResource(item.imagen)
 
+
     }
 
 
