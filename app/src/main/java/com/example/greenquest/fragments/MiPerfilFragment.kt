@@ -49,6 +49,12 @@ class MiPerfilFragment : Fragment() {
     ): View? {
 
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
+        val toolbarContainer = activity!!.findViewById<View>(
+            R.id.toolbar_container
+        )
+        toolbarContainer.visibility = View.VISIBLE
+        val nombreFragmentactual = activity!!.findViewById<TextView>(R.id.nombreFragmentActualTextView)
+        nombreFragmentactual.text = "Mi Perfil"
         val recyclerView = binding.logrosRecyclerview
 
         val logros = listOf<Logro>(
@@ -70,8 +76,8 @@ class MiPerfilFragment : Fragment() {
         binding.configuracionButton.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frame_container, ConfiguracionFragment())
-                .addToBackStack(null)
                 .commit()
+
 
         }
 
