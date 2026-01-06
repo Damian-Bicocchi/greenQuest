@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.adapters.AdapterLogro
-import com.example.greenquest.Logro
+import com.example.greenquest.Logros.Logro
 import com.example.greenquest.LogroProvider
 import com.example.greenquest.R
 import com.example.greenquest.database.user.User

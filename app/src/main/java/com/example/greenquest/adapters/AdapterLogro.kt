@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.Logro
+import com.example.greenquest.Logros.Logro
 import com.example.greenquest.R
 
 class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterLogro.ViewHolder>(){
