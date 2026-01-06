@@ -52,6 +52,9 @@ interface TriviaDao {
     @Query("SELECT COUNT(*) FROM opciones WHERE preguntaCorrespondienteId = :preguntaId")
     suspend fun contarOpciones(preguntaId: Long): Int
 
+    @Query("SELECT explanation FROM preguntas WHERE preguntaId = :preguntaId")
+    suspend fun getExplicacionPregunta(preguntaId: Long) : String?
+
 
 
 }

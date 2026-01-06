@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.database.trivia.PreguntaConOpciones
@@ -30,12 +30,8 @@ class TriviaFragment : Fragment() {
         triviaViewModel = ViewModelProvider(this)[TriviaViewModel::class.java]
     }
 
-    private fun showLoading(bool: Boolean) {
-        Log.d("triviaLogging","Pregunta lista para ser mostrada")
-    }
 
     private fun showGameFinished() {
-        Log.e("greenQuest", "voy a cambiar las cosas")
         binding.triviaPreguntaTexto.text = "Impresionante"
         binding.containerOpciones.visibility = View.INVISIBLE
         binding.botonResponder.visibility = View.INVISIBLE
@@ -67,8 +63,6 @@ class TriviaFragment : Fragment() {
         binding.containerOpciones.children.map {
             opcion -> opcion.setBackgroundColor(12)
         }
-
-
         selectedOptionId = opcionId
     }
 
@@ -86,9 +80,23 @@ class TriviaFragment : Fragment() {
     }
 
     fun showEstadoRespuesta(esCorrecta: Boolean){
-        Toast.makeText(requireContext(),
-            "La respuesta es ${esCorrecta}",
-            Toast.LENGTH_LONG).show()
+
+        val explicacion = triviaViewModel.explicacionState.value ?: ""
+        Log.d("triviaLogging", "La explicacion es $explicacion")
+        val titulo = if (esCorrecta) "\uD83D\uDC4C\u200B\uD83D\uDC4C\u200B Muy bien \uD83D\uDC4C\u200B\uD83D\uDC4C\u200B" else "❌\u200B❌\u200B"
+        val mensaje = if (esCorrecta) "Excelente: $explicacion" else explicacion
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder
+            .setMessage(mensaje)
+            .setTitle(titulo)
+
+            .setPositiveButton("Entendido") { _, _ ->
+                triviaViewModel.loadNextQuestion()
+            }
+
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
 
     }
 
@@ -104,8 +112,8 @@ class TriviaFragment : Fragment() {
         // Observar estado del juego
         triviaViewModel.gameState.observe(this) { state ->
             when (state) {
-                EstadoTrivia.CARGANDO -> showLoading(true)
-                EstadoTrivia.MOSTRANDO -> {showLoading(false)}
+                EstadoTrivia.CARGANDO -> {}
+                EstadoTrivia.MOSTRANDO -> {}
                 EstadoTrivia.FINALIZADO -> showGameFinished()
                 EstadoTrivia.CORRECTO -> showEstadoRespuesta(true)
                 EstadoTrivia.INCORRECTO -> showEstadoRespuesta(false)

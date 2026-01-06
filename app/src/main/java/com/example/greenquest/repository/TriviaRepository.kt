@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import androidx.core.content.edit
 import com.example.greenquest.Prefs
+import kotlin.math.exp
 
 object TriviaRepository {
     private val triviaDao by lazy {
@@ -50,7 +51,8 @@ object TriviaRepository {
                             PreguntaTrivia(
                                 preguntaId = preguntaJson.questionId,
                                 questionText = preguntaJson.questionText,
-                                answeredQuestion = false
+                                answeredQuestion = false,
+                                preguntaJson.explanation
                             )
                         )
                     } else {
@@ -59,7 +61,8 @@ object TriviaRepository {
                             PreguntaTrivia(
                                 preguntaId = preguntaJson.questionId,
                                 questionText = preguntaJson.questionText,
-                                answeredQuestion = preguntaBD.pregunta.answeredQuestion
+                                answeredQuestion = preguntaBD.pregunta.answeredQuestion,
+                                preguntaJson.explanation
                             )
                         )
                         // Si la pregunta ya fue respondida, no le cambies el estado ^
@@ -108,8 +111,11 @@ object TriviaRepository {
             opcion ->
             (opcion.opcionId== idRespuesta) && opcion.esCorrecta
         } ?: false
+    }
 
-
+    suspend fun getExplicacion(idPregunta: Long): String {
+        return triviaDao.obtenerPreguntaConOpcionesPorId(idPregunta)?.pregunta?.explanation
+            ?: ""
     }
 
 

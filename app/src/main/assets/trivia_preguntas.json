@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "ultimaActualizacion": "2026-01-03",
+  "version": 3,
+  "ultimaActualizacion": "2026-01-05",
   "preguntas": [
     {
       "questionText": "¿En qué contenedor se debe depositar un envase de plástico de yogur?",
@@ -10,7 +10,8 @@
         {"textoOpcion": "Contenedor amarillo", "esCorrecta": true},
         {"textoOpcion": "Contenedor verde", "esCorrecta": false},
         {"textoOpcion": "Contenedor gris", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "El contenedor amarillo es el destino para envases de plástico, latas y briks. Los envases de yogur, al ser de plástico, deben ir aquí."
     },
     {
       "questionText": "¿Qué significan las '3R' de la ecología?",
@@ -20,7 +21,8 @@
         {"textoOpcion": "Reducir, Reutilizar, Reciclar", "esCorrecta": true},
         {"textoOpcion": "Rehacer, Recoger, Reciclar", "esCorrecta": false},
         {"textoOpcion": "Reducir, Recargar, Recibir", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "Es una regla para cuidar el medio ambiente: primero Reducir el consumo, luego Reutilizar objetos y, finalmente, Reciclar los materiales."
     },
     {
       "questionText": "¿Cuál de estos materiales tarda más tiempo en degradarse en la naturaleza?",
@@ -30,7 +32,8 @@
         {"textoOpcion": "Vidrio", "esCorrecta": true},
         {"textoOpcion": "Cáscara de fruta", "esCorrecta": false},
         {"textoOpcion": "Madera", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "Mientras que el papel tarda meses y la madera años, el vidrio puede tardar hasta 4.000 años en desaparecer por completo de la naturaleza."
     },
     {
       "questionText": "¿Qué debe tirarse en el contenedor azul?",
@@ -40,7 +43,8 @@
         {"textoOpcion": "Botellas de vidrio", "esCorrecta": false},
         {"textoOpcion": "Pilas y baterías", "esCorrecta": false},
         {"textoOpcion": "Restos de comida", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "El contenedor azul está reservado exclusivamente para papel y cartón (cajas, revistas, periódicos), evitando que se mezclen con otros materiales."
     },
     {
       "questionText": "¿Cómo se llama el proceso de convertir residuos orgánicos en abono?",
@@ -50,7 +54,8 @@
         {"textoOpcion": "Compostaje", "esCorrecta": true},
         {"textoOpcion": "Destilación", "esCorrecta": false},
         {"textoOpcion": "Fusión", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "El compostaje es la descomposición controlada de materia orgánica por microorganismos para crear compost, un fertilizante natural."
     },
     {
       "questionText": "¿Cuál es el destino correcto para una bombilla fundida o un termómetro?",
@@ -60,7 +65,8 @@
         {"textoOpcion": "Contenedor verde", "esCorrecta": false},
         {"textoOpcion": "Punto limpio o centro de recogida", "esCorrecta": true},
         {"textoOpcion": "Contenedor amarillo", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "Estos objetos contienen componentes peligrosos o mercurio y no deben ir a los contenedores comunes, sino a puntos limpios especializados."
     },
     {
       "questionText": "¿Qué tipo de residuos van al contenedor marrón (si está disponible en tu zona)?",
@@ -70,7 +76,8 @@
         {"textoOpcion": "Residuos orgánicos (restos de alimentos)", "esCorrecta": true},
         {"textoOpcion": "Telas y ropa vieja", "esCorrecta": false},
         {"textoOpcion": "Aceite de cocina usado", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "El contenedor marrón se utiliza para la materia orgánica (restos de comida, pieles de fruta), que luego puede usarse para generar energía o abono."
     },
     {
       "questionText": "¿Por qué es importante reciclar el aluminio (latas de gaseosa)?",
@@ -80,7 +87,8 @@
         {"textoOpcion": "Porque ahorra un 95% de energía comparado con producirlo de cero", "esCorrecta": true},
         {"textoOpcion": "Porque el aluminio no se puede reutilizar", "esCorrecta": false},
         {"textoOpcion": "Porque es magnético", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "Extraer aluminio virgen de la mina es muy costoso energéticamente. Reciclarlo es infinitamente más eficiente y el metal no pierde propiedades."
     },
     {
       "questionText": "¿Qué NO se debe tirar nunca al contenedor verde de vidrio?",
@@ -90,7 +98,8 @@
         {"textoOpcion": "Frascos de perfume", "esCorrecta": false},
         {"textoOpcion": "Cristal de ventanas o espejos", "esCorrecta": true},
         {"textoOpcion": "Tarros de mermelada", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "El cristal (ventanas, copas) tiene una composición química diferente al vidrio. Si se mezclan, se arruina el proceso de reciclaje del vidrio."
     },
     {
       "questionText": "¿Cuál es la principal ventaja de utilizar papel reciclado?",
@@ -100,7 +109,8 @@
         {"textoOpcion": "Salva árboles y consume menos agua y energía", "esCorrecta": true},
         {"textoOpcion": "Es imposible de romper", "esCorrecta": false},
         {"textoOpcion": "No requiere transporte", "esCorrecta": false}
-      ]
+      ],
+      "explanation": "Producir papel reciclado requiere mucha menos energía y agua que fabricarlo desde fibra virgen, además de evitar la tala de nuevos árboles."
     }
   ]
 }
