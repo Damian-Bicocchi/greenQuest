@@ -62,7 +62,7 @@ class EscanearModel: ViewModel() {
                 }
             }
             .addOnFailureListener { e ->
-                Log.e("greenQuest", e.toString())
+                Log.e("greenQuest", "Error en el procesado de la imagen " + e.toString())
                 _scanState.value = ScanState.QrException("ERROR INESPERADO")
 
 

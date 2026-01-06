@@ -10,9 +10,7 @@ import com.example.greenquest.database.trivia.PreguntaTrivia
 import com.example.greenquest.database.trivia.TriviaDataLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import androidx.core.content.edit
 import com.example.greenquest.Prefs
-import kotlin.math.exp
 
 object TriviaRepository {
     private val triviaDao by lazy {
@@ -109,7 +107,7 @@ object TriviaRepository {
         val pregunta = triviaDao.obtenerPreguntaConOpcionesPorId(idPregunta) ?: return false
         return pregunta.opciones?.any {
             opcion ->
-            (opcion.opcionId== idRespuesta) && opcion.esCorrecta
+            (opcion.opcionId == idRespuesta) && opcion.esCorrecta
         } ?: false
     }
 
