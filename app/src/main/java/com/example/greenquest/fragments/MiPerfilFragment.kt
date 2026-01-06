@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.Logro
+import com.example.greenquest.LogroProvider
 import com.example.greenquest.R
 import com.example.greenquest.database.user.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
@@ -47,13 +48,7 @@ class MiPerfilFragment : Fragment() {
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
         val recyclerView = binding.logrosRecyclerview
 
-        val logros = listOf<Logro>(
-            Logro(R.drawable.trash, "Primer Logro", "Has conseguido tu primer logro!",false),
-            Logro(R.drawable.icon_menu, "Explorador", "Has explorado todas las secciones de la app.",false),
-            Logro(R.drawable.icon_menu, "Amigo de la naturaleza", "Has completado 5 misiones ecológicas.",false),
-            Logro(R.drawable.trash, "Reciclador", "Has reciclado 10 objetos diferentes.",false),
-            Logro(R.drawable.icon_menu, "Campeón del reciclaje", "Has alcanz)ado 100 puntos de reciclaje.",true)
-        )
+        val logros = LogroProvider.logros
         recyclerView.adapter = AdapterLogro(logros)
         lifecycleScope.launch {
             usuario = UsuarioRepository.obtenerUsuarioLocal()!!
