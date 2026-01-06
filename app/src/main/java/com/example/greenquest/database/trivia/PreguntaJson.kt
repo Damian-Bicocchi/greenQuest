@@ -5,5 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class PreguntaJson(
     @SerializedName("questionText") val questionText: String,
     @SerializedName("questionId") val questionId: Long,
-    @SerializedName("options") val options: List<OpcionJson>
+    @SerializedName("options") val options: List<OpcionJson>,
+    @SerializedName("explanation") val explanation: String,
 )
