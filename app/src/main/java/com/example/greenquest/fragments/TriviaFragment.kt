@@ -32,7 +32,7 @@ class TriviaFragment : Fragment() {
 
 
     private fun showGameFinished() {
-        binding.triviaPreguntaTexto.text = "Impresionante"
+        binding.triviaPreguntaTexto.text = "Impresionante. Respondiste bien todas las preguntas"
         binding.containerOpciones.visibility = View.INVISIBLE
         binding.botonResponder.visibility = View.INVISIBLE
     }
@@ -52,7 +52,8 @@ class TriviaFragment : Fragment() {
             val radioButton = RadioButton(requireContext())
 
             radioButton.id = View.generateViewId()
-            radioButton.text = letraChar + " " + opcion.textoOpcion
+            val textoOpcion = letraChar + " " + opcion.textoOpcion
+            radioButton.text = textoOpcion
             radioGroup.addView(radioButton)
             radioButton.setOnClickListener { onOptionSelected(opcion.opcionId, it) }
         }
@@ -82,7 +83,6 @@ class TriviaFragment : Fragment() {
     fun showEstadoRespuesta(esCorrecta: Boolean){
 
         val explicacion = triviaViewModel.explicacionState.value ?: ""
-        Log.d("triviaLogging", "La explicacion es $explicacion")
         val titulo = if (esCorrecta) "\uD83D\uDC4C\u200B\uD83D\uDC4C\u200B Muy bien \uD83D\uDC4C\u200B\uD83D\uDC4C\u200B" else "❌\u200B❌\u200B"
         val mensaje = if (esCorrecta) "Excelente: $explicacion" else explicacion
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
@@ -102,7 +102,7 @@ class TriviaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        triviaViewModel.preguntaActual.observe(this) { pregunta ->
+        triviaViewModel.preguntaActual.observe(viewLifecycleOwner) { pregunta ->
 
             pregunta?.let {
                 selectedQuestionId = pregunta.pregunta.preguntaId
@@ -110,7 +110,7 @@ class TriviaFragment : Fragment() {
         }
 
         // Observar estado del juego
-        triviaViewModel.gameState.observe(this) { state ->
+        triviaViewModel.gameState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 EstadoTrivia.CARGANDO -> {}
                 EstadoTrivia.MOSTRANDO -> {}
@@ -127,6 +127,7 @@ class TriviaFragment : Fragment() {
         }
 
         triviaViewModel.loadNextQuestion()
+
     }
 
 }

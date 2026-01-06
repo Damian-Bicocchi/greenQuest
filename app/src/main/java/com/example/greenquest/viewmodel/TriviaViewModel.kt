@@ -8,10 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.repository.TriviaRepository
 import com.example.greenquest.states.trivia.EstadoTrivia
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlin.math.exp
+import kotlinx.coroutines.withContext
 
 class TriviaViewModel: ViewModel() {
 
@@ -24,16 +27,16 @@ class TriviaViewModel: ViewModel() {
     private val _explicacionState = MutableStateFlow<String?>(null)
     val explicacionState: StateFlow<String?> = _explicacionState
 
-
-
+    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 
 
     fun loadNextQuestion() {
         _gameState.value = EstadoTrivia.CARGANDO
-
         viewModelScope.launch {
-            val pregunta = TriviaRepository.obtenerPreguntaAleatoria()
-
+            val preguntaDeferred = async(dispatcherIO){
+                TriviaRepository.obtenerPreguntaAleatoria()
+            }
+            val pregunta = preguntaDeferred.await()
             if (pregunta != null) {
                 _preguntaActual.value = pregunta
                 _gameState.value = EstadoTrivia.MOSTRANDO
@@ -44,43 +47,36 @@ class TriviaViewModel: ViewModel() {
     }
 
     fun chequearRespuestaCorrecta(idPregunta: Long, idRespuesta: Long) {
-        viewModelScope.launch {
+        viewModelScope.launch{
             try {
-                val esCorrecta = TriviaRepository.chequearRespuesta(idPregunta, idRespuesta)
-                val explicacionCargada = try {
-                    TriviaRepository.getExplicacion(idPregunta)
-                } catch (_: Exception) {
-                    "No se pudo cargar la explicación."
+                val esCorrectaDeferred = async(dispatcherIO) {
+                    TriviaRepository.chequearRespuesta(idPregunta = idPregunta, idRespuesta = idRespuesta)
                 }
 
-                _explicacionState.value = explicacionCargada
+                val explicacionDeferred = async(dispatcherIO) {
+                    try {
+                        TriviaRepository.getExplicacion(idPregunta = idPregunta)
+                    } catch (e: Exception) {
+                        Log.e("greenQuest", "Excepción en chequearRespuestaCorrecta ${e.toString()}")
+                        "No se pudo cargar la explicación"
+                    }
+                }
 
+                val esCorrecta = esCorrectaDeferred.await()
+                val explicacionCargada = explicacionDeferred.await()
+
+                _explicacionState.value = explicacionCargada
                 if (esCorrecta) {
-                    TriviaRepository.marcarComoRespondida(idPregunta)
+                    withContext(dispatcherIO){
+                        TriviaRepository.marcarComoRespondida(idPregunta)
+                    }
                     _gameState.value = EstadoTrivia.CORRECTO
                 } else {
                     _gameState.value = EstadoTrivia.INCORRECTO
                 }
-
             } catch (e: Exception) {
-                Log.e("triviaLogging", "Error: ${e.message}")
+                Log.e("greenQuest", "Error en chequearRespuestaCorrecta: ${e.message}")
             }
         }
-    }
-
-    fun getExplicacion(idPregunta: Long) {
-        viewModelScope.launch {
-            try {
-                val explicacion = TriviaRepository.getExplicacion(idPregunta = idPregunta)
-                _explicacionState.value = explicacion
-            } catch (e: Exception) {
-                _explicacionState.value = "Error al obtener explicación"
-                Log.e("triviaLogging", "Error: ${e.message}")
-            }
-        }
-    }
-
-    fun resetExplicacion() {
-        _explicacionState.value = null
     }
 }

@@ -1,7 +1,6 @@
 package com.example.greenquest.database.trivia
 
 import androidx.room.Embedded
-import androidx.room.Entity
 import androidx.room.Relation
 
 
