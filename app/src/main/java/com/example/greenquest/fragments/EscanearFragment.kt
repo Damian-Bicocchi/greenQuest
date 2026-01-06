@@ -81,10 +81,6 @@ class EscanearFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         escanearModel = ViewModelProvider(this)[EscanearModel::class.java]
-        val toolbarContainer = activity!!.findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.GONE
         if (ContextCompat.checkSelfPermission(
             requireContext(),
                 Manifest.permission.CAMERA
@@ -108,12 +104,6 @@ class EscanearFragment : Fragment() {
         qrAlreadyDetected = false
         lastErrorMessage = ""
         startCamera()
-        val toolbarContainer = activity!!.findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.GONE
-
-
     }
 
     override fun onDestroy() {
@@ -219,7 +209,7 @@ class EscanearFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-                
+
                 is ScanState.HappyError -> {
                     showToastError("¡Oh no! " + state.message)
                 }

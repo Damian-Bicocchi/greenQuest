@@ -1,8 +1,8 @@
 package com.example.greenquest.ui
 
 import android.os.Bundle
-import android.support.v4.os.IResultReceiver
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.greenquest.R
@@ -10,7 +10,7 @@ import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
-import com.example.greenquest.fragments.TopAmigosFragment
+import com.example.greenquest.fragments.TiendaFragment
 import com.example.greenquest.fragments.TopGlobal
 import com.example.greenquest.fragments.TriviaFragment
 import com.google.android.material.navigation.NavigationBarView
@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView
 class menu_principal : AppCompatActivity() {
     private lateinit var binding: ActivityToolbarBinding
     private var topGlobalFragment: TopGlobal? = null
-    private var topAmigosFragment: TopAmigosFragment? = null
+    private var topAmigosFragment: TiendaFragment? = null
     private var escanearFragment: EscanearFragment? = null
     private var categorizarFragment: CategorizarFragment? = null
     private var miPefilFragment : MiPerfilFragment? = null
@@ -58,7 +58,7 @@ class menu_principal : AppCompatActivity() {
             }
             R.id.topAmigosFragment -> {
                 if (topAmigosFragment == null) {
-                    topAmigosFragment = TopAmigosFragment()
+                    topAmigosFragment = TiendaFragment()
                 }
                 showFragment(topAmigosFragment!!)
                 true
@@ -92,18 +92,31 @@ class menu_principal : AppCompatActivity() {
     private fun showFragment(fragment: Fragment) {
         if (fragment == currentFragment) return
 
+        // ✅ Actualizar toolbar ANTES o DESPUÉS del commit (da igual mientras sea siempre)
+        when (fragment) {
+            is TopGlobal -> setToolbar("Top Global", true)
+            is TiendaFragment -> setToolbar("Tienda", true)
+            is CategorizarFragment -> setToolbar("Categorizar", true)
+            is TriviaFragment -> setToolbar("Trivia", true)
+            is MiPerfilFragment -> setToolbar("Mi Perfil", true)
+            is EscanearFragment -> setToolbar("", false)
+            else -> setToolbar("", true)
+        }
+
         supportFragmentManager.beginTransaction().apply {
             currentFragment?.let { hide(it) }
 
-            if (fragment.isAdded) {
-                show(fragment)
-            } else {
-                add(R.id.frame_container, fragment)
-            }
+            if (fragment.isAdded) show(fragment)
+            else add(R.id.frame_container, fragment)
 
             commit()
         }
 
         currentFragment = fragment
+    }
+
+    private fun setToolbar(titulo : String, mostrarToolbar : Boolean){
+        binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
+        binding.nombreFragmentActualTextView.text = titulo
     }
 }

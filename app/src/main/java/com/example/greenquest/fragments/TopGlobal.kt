@@ -36,13 +36,7 @@ class TopGlobal : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val toolbarContainer = activity!!.findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.VISIBLE
 
-        val nombreFragmentactual = activity!!.findViewById<TextView>(R.id.nombreFragmentActualTextView)
-        nombreFragmentactual.text = "Top Global"
         _binding = FragmentTopGlobalBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -108,14 +102,6 @@ class TopGlobal : Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.obtenerRanking()
-        val toolbarContainer = activity!!.findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.VISIBLE
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
