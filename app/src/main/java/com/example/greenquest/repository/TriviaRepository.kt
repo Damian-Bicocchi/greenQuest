@@ -11,6 +11,8 @@ import com.example.greenquest.database.trivia.TriviaDataLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.example.greenquest.Prefs
+import com.example.greenquest.database.trivia.RespuestaUsuario
+
 
 object TriviaRepository {
     private val triviaDao by lazy {
@@ -49,7 +51,6 @@ object TriviaRepository {
                             PreguntaTrivia(
                                 preguntaId = preguntaJson.questionId,
                                 questionText = preguntaJson.questionText,
-                                answeredQuestion = false,
                                 preguntaJson.explanation
                             )
                         )
@@ -59,15 +60,11 @@ object TriviaRepository {
                             PreguntaTrivia(
                                 preguntaId = preguntaJson.questionId,
                                 questionText = preguntaJson.questionText,
-                                answeredQuestion = preguntaBD.pregunta.answeredQuestion,
                                 preguntaJson.explanation
                             )
                         )
                         // Si la pregunta ya fue respondida, no le cambies el estado ^
                     }
-
-                    Log.e("triviaLogging", "Las opciones segun el json son" + preguntaJson.options)
-
                     val opciones = preguntaJson.options.mapIndexed { _, opcionJson ->
                         OpcionesTrivia(
                             opcionId = 0,
@@ -76,31 +73,25 @@ object TriviaRepository {
                             esCorrecta = opcionJson.esCorrecta,
                         )
                     }
-                    Log.d("triviaLogging",
-                        (opciones + "dale esto se cargo en opciones linea 71").toString()
-                    )
-
                     triviaDao.insertarOpciones(opciones)
                 }
-                Log.e("triviaLogging", "Preguntas cargadas")
             } catch (e: Exception) {
-                Log.e("triviaLogging", "Error cargando datos desde JSON ${e}")
+                Log.e("greenQuest", "Error cargando datos desde JSON ${e}")
             }
         }
     }
 
     suspend fun obtenerPreguntaAleatoria(): PreguntaConOpciones? {
-        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta()
+        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta(UsuarioRepository.obtenerUsuarioLocal()!!.uid)
         return pregunta
     }
 
-    suspend fun marcarComoRespondida(preguntaId: Long) {
-        val preguntaParaActualizar = triviaDao.obtenerPreguntaConOpcionesPorId(preguntaId)
-        preguntaParaActualizar?.pregunta?.let {
-            it.answeredQuestion = true
-            triviaDao.actualizarPregunta(it)
-        }
-
+    suspend fun marcarComoRespondida(preguntaId: Long, userId: Int, esCorrecta: Boolean) {
+        triviaDao.insertRespuesta(RespuestaUsuario(
+            preguntaId = preguntaId,
+            userId = userId,
+            esCorrecta = esCorrecta
+        ))
     }
 
     suspend fun chequearRespuesta(idPregunta: Long, idRespuesta: Long) : Boolean{

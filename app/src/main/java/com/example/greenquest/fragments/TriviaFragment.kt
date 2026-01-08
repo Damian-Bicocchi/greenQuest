@@ -1,7 +1,8 @@
 package com.example.greenquest.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.databinding.FragmentTriviaBinding
@@ -40,30 +40,25 @@ class TriviaFragment : Fragment() {
     private fun mostrarPregunta(preguntaConOpciones: PreguntaConOpciones){
         binding.triviaPreguntaTexto.text = preguntaConOpciones.pregunta.questionText
         binding.containerOpciones.removeAllViews()
-        val letters = mutableListOf<Char>()
-        for (letra in 'A'..'Z') {
-            letters.add(letra)
-        }
+
         val radioGroup : RadioGroup = binding.containerOpciones
 
 
         preguntaConOpciones.opciones?.forEachIndexed { index, opcion ->
-            val letraChar = letters.getOrElse(index = index) {'?'}
             val radioButton = RadioButton(requireContext())
-
             radioButton.id = View.generateViewId()
-            val textoOpcion = letraChar + " " + opcion.textoOpcion
-            radioButton.text = textoOpcion
+            radioButton.text = opcion.textoOpcion
             radioGroup.addView(radioButton)
+            radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+
             radioButton.setOnClickListener { onOptionSelected(opcion.opcionId, it) }
+
         }
+
+
     }
 
     private fun onOptionSelected(opcionId: Long, optionView: View) {
-        optionView.setBackgroundColor(0)
-        binding.containerOpciones.children.map {
-            opcion -> opcion.setBackgroundColor(12)
-        }
         selectedOptionId = opcionId
     }
 
@@ -93,8 +88,9 @@ class TriviaFragment : Fragment() {
             .setPositiveButton("Entendido") { _, _ ->
                 triviaViewModel.loadNextQuestion()
             }
-
-
+            .setOnCancelListener {
+                triviaViewModel.loadNextQuestion()
+            }
         val dialog: AlertDialog = builder.create()
         dialog.show()
 
@@ -103,7 +99,6 @@ class TriviaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         triviaViewModel.preguntaActual.observe(viewLifecycleOwner) { pregunta ->
-
             pregunta?.let {
                 selectedQuestionId = pregunta.pregunta.preguntaId
                 this.mostrarPregunta(it) }
@@ -125,9 +120,7 @@ class TriviaFragment : Fragment() {
                 selectedQuestionId!!,
                 selectedOptionId!!)
         }
-
         triviaViewModel.loadNextQuestion()
-
     }
 
 }

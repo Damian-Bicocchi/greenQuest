@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.repository.TriviaRepository
+import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.states.trivia.EstadoTrivia
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -67,12 +68,15 @@ class TriviaViewModel: ViewModel() {
 
                 _explicacionState.value = explicacionCargada
                 if (esCorrecta) {
-                    withContext(dispatcherIO){
-                        TriviaRepository.marcarComoRespondida(idPregunta)
-                    }
                     _gameState.value = EstadoTrivia.CORRECTO
                 } else {
                     _gameState.value = EstadoTrivia.INCORRECTO
+                }
+                withContext(dispatcherIO){
+                    TriviaRepository.marcarComoRespondida(
+                        idPregunta,
+                        userId = UsuarioRepository.obtenerUsuarioLocal()!!.uid,
+                        esCorrecta = esCorrecta)
                 }
             } catch (e: Exception) {
                 Log.e("greenQuest", "Error en chequearRespuestaCorrecta: ${e.message}")

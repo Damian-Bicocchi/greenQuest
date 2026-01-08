@@ -28,13 +28,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:textStyle="bold"
-                    android:textSize="20sp"
+                    android:textSize="28sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:lineSpacingExtra="4dp"
                     android:text="@string/placeholder_pregunta"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
 
                 <!-- Contenedor DINAMICO para opciones -->
                 <RadioGroup
@@ -46,7 +47,8 @@
 
                     <RadioButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:gravity="center"/>
                 </RadioGroup>
                 <LinearLayout
                     android:layout_width="match_parent"
