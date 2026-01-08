@@ -8,6 +8,5 @@ import androidx.room.PrimaryKey
 data class PreguntaTrivia(
     @PrimaryKey(false) val preguntaId: Long,
     @ColumnInfo(name = "question_text") var questionText: String,
-    @ColumnInfo(name = "answered_question") var answeredQuestion: Boolean = false,
     @ColumnInfo(name = "explanation") var explanation: String,
 )
