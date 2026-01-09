@@ -40,7 +40,8 @@ class InicioSesionModel: ViewModel() {
                         userName = userName,
                         password = password,
                         puntos = 0,
-                        imagen = null
+                        imagen = null,
+                        descripcion = null
                     )
                 )
                 emit("OK")

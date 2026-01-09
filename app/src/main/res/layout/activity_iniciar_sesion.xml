@@ -64,27 +64,27 @@
                 android:textColor="@color/texto_normal"
                 android:textSize="20sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                app:boxBackgroundMode="none"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username_input"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingHorizontal="12dp"
-                    android:paddingVertical="12dp"
-                    android:background="@drawable/edittext"
-                    android:hint="@string/username_hint"
-                    android:inputType="text|textNoSuggestions"
-                    android:autofillHints="username"
-                    android:textColor="@color/texto_normal"
-                    android:textColorHint="@color/texto_normal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginBottom="12dp"
+                    app:boxBackgroundMode="none"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/usernameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="12dp"
+                        android:background="@drawable/edittext"
+                        android:hint="@string/username_hint"
+                        android:inputType="text|textNoSuggestions"
+                        android:autofillHints="username"
+                        android:textColor="@color/texto_normal"
+                        android:textColorHint="@color/texto_normal" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/label_contrasenia"

@@ -24,5 +24,6 @@
     <color name="texto_oscuro">#181926</color>
     <color name="texto_sobre_acento_de_fondo">#1D1B20</color>
     <color name="white">#FFFFFF</color>
+    <color name="boton_configiuracion">#6E738D</color>
 
 </resources>
