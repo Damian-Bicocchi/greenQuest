@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.greenquest.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,7 +31,7 @@ class CategorizarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_categorizar, container, false)
     }
 
@@ -53,4 +54,6 @@ class CategorizarFragment : Fragment() {
                 }
             }
     }
+
+
 }

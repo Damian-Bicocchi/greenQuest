@@ -5,17 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.adapters.AdapterUsuarios
+import android.widget.TextView
 import com.example.greenquest.R
-import com.example.greenquest.database.user.User
 
-class TopAmigosFragment : Fragment() {
+class TiendaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_top_amigos, container, false)
     }
+
 }

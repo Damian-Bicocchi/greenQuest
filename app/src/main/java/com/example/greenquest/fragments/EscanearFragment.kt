@@ -81,7 +81,6 @@ class EscanearFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         escanearModel = ViewModelProvider(this)[EscanearModel::class.java]
-
         if (ContextCompat.checkSelfPermission(
             requireContext(),
                 Manifest.permission.CAMERA
@@ -117,6 +116,10 @@ class EscanearFragment : Fragment() {
         super.onPause()
         camaraIniciada = false
         cameraProvider?.unbindAll()
+        val toolbarContainer = activity!!.findViewById<View>(
+            R.id.toolbar_container
+        )
+        toolbarContainer.visibility = View.GONE
     }
 
 
@@ -206,7 +209,7 @@ class EscanearFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-                
+
                 is ScanState.HappyError -> {
                     showToastError("¡Oh no! " + state.message)
                 }
