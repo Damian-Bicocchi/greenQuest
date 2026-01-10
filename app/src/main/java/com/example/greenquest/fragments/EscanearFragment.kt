@@ -25,7 +25,7 @@ import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
-import com.example.greenquest.viewmodel.ScanState
+import com.example.greenquest.states.ScanState
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage

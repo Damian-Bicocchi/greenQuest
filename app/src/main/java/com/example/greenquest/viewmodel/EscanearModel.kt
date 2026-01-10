@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.MonedasRepository
 import com.example.greenquest.repository.ScannerRepository
+import com.example.greenquest.states.ScanState
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
