@@ -6,6 +6,7 @@ import com.example.greenquest.database.estadisticas.HistorialResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.OffsetDateTime
+import java.time.ZoneId
 
 object EstadisticasRepository {
     private val historialResiduoDao by lazy {
@@ -18,7 +19,7 @@ object EstadisticasRepository {
                     historialResiduoId = 0,
                     idResiduo = payload.id_residuo,
                     idUsuario = UsuarioRepository.getUserProfile().id!!,
-                    fecha = OffsetDateTime.now(),
+                    fecha = OffsetDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires")),
                     tipoResiduo = payload.tipo_residuo,
                     puntosDados = payload.puntaje
                 )

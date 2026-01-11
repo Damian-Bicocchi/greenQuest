@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="1dp"
+    android:background="@color/acento_de_fondo">
+
+    <ImageView
+        android:id="@+id/icono_logo_residuo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/texto_nombre_residuo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="Nombre del Residuo"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/texto_sobre_acento_de_fondo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_fecha_residuo"
+        app:layout_constraintStart_toEndOf="@+id/icono_logo_residuo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/layout_fecha_residuo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/texto_fecha_residuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09/12/18"
+            android:textSize="20sp"
+            android:textColor="@color/texto_normal" />
+        <TextView
+            android:id="@+id/texto_hora_residuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:34:56"
+            android:textSize="18sp"
+            android:textColor="@color/texto_normal"/>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
