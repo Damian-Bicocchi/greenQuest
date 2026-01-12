@@ -23,6 +23,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.states.ScanState
@@ -116,7 +117,7 @@ class EscanearFragment : Fragment() {
         super.onPause()
         camaraIniciada = false
         cameraProvider?.unbindAll()
-        val toolbarContainer = activity!!.findViewById<View>(
+        val toolbarContainer = requireActivity().findViewById<View>(
             R.id.toolbar_container
         )
         toolbarContainer.visibility = View.GONE
@@ -203,11 +204,10 @@ class EscanearFragment : Fragment() {
                         tipoResiduo = state.payload.tipo_residuo,
                         puntos = state.payload.puntaje
                     )
-                    val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment)
-                        .addToBackStack(null)
-                        .commit()
+                    val action =
+                        EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)
+
+                    findNavController().navigate(action)
                 }
 
                 is ScanState.HappyError -> {

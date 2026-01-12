@@ -5,6 +5,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.MiPerfilFragment
@@ -17,110 +19,50 @@ import com.example.greenquest.fragments.TriviaFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class menu_principal : AppCompatActivity() {
+
     private lateinit var binding: ActivityToolbarBinding
-    private var topGlobalFragment: TopGlobal? = null
-    private var topAmigosFragment: TiendaFragment? = null
-    private var escanearFragment: EscanearFragment? = null
-    private var categorizarFragment: CategorizarFragment? = null
-    private var miPefilFragment : MiPerfilFragment? = null
-
-    private var triviaFragment : TriviaFragment? = null
-
-    private var estadisticasFragment : EstadisticasFragment? = null
-
-    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityToolbarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
-        navigation.setOnItemSelectedListener { item -> onNavigationItemSelectedListener(item) }
-        val miPerfil = binding.miPerfil
-        miPerfil.setOnClickListener {
-            miPefilFragment = MiPerfilFragment()
-            showFragment(miPefilFragment!!)
-        }
-        if (savedInstanceState == null) {
-            topGlobalFragment = TopGlobal()
-            showFragment(topGlobalFragment!!)
-            navigation.selectedItemId = R.id.topGlobalFragment
-        }
-    }
 
-    private val onNavigationItemSelectedListener: (MenuItem) -> Boolean = { item ->
-        when (item.itemId) {
-            R.id.topGlobalFragment -> {
-                if (topGlobalFragment == null) {
-                    topGlobalFragment = TopGlobal()
-                }
-                showFragment(topGlobalFragment!!)
-                true
-            }
-            R.id.topAmigosFragment -> {
-                if (topAmigosFragment == null) {
-                    topAmigosFragment = TiendaFragment()
-                }
-                showFragment(topAmigosFragment!!)
-                true
-            }
-            R.id.escanearFragment -> {
-                if (escanearFragment == null) {
-                    escanearFragment = EscanearFragment()
-                }
-                showFragment(escanearFragment!!)
-                true
-            }
-            R.id.estadisticaFragment -> {
-                if (estadisticasFragment == null) {
-                    estadisticasFragment = EstadisticasFragment()
-                }
-                showFragment(estadisticasFragment!!)
-                true
-            }
-            R.id.triviaFragment -> {
-                if (triviaFragment == null) {
-                    triviaFragment = TriviaFragment()
-                }
-                showFragment(triviaFragment!!)
-                true
-            }
+        // NavController
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.frame_container) as NavHostFragment
 
-            else -> false
+        val navController = navHostFragment.navController
+
+        // Conectar BottomNavigation con el grafo
+        binding.bottomNavigation.setupWithNavController(navController)
+
+        // Click en perfil (toolbar)
+        binding.miPerfil.setOnClickListener {
+            navController.navigate(R.id.miPerfil)
+        }
+
+        // Toolbar dinámica según destino
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.topGlobalFragment -> setToolbar("Top Global", true)
+                R.id.tiendaFragment -> setToolbar("Tienda", true)
+                R.id.categorizarFragment -> setToolbar("Categorizar", true)
+                R.id.triviaFragment -> setToolbar("Trivia", true)
+                R.id.miPerfil-> setToolbar("Mi Perfil", true)
+                R.id.escanearFragment -> setToolbar("", false)
+                R.id.estadisticasFragment -> setToolbar("Estadísticas de usuario", true)
+                else -> setToolbar("", true)
+            }
         }
     }
 
-    private fun showFragment(fragment: Fragment) {
-        if (fragment == currentFragment) return
-
-        // ✅ Actualizar toolbar ANTES o DESPUÉS del commit (da igual mientras sea siempre)
-        when (fragment) {
-            is TopGlobal -> setToolbar("Top Global", true)
-            is TiendaFragment -> setToolbar("Tienda", true)
-            is CategorizarFragment -> setToolbar("Categorizar", true)
-            is TriviaFragment -> setToolbar("Trivia", true)
-            is MiPerfilFragment -> setToolbar("Mi Perfil", true)
-            is EscanearFragment -> setToolbar("", false)
-            is EstadisticasFragment -> setToolbar("Estadísticas de usuario", true)
-            else -> setToolbar("", true)
-        }
-
-        supportFragmentManager.beginTransaction().apply {
-            currentFragment?.let { hide(it) }
-
-            if (fragment.isAdded) show(fragment)
-            else add(R.id.frame_container, fragment)
-
-            commit()
-        }
-
-        currentFragment = fragment
-    }
-
-    private fun setToolbar(titulo : String, mostrarToolbar : Boolean = true){
-        binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
+    private fun setToolbar(titulo: String, mostrarToolbar: Boolean = true) {
+        binding.toolbarContainer.visibility =
+            if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo
     }
 }

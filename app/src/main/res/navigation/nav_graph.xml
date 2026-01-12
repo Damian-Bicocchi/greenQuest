@@ -2,22 +2,33 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/topGlobalFragment">
 
     <fragment
-    android:id="@+id/escanearFragment"
-    android:name="com.example.greenquest.fragments.EscanearFragment"
-    tools:layout="@layout/fragment_escanear">
+        android:id="@+id/topGlobalFragment"
+        android:name="com.example.greenquest.fragments.TopGlobal"
+        android:label="Top Global" />
 
-    <action
-        android:id="@+id/action_escanearFragment_to_escaneadoExitoso"
-        app:destination="@id/escaneadoExitosoFragment" />
+    <fragment
+        android:id="@+id/escanearFragment"
+        android:name="com.example.greenquest.fragments.EscanearFragment"
+        tools:layout="@layout/fragment_escanear">
+
+        <action
+            android:id="@+id/action_escanearFragment_to_escaneadoExitoso"
+            app:destination="@id/escaneadoExitosoFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/escaneadoExitosoFragment"
         android:name="com.example.greenquest.fragments.EscaneadoExitoso"
-        tools:layout="@layout/fragment_escaneado_exitoso" >
+        tools:layout="@layout/fragment_escaneado_exitoso">
+
+        <argument
+            android:name="datosEscaneo"
+            app:argType="com.example.greenquest.database.escaneo.DatosEscaneo" />
+
         <action
             android:id="@+id/action_escaneadoExitosoFragment_to_escanearFragment"
             app:destination="@id/escanearFragment" />
@@ -26,7 +37,8 @@
     <fragment
         android:id="@+id/estadisticasFragment"
         android:name="com.example.greenquest.fragments.EstadisticasFragment"
-        android:label="EstadisticasFragment" >
+        android:label="Estadísticas">
+
         <action
             android:id="@+id/action_estadisticasFragment_to_historialResiduoCompletoFragment"
             app:destination="@id/historialResiduoCompletoFragment" />
@@ -35,5 +47,33 @@
     <fragment
         android:id="@+id/historialResiduoCompletoFragment"
         android:name="com.example.greenquest.fragments.HistorialResiduoCompletoFragment"
-        android:label="HistorialResiduoCompletoFragment" />
+        android:label="Historial completo" />
+
+    <fragment
+        android:id="@+id/categorizarFragment"
+        android:name="com.example.greenquest.fragments.CategorizarFragment"
+        android:label="Categorizar"
+        tools:layout="@layout/fragment_categorizar" />
+
+    <fragment
+        android:id="@+id/triviaFragment"
+        android:name="com.example.greenquest.fragments.TriviaFragment"
+        android:label="Trivia" />
+
+    <fragment
+        android:id="@+id/tiendaFragment"
+        android:name="com.example.greenquest.fragments.TiendaFragment"
+        android:label="Tienda" />
+
+    <fragment
+        android:id="@+id/configuracionFragment"
+        android:name="com.example.greenquest.fragments.ConfiguracionFragment"
+        android:label="Configuración" />
+
+    <fragment
+        android:id="@+id/miPerfil"
+        android:name="com.example.greenquest.fragments.MiPerfilFragment"
+        android:label="Mi perfil"
+        tools:layout="@layout/fragment_mi_perfil" />
+
 </navigation>

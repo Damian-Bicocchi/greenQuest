@@ -8,66 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
-import com.example.greenquest.database.escaneo.DatosEscaneo
+import kotlin.getValue
 
 
-private const val ARG_DATOS = "datos_escaneo"
+class EscaneadoExitoso : Fragment(R.layout.fragment_escaneado_exitoso) {
 
-
-class EscaneadoExitoso : Fragment() {
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        Log.d("greenQuestFragment", "HEre it is")
-        return inflater.inflate(R.layout.fragment_escaneado_exitoso, container, false)
-    }
+    private val args: EscaneadoExitosoArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
-        val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
-        // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
-        datos?.let {
-            view.findViewById<TextView>(
-                R.id.label_resumen_residuo).text = "Reciclaste: ${it.tipoResiduo}"
-            view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = "¡Felicidades! Sumaste " + it.puntos + " puntos"
-        }
+        val datos = args.datosEscaneo
 
-        val buttonDenunciar = view.findViewById<View>(R.id.button_denunciar_categoria)
-        val buttonContinuar = view.findViewById<View>(R.id.button_qr_exitoso_continuar)
+        view.findViewById<TextView>(R.id.label_resumen_residuo).text =
+            "Reciclaste: ${datos}"
 
-        buttonContinuar.setOnClickListener {
-            val fragment = EscanearFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
+        view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text =
+            "¡Felicidades! Sumaste ${datos.puntos} puntos"
 
-        buttonDenunciar.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "No implementado",
-                Toast.LENGTH_LONG).show()
-
-        }
-
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(datosEscaneo: DatosEscaneo): EscaneadoExitoso {
-            val fragment = EscaneadoExitoso()
-            val args = Bundle()
-            args.putParcelable(ARG_DATOS, datosEscaneo)
-            fragment.arguments = args
-            return fragment
-        }
+        view.findViewById<View>(R.id.button_qr_exitoso_continuar)
+            .setOnClickListener {
+                findNavController().navigate(
+                    EscaneadoExitosoDirections
+                        .actionEscaneadoExitosoFragmentToEscanearFragment()
+                )
+            }
     }
 }

@@ -22,55 +22,38 @@ import com.example.greenquest.viewmodel.EstadisticaViewModel
 import kotlinx.coroutines.launch
 
 
-class EstadisticasFragment : Fragment() {
-
+class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var estadisticaViewModel: EstadisticaViewModel
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         estadisticaViewModel = ViewModelProvider(this)[EstadisticaViewModel::class.java]
-
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_estadisticas, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         estadisticaViewModel.obtenerResiduos()
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                estadisticaViewModel.residuos.collect { lista ->
+                    val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
+                    val adapter = AdapterHistorialItem(listaFinal)
 
-                estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
-                    val listaFinal = if (lista.size > 3) lista.subList(0,2) else lista
-                    val adapterHistorialItem = AdapterHistorialItem(listaFinal)
-                    val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
+                    val recycler = view.findViewById<RecyclerView>(R.id.recycler_view_historial)
                     recycler.layoutManager = LinearLayoutManager(requireContext())
-                    recycler.adapter = adapterHistorialItem
+                    recycler.adapter = adapter
                 }
             }
         }
+
         val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
-
         linkTodaActividad.setOnClickListener {
-
-            val fragment = HistorialResiduoCompletoFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
-
+            findNavController().navigate(
+                R.id.action_estadisticasFragment_to_historialResiduoCompletoFragment
+            )
         }
     }
-
-
 }
