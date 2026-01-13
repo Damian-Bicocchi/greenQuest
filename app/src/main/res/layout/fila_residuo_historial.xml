@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="1dp"
-    android:background="@color/acento_de_fondo">
+    android:background="@color/acento_de_fondo"
+    android:layout_marginBottom="2dp">
 
     <ImageView
         android:id="@+id/icono_logo_residuo"
@@ -24,7 +25,6 @@
         android:layout_marginEnd="1dp"
         android:text="Nombre del Residuo"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="@color/texto_sobre_acento_de_fondo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/layout_fecha_residuo"

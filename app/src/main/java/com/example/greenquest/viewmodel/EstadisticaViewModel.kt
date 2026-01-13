@@ -35,6 +35,7 @@ class EstadisticaViewModel : ViewModel() {
     }
 
     fun obtenerResiduosEntreFechas(fechaInicio: Long?, fechaFin: Long?){
+        Log.e("estadisticasLogging", "Llamaron a obtenerResiduos y fechaInicio es $fechaInicio, mientras que fechaFin = $fechaFin")
         viewModelScope.launch {
             try{
                 val mapeo = EstadisticasRepository.obtenerResiduosEntre(

@@ -8,6 +8,7 @@ import com.example.greenquest.database.estadisticas.ResumenResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
+import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -59,7 +60,7 @@ object EstadisticasRepository {
             OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
         }
         val fin = fechaFin?.let {
-            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
+            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC).with(LocalTime.MAX)
         }
 
         return withContext(Dispatchers.IO) {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.ui.text.capitalize
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.Locale.getDefault
 
 class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
 
@@ -39,8 +42,10 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
         val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
         holder.textoFechaResiduo.text = residuoParticular.fecha?.format(formatterFecha)
-        holder.textoHoraResiduo.text = residuoParticular.fecha?.format(DateTimeFormatter.ISO_LOCAL_TIME)
-        holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name
+        val formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss")
+        holder.textoHoraResiduo.text = residuoParticular.fecha?.format(formatterHora)
+        holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
     }
 
     private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo): Drawable? {
