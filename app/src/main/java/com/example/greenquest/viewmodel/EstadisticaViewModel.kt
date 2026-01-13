@@ -3,6 +3,7 @@ package com.example.greenquest.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.repository.EstadisticasRepository
 import com.example.greenquest.repository.UsuarioRepository
@@ -16,6 +17,10 @@ class EstadisticaViewModel : ViewModel() {
     private val _residuos = MutableStateFlow<List<HistorialResiduo>>(emptyList())
     val residuos : StateFlow<List<HistorialResiduo>> = _residuos.asStateFlow()
 
+    private val _residuosEntreFechas = MutableStateFlow<Map<TipoResiduo, Int>>(emptyMap())
+    val residuosEntreFechas: StateFlow<Map<TipoResiduo, Int>> = _residuosEntreFechas.asStateFlow()
+
+
     fun obtenerResiduos(){
         viewModelScope.launch {
             try {
@@ -23,9 +28,23 @@ class EstadisticaViewModel : ViewModel() {
                 _residuos.value = lista
             }
             catch (e: Exception){
-                Log.e("estadisticaLogging", "hubo un error en 26 ${e.message}")
+                Log.e("estadisticaLogging", "hubo un error en obtenerResiduos ${e.message}")
             }
         }
 
+    }
+
+    fun obtenerResiduosEntreFechas(fechaInicio: Long?, fechaFin: Long?){
+        viewModelScope.launch {
+            try{
+                val mapeo = EstadisticasRepository.obtenerResiduosEntre(
+                    fechaInicio,
+                    fechaFin,
+                    UsuarioRepository.obtenerIdUsuarioActual() )
+                _residuosEntreFechas.value = HashMap(mapeo)
+            } catch (e: Exception){
+                Log.e("estadisticaLogging", "hubo un error en obtenerResiduosEntreFechas $e")
+            }
+        }
     }
 }

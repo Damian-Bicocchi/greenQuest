@@ -38,7 +38,6 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
         val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val formatterHora = DateTimeFormatter.ofPattern("HH-mm-ss")
         holder.textoFechaResiduo.text = residuoParticular.fecha?.format(formatterFecha)
         holder.textoHoraResiduo.text = residuoParticular.fecha?.format(DateTimeFormatter.ISO_LOCAL_TIME)
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name

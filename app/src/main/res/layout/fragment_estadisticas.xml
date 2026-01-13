@@ -74,20 +74,20 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
                 android:background="@color/fondo_secundario"
+                android:orientation="vertical"
                 android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_tipos_residuos_por_periodo"
-                    android:gravity="center"
-                    android:textSize="20sp"
+                    android:layout_marginBottom="1dp"
                     android:background="@color/fondo_secundario"
+                    android:gravity="center"
+                    android:text="@string/title_tipos_residuos_por_periodo"
                     android:textColor="@color/texto_secundario"
-                    android:layout_marginBottom="1dp"/>
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,10 +99,11 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
                         android:hint="@string/title_fecha_de_inicio"
                         android:textColorHint="@color/accent_color">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fecha_inicio_tipo_residuo_por_periodo"
                             android:layout_width="match_parent"
@@ -110,20 +111,22 @@
                             android:focusable="false"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
                         android:hint="@string/title_fecha_de_fin"
                         android:textColorHint="@color/accent_color">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/fecha_fin_tipo_residuo_por_periodo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:textSize="15sp"/>
+                            android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -132,7 +135,8 @@
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pie_chart_tipo_residuo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:minHeight="208dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

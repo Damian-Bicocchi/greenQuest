@@ -5,12 +5,13 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.database.estadisticas.ResumenResiduo
+import java.time.OffsetDateTime
 
 
 @Dao
 interface HistorialResiduoDao {
 
-    @Transaction
     @Query("""
         SELECT * FROM historial_residuos
         WHERE id_usuario = :idUsuario
@@ -20,7 +21,6 @@ interface HistorialResiduoDao {
     suspend fun obtenerNResiduosMasRecientes(cantDeseada: Int, idUsuario: Int): List<HistorialResiduo>
 
 
-    @Transaction
     @Query("""
         SELECT * FROM historial_residuos
         WHERE id_usuario = :idUsuario
@@ -28,19 +28,20 @@ interface HistorialResiduoDao {
     """)
     suspend fun obtenerTodosLosResiduos(idUsuario: Int): List<HistorialResiduo>
 
-    @Transaction
+
     @Query("""
-        SELECT * FROM historial_residuos
+        SELECT tipo_residuo, COUNT(*) as total 
+        FROM historial_residuos
         WHERE (:fechaInicio IS NULL OR fecha >= :fechaInicio)
           AND (:fechaFin IS NULL OR fecha <= :fechaFin)
-          AND (id_usuario = :idUsuario)
-        ORDER BY datetime(fecha) DESC
+          AND id_usuario = :idUsuario
+        GROUP BY tipo_residuo
     """)
-    suspend fun obtenerTodosLosResiduosEntreFechas(
-        fechaInicio: String?,
-        fechaFin: String?,
+    suspend fun obtenerResiduosEntreFechas(
+        fechaInicio: OffsetDateTime?,
+        fechaFin: OffsetDateTime?,
         idUsuario: Int
-    ): List<HistorialResiduo>
+    ): List<ResumenResiduo>
 
     @Transaction
     @Insert
