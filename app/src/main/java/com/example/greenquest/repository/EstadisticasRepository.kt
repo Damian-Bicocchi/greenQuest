@@ -4,6 +4,7 @@ import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,7 +25,7 @@ object EstadisticasRepository {
                     historialResiduoId = 0,
                     idResiduo = payload.id_residuo,
                     idUsuario = UsuarioRepository.getUserProfile().id!!,
-                    fecha = OffsetDateTime.now(ZoneId.of("America/Argentina/Buenos_Aires")),
+                    fecha = OffsetDateTime.now(),
                     tipoResiduo = payload.tipo_residuo,
                     puntosDados = payload.puntaje
                 )
@@ -32,14 +33,6 @@ object EstadisticasRepository {
         }
     }
 
-    @Deprecated("Sin uso en la aplicación greenQuest")
-    suspend fun obtenerNResiduosMasRecientes(cantidad: Int, idUsuario: Int): List<HistorialResiduo>{
-        if (cantidad <= 0) return emptyList()
-        val lista = withContext(Dispatchers.IO){
-            return@withContext historialResiduoDao.obtenerNResiduosMasRecientes(cantidad, idUsuario)
-        }
-        return lista
-    }
 
     suspend fun obtenerTodosLosResiduos(idUsuario: Int): List<HistorialResiduo>{
         val lista = withContext(Dispatchers.IO){
@@ -69,11 +62,40 @@ object EstadisticasRepository {
                 fin,
                 idUsuario
             )
-            var mapARetornar : HashMap<TipoResiduo, Int> = HashMap()
+            val mapARetornar : HashMap<TipoResiduo, Int> = HashMap()
             for (elemento in listaResumen){
                 mapARetornar[elemento.tipo_residuo] = elemento.total
             }
             mapARetornar
+        }
+    }
+
+    suspend fun obtenerPuntosEntre(
+        fechaInicio: Long?,
+        fechaFin: Long?,
+        idUsuario: Int
+    ): Map<String, Int>{
+        val inicioDeResumen = fechaInicio?.let {
+            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
+        }
+
+        val finDeResumen = fechaFin?.let{
+            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC).with(LocalTime.MAX)
+
+        }
+
+        return withContext(Dispatchers.IO){
+            val listaResumenPuntos: List<ResumenPuntos> = historialResiduoDao.obtenerPuntosEntreFechas(
+                inicioDeResumen,
+                finDeResumen,
+                idUsuario
+            )
+            val mapARetornar : HashMap<String, Int> = HashMap()
+            for (elemento in listaResumenPuntos){
+                mapARetornar[elemento.fecha] = elemento.total
+            }
+            mapARetornar
+
         }
     }
 

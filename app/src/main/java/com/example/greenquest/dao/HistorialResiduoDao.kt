@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
 import java.time.OffsetDateTime
 
@@ -33,8 +34,8 @@ interface HistorialResiduoDao {
         SELECT tipo_residuo, COUNT(*) as total 
         FROM historial_residuos
         WHERE (:fechaInicio IS NULL OR fecha >= :fechaInicio)
-          AND (:fechaFin IS NULL OR fecha <= :fechaFin)
-          AND id_usuario = :idUsuario
+            AND (:fechaFin IS NULL OR fecha <= :fechaFin)
+            AND id_usuario = :idUsuario
         GROUP BY tipo_residuo
     """)
     suspend fun obtenerResiduosEntreFechas(
@@ -46,6 +47,21 @@ interface HistorialResiduoDao {
     @Transaction
     @Insert
     suspend fun insertarResiduoAlHistorial(historialResiduo: HistorialResiduo)
+
+    @Query("""
+        SELECT date(fecha) as fecha, SUM(puntos_dados) as total
+        FROM historial_residuos
+        WHERE (:fechaInicio IS NULL OR fecha >= :fechaInicio)
+            AND (:fechaFin IS NULL OR fecha <= :fechaFin)
+            AND id_usuario = :idUsuario
+        GROUP BY date(fecha)
+        ORDER BY fecha ASC
+    """)
+    suspend fun obtenerPuntosEntreFechas(
+        fechaInicio: OffsetDateTime?,
+        fechaFin: OffsetDateTime?,
+        idUsuario: Int
+    ): List<ResumenPuntos>
 
 
 

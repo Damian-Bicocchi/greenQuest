@@ -83,7 +83,9 @@ class EstadisticasFragment : Fragment() {
                 }
             }
         }
+
         pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 estadisticaViewModel.residuosEntreFechas.collect { mapeo ->
@@ -210,7 +212,7 @@ class EstadisticasFragment : Fragment() {
 
 
     private fun showPieChart(mapeo: Map<TipoResiduo, Int>) {
-        if (mapeo.isEmpty() || mapeo.keys.size == 0) {
+        if (mapeo.isEmpty() || mapeo.keys.isEmpty()) {
             val textoAMostrar = if (fechaFinMillisPieChart == null && fechaInicioMillisPieChart == null) {
                 "Usted no ha reciclado aún"
             } else {
@@ -220,7 +222,7 @@ class EstadisticasFragment : Fragment() {
             pieChart.setNoDataText(textoAMostrar)
             return
         }
-        var pieEntries : ArrayList<PieEntry> = ArrayList()
+        val pieEntries : ArrayList<PieEntry> = ArrayList()
 
         val colorArray = resources.getIntArray(R.array.pieChartColorArray)
         val colors = colorArray.toList()
@@ -242,7 +244,6 @@ class EstadisticasFragment : Fragment() {
         val pieData = PieData(pieDataSet)
         pieData.setValueFormatter(PercentFormatter())
         pieChart.description.isEnabled = false
-        pieChart.setUsePercentValues(true) // Ayuda a que los textos no ocupen espacio innecesario
         pieChart.extraBottomOffset = 10f // Ajusta márgenes externos
         pieChart.extraLeftOffset = 10f
         pieChart.extraRightOffset = 10f
