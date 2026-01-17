@@ -4,15 +4,18 @@ import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.database.estadisticas.PeriodoResiduo
 import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.DateTimeException
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.OffsetDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 object EstadisticasRepository {
     private val historialResiduoDao by lazy {
@@ -70,32 +73,63 @@ object EstadisticasRepository {
         }
     }
 
-    suspend fun obtenerPuntosEntre(
-        fechaInicio: Long?,
-        fechaFin: Long?,
+
+    suspend fun obtenerPuntajeEnRangoFecha(
+        periodo: PeriodoResiduo,
         idUsuario: Int
-    ): Map<String, Int>{
-        val inicioDeResumen = fechaInicio?.let {
-            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
+    ): Map<String, Int> {
+        val fechaAhora = Instant.now()
+        val fechaHoy = LocalDate.now()
+
+        return when (periodo) {
+            PeriodoResiduo.HOY -> {
+                val inicioDeResumen = fechaHoy.atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = OffsetDateTime.ofInstant(fechaAhora, ZoneOffset.UTC)
+                obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
+            }
+
+            PeriodoResiduo.SEMANA -> {
+                val inicioDeResumen = fechaHoy.minusDays(6).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
+            }
+
+            PeriodoResiduo.MES -> {
+                val inicioDeResumen = fechaHoy.withDayOfMonth(1).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
+            }
+
+            PeriodoResiduo.AÑO -> {
+                val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
+            }
         }
+    }
 
-        val finDeResumen = fechaFin?.let{
-            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC).with(LocalTime.MAX)
-
-        }
-
-        return withContext(Dispatchers.IO){
+    private suspend fun obtenerPuntosParaRango(
+        inicio: LocalDate,
+        fin: LocalDate,
+        idUsuario: Int
+    ): Map<String, Int> {
+        return withContext(Dispatchers.IO) {
             val listaResumenPuntos: List<ResumenPuntos> = historialResiduoDao.obtenerPuntosEntreFechas(
-                inicioDeResumen,
-                finDeResumen,
+                inicio.atStartOfDay().atOffset(ZoneOffset.UTC),
+                fin.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC),
                 idUsuario
             )
-            val mapARetornar : HashMap<String, Int> = HashMap()
-            for (elemento in listaResumenPuntos){
-                mapARetornar[elemento.fecha] = elemento.total
-            }
-            mapARetornar
 
+            val datosObtenidos = listaResumenPuntos.associate { it.fecha to it.total }
+            val resultado = mutableMapOf<String, Int>()
+            var fechaActual = inicio
+
+            while (!fechaActual.isAfter(fin)) {
+                val fechaStr = fechaActual.format(DateTimeFormatter.ISO_LOCAL_DATE)
+                resultado[fechaStr] = datosObtenidos[fechaStr] ?: 0
+                fechaActual = fechaActual.plusDays(1)
+            }
+            resultado
         }
     }
 

@@ -5,13 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.database.estadisticas.PeriodoResiduo
 import com.example.greenquest.repository.EstadisticasRepository
 import com.example.greenquest.repository.UsuarioRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.time.OffsetDateTime
 
 class EstadisticaViewModel : ViewModel() {
 
@@ -52,18 +53,18 @@ class EstadisticaViewModel : ViewModel() {
         }
     }
 
-    fun obtenerPuntosEntreFechas(fechaInicio: Long?, fechaFin: Long?){
-        viewModelScope.launch {
-            try {
-                val mapeo = EstadisticasRepository.obtenerPuntosEntre(
-                    fechaInicio,
-                    fechaFin,
-                    UsuarioRepository.obtenerIdUsuarioActual()
-                )
-                _puntosEntreFechas.value = HashMap(mapeo)
+    fun obtenerPuntosPorPeriodo(periodoResiduo: PeriodoResiduo){
 
-            } catch(e: Exception){
-                Log.e("estadisticasLogging", "Hubo un error en obtenerPuntosEntreFechas $e")
+        viewModelScope.launch(Dispatchers.IO){
+            viewModelScope.launch {
+                try {
+                    val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
+                    val datos = EstadisticasRepository.obtenerPuntajeEnRangoFecha(periodoResiduo, idUsuario)
+                    _puntosEntreFechas.value = datos
+                } catch (e: Exception) {
+                    // Manejar error
+                    _puntosEntreFechas.value = emptyMap()
+                }
             }
         }
     }

@@ -161,53 +161,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/title_historial_de_puntaja"
+                    android:text="Historial de puntaje"
                     android:textColor="@color/texto_secundario"
                     android:textSize="20sp"
                     android:layout_marginBottom="12dp" />
 
-                <LinearLayout
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout_periodos_line_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/fondo_secundario"
+                    app:tabIndicatorColor="@color/accent_color"
+                    app:tabSelectedTextColor="@color/accent_color"
+                    app:tabTextColor="@color/texto_secundario"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="4dp"
-                        android:hint="@string/title_fecha_de_inicio"
-                        android:textColorHint="@color/accent_color">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/fecha_inicio_historial_de_puntaje"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="4dp"
-                        android:hint="@string/title_fecha_de_fin"
-                        android:textColorHint="@color/accent_color">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/fecha_fin_historial_de_puntaje"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:textSize="15sp"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                        android:text="@string/tab_title_de_hoy" />
 
-                <com.github.mikephil.charting.charts.LineChart
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tab_title_ultima_semana" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tab_title_del_mes"/>
+
+
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/line_chart_historial_puntaje"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="500dp"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
