@@ -120,6 +120,7 @@
 
     <string name="tab_title_de_hoy">Hoy</string>
     <string name="tab_title_ultima_semana">Última semana</string>
-    <string name="tab_title_del_mes">En el mes</string>
-    <string name="tab_title_del_año">En este año</string>
+    <string name="tab_title_del_mes">Este mes</string>
+    <string name="tab_title_del_año">Este año</string>
+    <string name="tab_historico">Histórico</string>
 </resources>

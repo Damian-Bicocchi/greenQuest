@@ -24,6 +24,7 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         val textoNombreResiduo = view.findViewById<TextView>(R.id.texto_nombre_residuo)
         val textoFechaResiduo = view.findViewById<TextView>(R.id.texto_fecha_residuo)
         val textoHoraResiduo = view.findViewById<TextView>(R.id.texto_hora_residuo)
+        val textoPuntaje = view.findViewById<TextView>(R.id.texto_puntos_extra)
     }
 
     private lateinit var parent: ViewGroup
@@ -46,6 +47,9 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         holder.textoHoraResiduo.text = residuoParticular.fecha?.format(formatterHora)
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+        holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
+
+
     }
 
     private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo): Drawable? {

@@ -63,6 +63,20 @@ interface HistorialResiduoDao {
         idUsuario: Int
     ): List<ResumenPuntos>
 
+    @Query("""
+        SELECT SUM(puntos_dados) as total
+        FROM historial_residuos
+        WHERE (:fechaInicio IS NULL OR fecha >= :fechaInicio)
+            AND (:fechaFin IS NULL OR fecha <= :fechaFin)
+            AND id_usuario = :idUsuario
+    """)
+    suspend fun obtenerCantidadPuntosEntreFechas(
+        fechaInicio: OffsetDateTime?,
+        fechaFin: OffsetDateTime?,
+        idUsuario: Int
+    ): Int
+
+
 
 
 }

@@ -46,38 +46,67 @@ object EstadisticasRepository {
         return lista
     }
 
-    suspend fun obtenerResiduosEntre(
-        fechaInicio: Long?,
-        fechaFin: Long?,
+
+    private suspend fun obtenerResiduosParaRango(
+        inicio: OffsetDateTime?,
+        fin: OffsetDateTime?,
         idUsuario: Int
     ): Map<TipoResiduo, Int> {
-
-        val inicio = fechaInicio?.let {
-            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
+        val listaResumen: List<ResumenResiduo> = historialResiduoDao.obtenerResiduosEntreFechas(
+            inicio,
+            fin,
+            idUsuario
+        )
+        val mapARetornar: HashMap<TipoResiduo, Int> = HashMap()
+        for (elemento in listaResumen) {
+            mapARetornar[elemento.tipo_residuo] = elemento.total
         }
-        val fin = fechaFin?.let {
-            OffsetDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC).with(LocalTime.MAX)
-        }
-
-        return withContext(Dispatchers.IO) {
-            val listaResumen: List<ResumenResiduo> = historialResiduoDao.obtenerResiduosEntreFechas(
-                inicio,
-                fin,
-                idUsuario
-            )
-            val mapARetornar : HashMap<TipoResiduo, Int> = HashMap()
-            for (elemento in listaResumen){
-                mapARetornar[elemento.tipo_residuo] = elemento.total
-            }
-            mapARetornar
-        }
+        return mapARetornar
     }
 
 
+    suspend fun obtenerResiduosEnRangoFecha(
+        periodo: PeriodoResiduo,
+        idUsuario: Int
+    ): Map<TipoResiduo, Int>{
+        val fechaAhora = Instant.now()
+        val fechaHoy = LocalDate.now()
+        
+        return when(periodo){
+            PeriodoResiduo.HOY -> {
+                val inicioDeResumen = fechaHoy.atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = OffsetDateTime.ofInstant(fechaAhora, ZoneOffset.UTC)
+                obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
+            }
+
+            PeriodoResiduo.SEMANA -> {
+                val inicioDeResumen = fechaHoy.minusDays(6).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
+
+            }
+            PeriodoResiduo.MES -> {
+                val inicioDeResumen = fechaHoy.withDayOfMonth(1).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
+
+            }
+            PeriodoResiduo.AÑO -> {
+                val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
+                val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
+                obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
+            }
+
+            PeriodoResiduo.TOTAL -> {
+                obtenerResiduosParaRango(null, null, idUsuario)
+            }
+        }
+    }
+    
     suspend fun obtenerPuntajeEnRangoFecha(
         periodo: PeriodoResiduo,
         idUsuario: Int
-    ): Map<String, Int> {
+    ): Int{
         val fechaAhora = Instant.now()
         val fechaHoy = LocalDate.now()
 
@@ -105,31 +134,26 @@ object EstadisticasRepository {
                 val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
                 obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
             }
+            PeriodoResiduo.TOTAL -> {
+                obtenerPuntosParaRango(null, null, idUsuario = idUsuario)
+            }
+            
         }
     }
 
     private suspend fun obtenerPuntosParaRango(
-        inicio: LocalDate,
-        fin: LocalDate,
+        inicio: LocalDate?,
+        fin: LocalDate?,
         idUsuario: Int
-    ): Map<String, Int> {
+    ): Int {
         return withContext(Dispatchers.IO) {
-            val listaResumenPuntos: List<ResumenPuntos> = historialResiduoDao.obtenerPuntosEntreFechas(
-                inicio.atStartOfDay().atOffset(ZoneOffset.UTC),
-                fin.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC),
+            val cantidadPuntos: Int = historialResiduoDao.obtenerCantidadPuntosEntreFechas(
+                inicio?.atStartOfDay()?.atOffset(ZoneOffset.UTC),
+                fin?.atTime(LocalTime.MAX)?.atOffset(ZoneOffset.UTC),
                 idUsuario
             )
 
-            val datosObtenidos = listaResumenPuntos.associate { it.fecha to it.total }
-            val resultado = mutableMapOf<String, Int>()
-            var fechaActual = inicio
-
-            while (!fechaActual.isAfter(fin)) {
-                val fechaStr = fechaActual.format(DateTimeFormatter.ISO_LOCAL_DATE)
-                resultado[fechaStr] = datosObtenidos[fechaStr] ?: 0
-                fechaActual = fechaActual.plusDays(1)
-            }
-            resultado
+            cantidadPuntos
         }
     }
 

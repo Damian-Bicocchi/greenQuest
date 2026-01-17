@@ -22,8 +22,8 @@ class EstadisticaViewModel : ViewModel() {
     private val _residuosEntreFechas = MutableStateFlow<Map<TipoResiduo, Int>>(emptyMap())
     val residuosEntreFechas: StateFlow<Map<TipoResiduo, Int>> = _residuosEntreFechas.asStateFlow()
 
-    private val _puntosEntreFechas = MutableStateFlow<Map<String, Int>>(emptyMap())
-    val puntosEntreFechas: StateFlow<Map<String, Int>> = _puntosEntreFechas.asStateFlow()
+    private val _puntosEntreFechas = MutableStateFlow(0)
+    val puntosEntreFechas: StateFlow<Int> = _puntosEntreFechas.asStateFlow()
 
 
     fun obtenerResiduos(){
@@ -39,15 +39,14 @@ class EstadisticaViewModel : ViewModel() {
 
     }
 
-    fun obtenerResiduosEntreFechas(fechaInicio: Long?, fechaFin: Long?){
+
+    fun obtenerResiduosPorPeriodo(periodoResiduo: PeriodoResiduo){
         viewModelScope.launch {
-            try{
-                val mapeo = EstadisticasRepository.obtenerResiduosEntre(
-                    fechaInicio,
-                    fechaFin,
-                    UsuarioRepository.obtenerIdUsuarioActual() )
-                _residuosEntreFechas.value = HashMap(mapeo)
-            } catch (e: Exception){
+            try {
+                val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
+                val mapeo = EstadisticasRepository.obtenerResiduosEnRangoFecha(periodoResiduo, idUsuario)
+                _residuosEntreFechas.value = mapeo
+            } catch (e: Exception) {
                 Log.e("estadisticaLogging", "hubo un error en obtenerResiduosEntreFechas $e")
             }
         }
@@ -59,11 +58,11 @@ class EstadisticaViewModel : ViewModel() {
             viewModelScope.launch {
                 try {
                     val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
-                    val datos = EstadisticasRepository.obtenerPuntajeEnRangoFecha(periodoResiduo, idUsuario)
-                    _puntosEntreFechas.value = datos
+                    val cantidadTotal = EstadisticasRepository.obtenerPuntajeEnRangoFecha(periodoResiduo, idUsuario)
+                    _puntosEntreFechas.value = cantidadTotal
                 } catch (e: Exception) {
                     // Manejar error
-                    _puntosEntreFechas.value = emptyMap()
+                    _puntosEntreFechas.value = 0
                 }
             }
         }

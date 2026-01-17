@@ -32,18 +32,9 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.CompositeDateValidator
-import com.google.android.material.datepicker.DateValidatorPointBackward
-import com.google.android.material.datepicker.DateValidatorPointForward
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -55,11 +46,6 @@ class EstadisticasFragment : Fragment() {
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
 
-    private var fechaInicioMillisPieChart: Long? = null
-    private var fechaFinMillisPieChart: Long? = null
-
-    private var fechaInicioMillisLineChart: Long? = null
-    private var fechaFinMillisLineChart: Long? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,27 +61,21 @@ class EstadisticasFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_estadisticas, container, false)
     }
 
-    override fun onPause() {
-        super.onPause()
-        fechaFinMillisPieChart = null
-        fechaInicioMillisPieChart = null
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        estadisticaViewModel.obtenerResiduos()
-        estadisticaViewModel.obtenerResiduosEntreFechas(fechaInicioMillisPieChart, fechaFinMillisPieChart)
 
         val tabsLineChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_line_chart)
+        val tabsPieChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_pie_chart)
 
-        tabsLineChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+        tabsPieChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 when (p0?.position){
-                    0 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.HOY)
-                    1 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.SEMANA)
-                    2 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.MES)
-                    3 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.AÑO)
+                    0 -> estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.HOY)
+                    1 -> estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.SEMANA)
+                    2 -> estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.MES)
+                    3 -> estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.TOTAL)
                 }
             }
 
@@ -103,15 +83,31 @@ class EstadisticasFragment : Fragment() {
                 Log.d("estadisticasLogging", "onTabUnselected")
 
             }
-
             override fun onTabReselected(p0: TabLayout.Tab?) {
                 Log.d("estadisticasLogging", "onTabReselected")
             }
+        })
 
+        tabsLineChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                when (p0?.position){
+                    0 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.HOY)
+                    1 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.SEMANA)
+                    2 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.MES)
+                    3 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.TOTAL)
+                }
+            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                Log.d("estadisticasLogging", "onTabUnselected")
+
+            }
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+                Log.d("estadisticasLogging", "onTabReselected")
+            }
         })
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
+                estadisticaViewModel.obtenerResiduos()
                 estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
                     val listaFinal = if (lista.size > 3) lista.subList(0,2) else lista
                     val adapterHistorialItem = AdapterHistorialItem(listaFinal)
@@ -123,7 +119,6 @@ class EstadisticasFragment : Fragment() {
         }
 
         pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
-        barChart = view.findViewById(R.id.line_chart_historial_puntaje)
 
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -136,7 +131,7 @@ class EstadisticasFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 estadisticaViewModel.puntosEntreFechas.collect {
-                    mapeo -> showBarChart(mapeo = mapeo)
+                    cantidadPuntos -> showPuntosTotales(cantidadPuntos = cantidadPuntos)
                 }
             }
         }
@@ -150,125 +145,27 @@ class EstadisticasFragment : Fragment() {
                 .commit()
 
         }
-
-        val fechaInicioInputPieChart = view
-            .findViewById<TextInputEditText>(
-                R.id.fecha_inicio_tipo_residuo_por_periodo)
-
-        val fechaFinInputPieChart = view
-            .findViewById<TextInputEditText>(
-                R.id.fecha_fin_tipo_residuo_por_periodo)
-
-        fechaInicioInputPieChart.setOnClickListener {
-            val limiteSuperior = fechaFinMillisPieChart ?: MaterialDatePicker.todayInUtcMilliseconds()
-            showDatePicker(
-                fechaLimite = limiteSuperior,
-                esSeleccionandoInicio = true,
-                onDateSelected = { date, millis ->
-                    fechaInicioInputPieChart.setText(date)
-                    fechaInicioMillisPieChart = millis
-                    estadisticaViewModel.obtenerResiduosEntreFechas(fechaInicioMillisPieChart, fechaFinMillisPieChart)
-                },
-                onDateCleared = {
-                    fechaInicioInputPieChart.setText("") // Limpia el input
-                    fechaInicioMillisPieChart = null    // Limpia la variable
-                    estadisticaViewModel.obtenerResiduosEntreFechas(null, fechaFinMillisPieChart)
-                }
-            )
-        }
-
-        fechaFinInputPieChart.setOnClickListener {
-            // Idea. Poner un limite inferior. Es obvio que no va a haber cosas antes de 2025,
-            // pero por las dudas no lo pongo
-            showDatePicker(
-                fechaLimite = fechaInicioMillisPieChart,
-                esSeleccionandoInicio = false,
-                onDateSelected = { date, millis ->
-                    fechaFinInputPieChart.setText(date)
-                    fechaFinMillisPieChart = millis
-                    estadisticaViewModel.obtenerResiduosEntreFechas(fechaInicioMillisPieChart, fechaFinMillisPieChart)
-                },
-                onDateCleared = {
-                    fechaFinInputPieChart.setText("") // Limpia el input
-                    fechaFinMillisPieChart = null    // Limpia la variable
-                    estadisticaViewModel.obtenerResiduosEntreFechas(fechaInicioMillisPieChart, null)
-                }
-            )
-        }
     }
 
-    private fun showDatePicker(
-        fechaLimite: Long?,
-        esSeleccionandoInicio: Boolean,
-        onDateSelected: (String, Long) -> Unit,
-        onDateCleared: () -> Unit
-    ) {
-        val fechaHoy: Long = MaterialDatePicker.todayInUtcMilliseconds()
+    private fun showPuntosTotales(cantidadPuntos: Int) {
+        val textoCantidadPuntos = view?.findViewById<TextView>(R.id.texto_cantidad_puntos)
+        val textoStringPuntos = view?.findViewById<TextView>(R.id.texto_string_puntos)
 
-        val constraintsBuilder: CalendarConstraints = getCalendarConstraint(esSeleccionandoInicio, fechaLimite, fechaHoy)
-
-        val picker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Selecciona una fecha")
-            .setSelection(fechaLimite ?: MaterialDatePicker.todayInUtcMilliseconds())
-            .setCalendarConstraints(constraintsBuilder)
-            .setNegativeButtonText("Limpiar")
-            .setPositiveButtonText("Seleccionar")
-            .build()
-
-        picker.addOnPositiveButtonClickListener { selection ->
-            val instante = Instant.ofEpochMilli(selection).atZone(ZoneId.of("UTC")).toLocalDate()
-            val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-            val fechaFormateada = instante.format(formatterFecha)
-            onDateSelected(fechaFormateada, selection)
-        }
-
-        picker.addOnNegativeButtonClickListener {
-            onDateCleared()
-        }
-
-        picker.show(parentFragmentManager, "DATE_PICKER")
-    }
-
-    private fun getCalendarConstraint(
-        esSeleccionandoInicio: Boolean,
-        fechaLimite: Long?,
-        fechaHoy: Long
-    ): CalendarConstraints {
-        val constraintsBuilder = CalendarConstraints.Builder()
-
-        // La fecha limite en cualquier momento por defecto es hoy
-
-        val validator = if (esSeleccionandoInicio) {
-            // Si elijo INICIO: debe ser ANTES que la fecha de FIN
-            val fin = fechaLimite ?: fechaHoy
-            DateValidatorPointBackward.before(fin)
-        } else {
-            // Si elijo FIN: debe ser DESPUÉS que la fecha de INICIO y antes que HOY
-            val inicio = fechaLimite ?: 0L // Si no hay inicio, cualquier fecha vieja sirve
-            // Combinamos: después del inicio Y antes de hoy
-            CompositeDateValidator.allOf(
-                listOf(
-                    DateValidatorPointForward.from(inicio),
-                    DateValidatorPointBackward.now()
-                )
-            )
-        }
-        constraintsBuilder.setValidator(validator)
-        return constraintsBuilder.build()
+        textoCantidadPuntos?.text = cantidadPuntos.toString()
+        textoStringPuntos?.text = if (cantidadPuntos == 1) "punto" else "puntos"
     }
 
 
     private fun showPieChart(mapeo: Map<TipoResiduo, Int>) {
         if (mapeo.isEmpty() || mapeo.keys.isEmpty()) {
-            val textoAMostrar = if (fechaFinMillisPieChart == null && fechaInicioMillisPieChart == null) {
-                "Usted no ha reciclado aún"
-            } else {
-                "No se recicló nada para el período seleccionado"
-            }
+            val textoAMostrar = "No se recicló nada para el período seleccionado"
+
             pieChart.clear()
             pieChart.setNoDataText(textoAMostrar)
+            pieChart.setNoDataTextColor(ContextCompat.getColor(requireContext(), R.color.acento_de_fondo))
             return
         }
+        pieChart.clear()
         val pieEntries : ArrayList<PieEntry> = ArrayList()
 
         val colorArray = resources.getIntArray(R.array.pieChartColorArray)
@@ -298,7 +195,7 @@ class EstadisticasFragment : Fragment() {
         pieChart.setUsePercentValues(false) // Hace que no se usen valores porcentuales
         pieChart.isClickable = false
         pieChart.isScrollContainer = false
-        pieChart.isRotationEnabled = true // Lo pondria en true porque es relajante girarlo
+        pieChart.isRotationEnabled = false // Lo pondria en true porque es relajante girarlo
 
         pieChart.holeRadius = 0f
         pieChart.transparentCircleRadius = 0f
@@ -307,6 +204,8 @@ class EstadisticasFragment : Fragment() {
         pieChart.invalidate()
     }
 
+    @Deprecated("Sin uso en esta versión de greenQuest")
+    // Posible uso, por ejemplo para vista más detallada
     private fun showBarChart(mapeo: Map<String, Int>) {
         if (mapeo.isEmpty() || mapeo.keys.isEmpty()) {
             barChart.clear()
