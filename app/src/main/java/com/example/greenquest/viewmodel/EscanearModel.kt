@@ -27,7 +27,9 @@ class EscanearModel: ViewModel() {
         return qrScanner.process(image)
             .addOnSuccessListener { barcodes ->
                 viewModelScope.launch {
+                    var cantBarcodes = 0
                     for (barcode in barcodes){
+                        cantBarcodes++
                         try {
                             // Procesamos el codigo de barras
                             val payload = ScannerRepository.processBarcode(barcode = barcode)
@@ -46,10 +48,13 @@ class EscanearModel: ViewModel() {
                                 }
                             }
                         } catch (e : Exception){
-                            withContext(Dispatchers.Main) {
-                                Log.e("greenQuest", "La excepcion fue " + e.message)
-                                _scanState.value = ScanState.QrException("Hubo un error inesperado")
+                            if (cantBarcodes >= barcodes.size){
+                                withContext(Dispatchers.Main) {
+                                    Log.e("greenQuest", "La excepcion fue " + e.message)
+                                    _scanState.value = ScanState.QrException("Hubo un error inesperado")
+                                }
                             }
+
                         }
                     }
                 }
