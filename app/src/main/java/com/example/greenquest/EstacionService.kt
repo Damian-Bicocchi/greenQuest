@@ -15,19 +15,19 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface EstacionService {
-    @POST("logout/")
+    @POST("api/logout/")
     suspend fun logout(@Body token: LogoutRequest): Response<Unit>
 
-    @POST("residuo/reclamar/")
+    @POST("api/residuo/reclamar/")
     suspend fun residuoReclamar(@Body body: ReclamarResiduoRequest): Response<ReclamarResiduoGenericResponse>
 
-    @GET("datos_usuario/")
+    @GET("api/datos_usuario/")
     suspend fun getUserData(): UserInfoResponse
 
-    @GET("puntos/")
+    @GET("api/puntos/")
     suspend fun score(@Query("id_user") id: Int? = null): PuntosUsuario
 
-    @GET("ranking/semanal/")
+    @GET("api/ranking/semanal/")
     suspend fun rankingWeekly(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
 
     @GET("ranking/posicion/")

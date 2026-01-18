@@ -3,7 +3,7 @@ package com.example.greenquest.apiParameters
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.SerialDescriptor
+
 
 @Serializable
 enum class TipoResiduo {

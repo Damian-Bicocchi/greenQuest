@@ -1,11 +1,11 @@
 package com.example.greenquest.repository
 
 import android.util.Log
-import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
+import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.google.mlkit.vision.barcode.common.Barcode
 import kotlinx.serialization.json.Json
 import org.json.JSONObject
