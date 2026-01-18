@@ -58,12 +58,11 @@ class TopGlobal : Fragment() {
             )
             binding.categorySelectionTextView.setOnItemClickListener { _, _, position, _ ->
                 val category = categoryAdapter.getItem(position) ?: return@setOnItemClickListener
-                val text = category.getString(requireContext()) ?: ""
+                binding.categorySelectionTextView.setText(
+                    category.getString(requireContext()), false
+                )
                 viewModel.tipoResiduo = category.tipoResiduo
                 viewModel.obtenerRanking()
-                binding.categorySelectionTextView.setText(
-                    text, false
-                )
             }
         }
 
