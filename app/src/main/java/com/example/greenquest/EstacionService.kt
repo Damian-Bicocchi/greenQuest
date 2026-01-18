@@ -30,8 +30,12 @@ interface EstacionService {
     @GET("ranking/semanal/")
     suspend fun rankingWeekly(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
 
+
+    @GET("ranking/")
+    suspend fun rankingHistorical(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
+
     @GET("ranking/posicion/")
     suspend fun rankingPosition(
-        @Query("id_user") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
+        @Query("id_usuario") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
     ): PosicionRanking
 }

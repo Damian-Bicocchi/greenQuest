@@ -14,31 +14,32 @@ class TopGlobalViewModel : ViewModel() {
     private val _ranking = MutableStateFlow<List<RankingEntry>>(emptyList())
     val ranking: StateFlow<List<RankingEntry>> = _ranking.asStateFlow()
     var tipoResiduo: TipoResiduo? = null
+    var historical: Boolean = false
 
     fun obtenerRanking() {
         viewModelScope.launch {
-            val ranking = UsuarioRepository.rankingWeekly(tipoResiduo)
-            _ranking.value = ranking
-
-            // Bloque de código por si funcionara como esperamos la api para obtener la posición
-            // en el ranking. Ahora mismo este no permite preguntar por la posición en el ranking
-            // semanal.
-            /*val user = UsuarioRepository.obtenerUsuarioLocal()
-            val selfRank = UsuarioRepository.rankingPosition()
-            val selfScore = UsuarioRepository.score()
-            if (selfRank <= 10) {
-                _ranking.value = ranking
-            } else {
-                val newRanking = ArrayList<RankingEntry>()
-                newRanking.addAll(ranking)
-                newRanking.add(
-                    RankingEntry(
-                        user?.userName?: "Error",
-                        selfScore
+            // Si es histórico, podemos encontrar la posición del usuario.
+            _ranking.value = if (historical) {
+                val user = UsuarioRepository.obtenerUsuarioLocal()
+                val selfRank = UsuarioRepository.rankingPosition()
+                val selfScore = UsuarioRepository.score()
+                val fetched = UsuarioRepository.rankingHistorical(tipoResiduo)
+                if (selfRank <= 10) { // O ya está en el top o no está en absoluto.
+                    fetched
+                } else {
+                    val newRanking = ArrayList<RankingEntry>()
+                    newRanking.addAll(fetched)
+                    newRanking.add(
+                        RankingEntry(
+                            user?.userName ?: "Vos",
+                            selfScore
+                        )
                     )
-                )
-                _ranking.value = newRanking
-            }*/
+                    newRanking
+                }
+            } else {
+                UsuarioRepository.rankingWeekly(tipoResiduo)
+            }
         }
     }
 }

@@ -60,13 +60,20 @@ object UsuarioRepository {
         }
     }
 
+    suspend fun rankingHistorical(tipoResiduo: TipoResiduo? = null): List<RankingEntry> {
+        return try {
+            api.rankingHistorical(tipoResiduo)
+        } catch (_: Exception) {
+            listOf() // TODO: Mismo que arriba
+        }
+    }
+
     suspend fun rankingPosition(tipoResiduo: TipoResiduo? = null): Int {
-        // TODO: ALERTA! La api solo devuelve la posición del ranking total, no del semanal!
+        // La api solo devuelve la posición del ranking total, no del semanal!
         val rank = obtenerUsuarioLocal()?.let { api.rankingPosition(it.uid) }
         return rank?.posicion ?: Int.MIN_VALUE
     }
 
-    @Deprecated("No se usa en ningún momento en greenQuest")
     suspend fun score(tipoResiduo: TipoResiduo? = null): Int {
         return api.score().puntos
     }
