@@ -5,9 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.greenquest.repository.EstadisticasRepository
 import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.MonedasRepository
 import com.example.greenquest.repository.ScannerRepository
+import com.example.greenquest.states.ScanState
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -44,10 +46,14 @@ class EscanearModel: ViewModel() {
                                     _scanState.value = ScanState.QRDetected(payload)
                                 }
                                 // Agregarle monedas. Tantas monedas como puntajes da
-                                MonedasRepository.addMonedas(payload.puntaje)
+                                //MonedasRepository.addMonedas(payload.puntaje)
 
                                 // Contabilizar para logros
-                                LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
+                                //LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
+
+                                // Crear elemento del historial
+                                EstadisticasRepository.insertarResiduoAlHistorial(payload)
+                                Log.d("estadisticaLogging", "Se inserto el payload ${payload.id_residuo} de ${payload.tipo_residuo} y con puntaje ${payload.puntaje}")
 
                             } else {
                                 withContext(Dispatchers.Main) {
@@ -67,10 +73,8 @@ class EscanearModel: ViewModel() {
                 }
             }
             .addOnFailureListener { e ->
-                Log.e("greenQuest", "Error en el procesado de la imagen " + e.toString())
+                Log.e("greenQuest", "Error en el procesado de la imagen $e")
                 _scanState.value = ScanState.QrException("ERROR INESPERADO")
-
-
             }
 
     }

@@ -86,15 +86,11 @@ object UsuarioRepository {
             userDao.delete(user)
     }
 
-    suspend fun getPuntaje(): Int =
-        withContext(Dispatchers.IO){
-            userDao.getFirstUser()!!.puntos
-    }
-
-    suspend fun addPuntaje(addPuntos : Int){
-        withContext(Dispatchers.IO){
-
+    suspend fun obtenerIdUsuarioActual(): Int {
+        val id = withContext(Dispatchers.IO){
+            userDao.getFirstUser()?.uid ?: -1
         }
+        return id
     }
 }
 

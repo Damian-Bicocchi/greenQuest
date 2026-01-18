@@ -22,4 +22,18 @@
             android:id="@+id/action_escaneadoExitosoFragment_to_escanearFragment"
             app:destination="@id/escanearFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/estadisticasFragment"
+        android:name="com.example.greenquest.fragments.EstadisticasFragment"
+        android:label="EstadisticasFragment" >
+        <action
+            android:id="@+id/action_estadisticasFragment_to_historialResiduoCompletoFragment"
+            app:destination="@id/historialResiduoCompletoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/historialResiduoCompletoFragment"
+        android:name="com.example.greenquest.fragments.HistorialResiduoCompletoFragment"
+        android:label="HistorialResiduoCompletoFragment" />
 </navigation>

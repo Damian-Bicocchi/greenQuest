@@ -103,9 +103,24 @@
     <string name="title_bottom_scanner">Escanear</string>
     <string name="title_bottom_report">Reportar</string>
     <string name="title_bottom_trivia">Trivia</string>
+    <string name="title_bottom_estadistica">Estadísticas</string>
 
 
     <string name="button_responder_pregunta">Responder</string>
     <string name="placeholder_pregunta">Cargando pregunta</string>
 
+
+    <string name="title_historial_residuos">Historial de residuos</string>
+    <string name="link_toda_mi_actividad">Toda mi actividad -></string>
+    <string name="title_tipos_residuos_por_periodo">Tipos de residuos por período</string>
+    <string name="title_historial_de_puntaja">Historial de puntaje</string>
+    <string name="title_fecha_de_inicio">Fecha de inicio</string>
+    <string name="title_fecha_de_fin">Fecha de fin</string>
+    <string name="volver">&lt;- Volver</string>
+
+    <string name="tab_title_de_hoy">Hoy</string>
+    <string name="tab_title_ultima_semana">Última semana</string>
+    <string name="tab_title_del_mes">Este mes</string>
+    <string name="tab_title_del_año">Este año</string>
+    <string name="tab_historico">Histórico</string>
 </resources>

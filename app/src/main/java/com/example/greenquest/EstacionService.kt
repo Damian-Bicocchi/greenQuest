@@ -8,10 +8,12 @@ import com.example.greenquest.apiParameters.PuntosUsuario
 import com.example.greenquest.apiParameters.RankingEntry
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
+import com.example.greenquest.apiParameters.estadisticas.ResiduoItem
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EstacionService {
@@ -34,4 +36,11 @@ interface EstacionService {
     suspend fun rankingPosition(
         @Query("id_user") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
     ): PosicionRanking
+
+    @GET("residuos/{id_usuario}/")
+    suspend fun cantidadResiduos(
+        @Path("id_usuario") idUsuario: Int
+    ): List<List<ResiduoItem>>
+
+
 }

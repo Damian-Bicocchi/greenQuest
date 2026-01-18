@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.greenquest"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -57,9 +57,8 @@ dependencies {
     implementation(libs.androidx.cardview)
     testImplementation(libs.junit.jupiter)
     implementation(libs.androidx.databinding.runtime)
+
     val room_version = "2.8.4"
-
-
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
@@ -105,7 +104,6 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${camerax_version}")
     implementation("androidx.camera:camera-lifecycle:${camerax_version}")
     implementation("androidx.camera:camera-video:${camerax_version}")
-
     implementation("androidx.camera:camera-view:${camerax_version}")
     implementation("androidx.camera:camera-extensions:${camerax_version}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
@@ -115,8 +113,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
-    implementation(platform("androidx.compose:compose-bom:2025.12.00"))
 
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }
 
 kapt {

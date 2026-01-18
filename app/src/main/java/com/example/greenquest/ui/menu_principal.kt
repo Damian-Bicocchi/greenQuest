@@ -10,6 +10,7 @@ import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
+import com.example.greenquest.fragments.EstadisticasFragment
 import com.example.greenquest.fragments.TiendaFragment
 import com.example.greenquest.fragments.TopGlobal
 import com.example.greenquest.fragments.TriviaFragment
@@ -24,6 +25,8 @@ class menu_principal : AppCompatActivity() {
     private var miPefilFragment : MiPerfilFragment? = null
 
     private var triviaFragment : TriviaFragment? = null
+
+    private var estadisticasFragment : EstadisticasFragment? = null
 
     private var currentFragment: Fragment? = null
 
@@ -70,11 +73,11 @@ class menu_principal : AppCompatActivity() {
                 showFragment(escanearFragment!!)
                 true
             }
-            R.id.categorizarFragment -> {
-                if (categorizarFragment == null) {
-                    categorizarFragment = CategorizarFragment()
+            R.id.estadisticaFragment -> {
+                if (estadisticasFragment == null) {
+                    estadisticasFragment = EstadisticasFragment()
                 }
-                showFragment(categorizarFragment!!)
+                showFragment(estadisticasFragment!!)
                 true
             }
             R.id.triviaFragment -> {
@@ -100,6 +103,7 @@ class menu_principal : AppCompatActivity() {
             is TriviaFragment -> setToolbar("Trivia", true)
             is MiPerfilFragment -> setToolbar("Mi Perfil", true)
             is EscanearFragment -> setToolbar("", false)
+            is EstadisticasFragment -> setToolbar("Estadísticas de usuario", true)
             else -> setToolbar("", true)
         }
 
@@ -115,7 +119,7 @@ class menu_principal : AppCompatActivity() {
         currentFragment = fragment
     }
 
-    private fun setToolbar(titulo : String, mostrarToolbar : Boolean){
+    private fun setToolbar(titulo : String, mostrarToolbar : Boolean = true){
         binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo
     }

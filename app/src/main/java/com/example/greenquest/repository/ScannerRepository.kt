@@ -59,7 +59,7 @@ object ScannerRepository {
                 } catch (e: Exception) {
                     e.toString()
                 }
-                Log.e("greenquest", errorMessage)
+                Log.e("greenQuest", errorMessage)
 
                 ReclamarResiduoGenericResponse("", errorMessage)
             }
@@ -67,7 +67,7 @@ object ScannerRepository {
         } catch (e: IOException) {
             ReclamarResiduoGenericResponse(
                 "",
-                "Error de conexión con el servidor"
+                "Error de conexión con el servidor $e"
             )
 
         } catch (e: Exception) {
