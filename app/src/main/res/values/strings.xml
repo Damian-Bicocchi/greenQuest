@@ -123,4 +123,11 @@
     <string name="tab_title_del_mes">Este mes</string>
     <string name="tab_title_del_año">Este año</string>
     <string name="tab_historico">Histórico</string>
+    <string name="title_reportar">Reportar residuo mal clasificado</string>
+    <string name="texto_boton_camara">Tomar foto del residuo</string>
+    <string name="label_ingresar_clasificacion_correcta">¿Cuál es la clasificación correcta?</string>
+    <string name="title_button_enviar_reporte">Enviar Reporte</string>
+    <string name="vista_previa_de_imagen_para_reporte">Vista previa de imagen para reporte</string>
+    <string name="advertencia_reporte_1">1. Las imágenes que subas serán de uso compartido. No incluyas datos sensibles (identificaciones, menores de edad, tarjetas de crédito....).</string>
+    <string name="advertencia_reporte_2">2. Por favor, trata de centrar bien el residuo en la foto.</string>
 </resources>

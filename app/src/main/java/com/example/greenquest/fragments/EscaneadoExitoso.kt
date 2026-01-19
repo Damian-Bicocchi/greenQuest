@@ -49,7 +49,7 @@ class EscaneadoExitoso : Fragment() {
         }
 
         buttonDenunciar.setOnClickListener {
-            val fragment = EscanearFragment()
+            val fragment = ReportarFragment()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frame_container, fragment)
                 .addToBackStack(null)
