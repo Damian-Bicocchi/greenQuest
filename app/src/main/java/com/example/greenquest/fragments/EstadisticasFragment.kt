@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
@@ -39,7 +43,9 @@ import java.util.Date
 import java.util.Locale
 
 
-class EstadisticasFragment : Fragment() {
+
+
+class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var estadisticaViewModel: EstadisticaViewModel
 
@@ -64,6 +70,8 @@ class EstadisticasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        estadisticaViewModel.obtenerResiduos()
 
 
         val tabsLineChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_line_chart)
@@ -136,20 +144,17 @@ class EstadisticasFragment : Fragment() {
             }
         }
         val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
-
         linkTodaActividad.setOnClickListener {
-            val fragment = HistorialResiduoCompletoFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
-
+            findNavController().navigate(
+                R.id.action_estadisticasFragment_to_historialResiduoCompletoFragment
+            )
         }
     }
+}
 
     private fun showPuntosTotales(cantidadPuntos: Int) {
-        val textoCantidadPuntos = view?.findViewById<TextView>(R.id.texto_cantidad_puntos)
-        val textoStringPuntos = view?.findViewById<TextView>(R.id.texto_string_puntos)
+        val textoCantidadPuntos = findViewById<TextView>(R.id.texto_cantidad_puntos)
+        val textoStringPuntos = findViewById<TextView>(R.id.texto_string_puntos)
 
         textoCantidadPuntos?.text = cantidadPuntos.toString()
         textoStringPuntos?.text = if (cantidadPuntos == 1) "punto" else "puntos"

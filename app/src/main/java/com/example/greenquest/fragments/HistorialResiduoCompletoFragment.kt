@@ -57,11 +57,7 @@ class HistorialResiduoCompletoFragment : Fragment() {
         val botonVolver = view.findViewById<TextView>(R.id.link_volver_a_estadisticas)
         botonVolver.setOnClickListener {
 
-            val fragment = EstadisticasFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            findNavController().popBackStack()
 
         }
 
