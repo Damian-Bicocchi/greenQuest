@@ -116,7 +116,7 @@ class EscanearFragment : Fragment() {
         super.onPause()
         camaraIniciada = false
         cameraProvider?.unbindAll()
-        val toolbarContainer = activity!!.findViewById<View>(
+        val toolbarContainer = requireActivity().findViewById<View>(
             R.id.toolbar_container
         )
         toolbarContainer.visibility = View.GONE

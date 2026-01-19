@@ -4,7 +4,7 @@ enum class PeriodoResiduo(){
     HOY,
     SEMANA,
     MES,
-    AÑO,
+    ANIO,
     TOTAL
 }
 

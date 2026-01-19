@@ -31,7 +31,6 @@ class EscaneadoExitoso : Fragment() {
 
         // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
         val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
-        // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
         datos?.let {
             view.findViewById<TextView>(
                 R.id.label_resumen_residuo).text = "Reciclaste: ${it.tipoResiduo}"
@@ -50,10 +49,11 @@ class EscaneadoExitoso : Fragment() {
         }
 
         buttonDenunciar.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "No implementado",
-                Toast.LENGTH_LONG).show()
+            val fragment = EscanearFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment)
+                .addToBackStack(null)
+                .commit()
 
         }
 

@@ -5,17 +5,14 @@ import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
-import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.time.DateTimeException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 object EstadisticasRepository {
     private val historialResiduoDao by lazy {
@@ -91,7 +88,7 @@ object EstadisticasRepository {
                 obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
 
             }
-            PeriodoResiduo.AÑO -> {
+            PeriodoResiduo.ANIO -> {
                 val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
                 val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
                 obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
@@ -129,7 +126,7 @@ object EstadisticasRepository {
                 obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
             }
 
-            PeriodoResiduo.AÑO -> {
+            PeriodoResiduo.ANIO -> {
                 val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
                 val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
                 obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
