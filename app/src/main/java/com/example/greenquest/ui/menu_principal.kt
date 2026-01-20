@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationBarView
 class menu_principal : AppCompatActivity() {
     private lateinit var binding: ActivityToolbarBinding
     private var topGlobalFragment: TopGlobal? = null
-    private var topAmigosFragment: TiendaFragment? = null
+    private var tiendaFragment: TiendaFragment? = null
     private var escanearFragment: EscanearFragment? = null
     private var categorizarFragment: CategorizarFragment? = null
     private var miPefilFragment : MiPerfilFragment? = null
@@ -56,11 +56,11 @@ class menu_principal : AppCompatActivity() {
                 showFragment(topGlobalFragment!!)
                 true
             }
-            R.id.topAmigosFragment -> {
-                if (topAmigosFragment == null) {
-                    topAmigosFragment = TiendaFragment()
+            R.id.tiendaFragment-> {
+                if (tiendaFragment == null) {
+                    tiendaFragment = TiendaFragment()
                 }
-                showFragment(topAmigosFragment!!)
+                showFragment(tiendaFragment!!)
                 true
             }
             R.id.escanearFragment -> {

@@ -3,6 +3,7 @@ package com.example.greenquest.database.user
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.greenquest.apiParameters.TipoResiduo
 
 @Entity
 data class User(
@@ -11,11 +12,25 @@ data class User(
     @ColumnInfo(name = "password") val password: String?,
     @ColumnInfo(name = "descripcion") val descripcion: String?,
     @ColumnInfo(name = "puntos", defaultValue = "0") var puntos: Int = 0,
-    @ColumnInfo(name = "monedas", defaultValue = "0") val monedas: Int = 0,
-    @ColumnInfo(name = "cant_cartones", defaultValue = "0") val cant_cartones: Int = 0,
-    @ColumnInfo(name= "cant_papeles", defaultValue = "0") val cant_papeles: Int = 0,
-    @ColumnInfo(name= "cant_metal", defaultValue = "0") val cant_metal: Int = 0,
-    @ColumnInfo(name= "cant_vidrio", defaultValue = "0") val cant_vidrio: Int = 0,
-    @ColumnInfo(name = "cant_plastico", defaultValue = "0") val cant_plastico: Int = 0,
+    @ColumnInfo(name = "monedas", defaultValue = "0") var monedas: Int = 0,
+    @ColumnInfo(name = "cant_cartones", defaultValue = "0") var cant_cartones: Int = 0,
+    @ColumnInfo(name= "cant_papeles", defaultValue = "0") var cant_papeles: Int = 0,
+    @ColumnInfo(name= "cant_metal", defaultValue = "0") var cant_metal: Int = 0,
+    @ColumnInfo(name= "cant_vidrio", defaultValue = "0") var cant_vidrio: Int = 0,
+    @ColumnInfo(name = "cant_plastico", defaultValue = "0") var cant_plastico: Int = 0,
     @ColumnInfo(name = "imagen") val imagen: String? = null
-)
+){
+    fun incrementarCantidadResiduo(tipoResiduo: TipoResiduo, cantidad: Int? = 1){
+        if(tipoResiduo == TipoResiduo.CARTON){
+            cant_cartones +=cantidad?:1
+        }else if(tipoResiduo == TipoResiduo.PAPEL){
+            cant_papeles +=cantidad?:1
+        }else if(tipoResiduo == TipoResiduo.METAL){
+            cant_metal +=cantidad?:1
+        }else if (tipoResiduo == TipoResiduo.VIDRIO){
+            cant_vidrio +=cantidad?:1
+        }else{
+            cant_plastico +=cantidad?:1
+        }
+    }
+}

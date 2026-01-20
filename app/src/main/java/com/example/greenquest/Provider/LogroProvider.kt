@@ -1,9 +1,8 @@
-package com.example.greenquest
+package com.example.greenquest.Provider
 
-import androidx.lifecycle.compose.rememberLifecycleOwner
 import com.example.greenquest.Logros.Logro
+import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
-import com.example.greenquest.repository.UsuarioRepository
 
 class LogroProvider {
     companion object {
@@ -19,6 +18,12 @@ class LogroProvider {
         fun chequearYActualizarLogros(tipoResiduo: TipoResiduo, cantidadReciclada: Int) {
             for(logro in logrosNoObtenidos()) {
                 logro.chequearCumplimiento(cantidadReciclada, tipoResiduo)
+            }
+        }
+
+        fun obtenerLogrosObtenidosPrimero():List<Logro>{
+            return logros.sortedByDescending{
+                it.obtenido
             }
         }
 

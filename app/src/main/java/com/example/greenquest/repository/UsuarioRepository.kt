@@ -86,6 +86,35 @@ object UsuarioRepository {
             userDao.delete(user)
     }
 
+    suspend fun cantReciduosUsuario(id : Int){
+        try{
+            val recursosReciclados = api.cantReciduosUsuario(id)
+            val usuario = obtenerUsuarioLocal()
+            if (usuario != null) {
+                for ((tipoResiduo, cantidad) in recursosReciclados) {
+                    usuario.incrementarCantidadResiduo(tipoResiduo, cantidad)
+                }
+                actualizarUsuarioLocal(usuario)
+            }
+        }
+        catch (e : Exception){
+            Log.d("UsuarioRepository", "Error al obtener residuos del usuario: ${e.printStackTrace()}")
+        }
+    }
+
+    suspend fun incrementarCantidadResiduoLocal(tipoResiduo: TipoResiduo){
+        val usuario = obtenerUsuarioLocal()
+        if (usuario != null) {
+            usuario.incrementarCantidadResiduo(tipoResiduo)
+            actualizarUsuarioLocal(usuario)
+        }
+    }
+
+    suspend fun actualizarUsuarioLocal(user: User) =
+        withContext(Dispatchers.IO) {
+            userDao.updateUser(user)
+        }
+
     suspend fun getPuntaje(): Int =
         withContext(Dispatchers.IO){
             userDao.getFirstUser()!!.puntos
@@ -96,5 +125,6 @@ object UsuarioRepository {
 
         }
     }
+
 }
 

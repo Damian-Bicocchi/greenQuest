@@ -44,6 +44,7 @@ class InicioSesionModel: ViewModel() {
                         descripcion = null
                     )
                 )
+                UsuarioRepository.cantReciduosUsuario(id.id)
                 emit("OK")
             }else{
                 emit("Error desconocido")

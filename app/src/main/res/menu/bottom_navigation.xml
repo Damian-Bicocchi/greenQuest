@@ -8,7 +8,7 @@
         android:icon="@drawable/trofeo"
         android:title="@string/title_bottom_ranking" />
     <item
-        android:id="@+id/topAmigosFragment"
+        android:id="@+id/tiendaFragment"
         android:icon="@drawable/podium_13466153"
         android:title="@string/title_bottom_store"
         android:iconTint="@color/texto_oscuro"/>

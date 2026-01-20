@@ -24,6 +24,9 @@ interface EstacionService {
     @GET("datos_usuario/")
     suspend fun getUserData(): UserInfoResponse
 
+    @GET("residuos/")
+    suspend fun cantReciduosUsuario(@Query("id_user") id :Int? = null): Map<TipoResiduo, Int>
+
     @GET("puntos/")
     suspend fun score(@Query("id_user") id: Int? = null): PuntosUsuario
 
