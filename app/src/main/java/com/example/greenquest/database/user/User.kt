@@ -18,7 +18,7 @@ data class User(
     @ColumnInfo(name= "cant_metal", defaultValue = "0") var cant_metal: Int = 0,
     @ColumnInfo(name= "cant_vidrio", defaultValue = "0") var cant_vidrio: Int = 0,
     @ColumnInfo(name = "cant_plastico", defaultValue = "0") var cant_plastico: Int = 0,
-    @ColumnInfo(name = "imagen") val imagen: String? = null
+    @ColumnInfo(name = "imagen") val imagen: Int? = null
 ){
     fun incrementarCantidadResiduo(tipoResiduo: TipoResiduo, cantidad: Int? = 1){
         if(tipoResiduo == TipoResiduo.CARTON){

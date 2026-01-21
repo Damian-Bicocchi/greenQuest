@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="178dp"
@@ -13,8 +15,8 @@
         tools:layout_editor_absoluteY="37dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="90dp"
-            android:layout_height="24dp"
+            android:layout_width="92dp"
+            android:layout_height="27dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/radius_color_secundario"
             android:backgroundTint="#D5BD0D"
@@ -37,8 +39,8 @@
                 app:srcCompat="@drawable/coinimage" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="54dp"
-                android:layout_height="16dp"
+                android:layout_width="55dp"
+                android:layout_height="18dp"
                 android:background="#EDE28D"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +51,8 @@
 
                 <TextView
                     android:id="@+id/textviewPrecioArticulo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="55dp"
+                    android:layout_height="18dp"
                     android:autoSizeMaxTextSize="14sp"
                     android:autoSizeMinTextSize="10sp"
                     android:text="100000"

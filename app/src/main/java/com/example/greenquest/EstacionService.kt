@@ -6,6 +6,7 @@ import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.PuntosUsuario
 import com.example.greenquest.apiParameters.RankingEntry
+import com.example.greenquest.apiParameters.RecursoRecicladoDTO
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import retrofit2.Response
@@ -25,7 +26,7 @@ interface EstacionService {
     suspend fun getUserData(): UserInfoResponse
 
     @GET("residuos/")
-    suspend fun cantReciduosUsuario(@Query("id_user") id :Int? = null): Map<TipoResiduo, Int>
+    suspend fun cantReciduosUsuario(@Query("id_user") id :Int? = null):List<RecursoRecicladoDTO>
 
     @GET("puntos/")
     suspend fun score(@Query("id_user") id: Int? = null): PuntosUsuario

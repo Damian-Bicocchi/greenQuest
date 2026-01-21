@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.Logros.Logro
@@ -39,8 +40,6 @@ class MiPerfilFragment : Fragment() {
 
     private val miPerfilModel = MiPerfilModel()
 
-    private lateinit var adapterLogro: AdapterLogro
-
     private lateinit var binding: FragmentMiPerfilBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,13 +60,13 @@ class MiPerfilFragment : Fragment() {
         val recyclerView = binding.logrosRecyclerview
 
 
-
         lifecycleScope.launch {
-
             usuario = UsuarioRepository.obtenerUsuarioLocal()!!
             binding.usernameEditperfil.setText(usuario.userName.toString())
             binding.usernameEditperfil.setEnabled(false)
             binding.descripcionEditperfil.setEnabled(false)
+            binding.descripcionEditperfil.setText("${usuario.descripcion ?: "¡Hola! Soy nuevo en GreenQuest."}")
+            binding.imagenDePerfil.setImageResource(usuario.imagen?:R.drawable.outline_person_24)
             miPerfilModel.chequearYActualizarLogros(usuario)
             recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
             Log.d("CANTIDAD DE RESIUDOS", "Papel: ${usuario.cant_papeles}, Carton: ${usuario.cant_cartones}, Metal: ${usuario.cant_metal}, Plastico: ${usuario.cant_plastico}, Vidrio: ${usuario.cant_vidrio}")
@@ -77,8 +76,6 @@ class MiPerfilFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.frame_container, ConfiguracionFragment())
                 .commit()
-
-
         }
 
         binding.logrosConseguidosTextview.setOnClickListener {
@@ -106,9 +103,7 @@ class MiPerfilFragment : Fragment() {
             }
         }
 
-        binding.marcosPerfilTextview.setOnClickListener {
-            Toast.makeText(context, "¡Próximamente podrás personalizar tu perfil con marcos exclusivos!", Toast.LENGTH_SHORT).show()
-        }
+
 
 
         return  binding.root

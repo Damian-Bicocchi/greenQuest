@@ -91,14 +91,15 @@ object UsuarioRepository {
             val recursosReciclados = api.cantReciduosUsuario(id)
             val usuario = obtenerUsuarioLocal()
             if (usuario != null) {
-                for ((tipoResiduo, cantidad) in recursosReciclados) {
-                    usuario.incrementarCantidadResiduo(tipoResiduo, cantidad)
+                for (item in recursosReciclados) {
+                    Log.d("UsuarioRepository", "Tipo residuo: ${item.nombre}, Cantidad: ${item.cantidad}")
+                    usuario.incrementarCantidadResiduo(item.nombre, item.cantidad)
                 }
                 actualizarUsuarioLocal(usuario)
             }
         }
-        catch (e : Exception){
-            Log.d("UsuarioRepository", "Error al obtener residuos del usuario: ${e.printStackTrace()}")
+        catch (e: Exception) {
+            Log.e("UsuarioRepository", "Error al obtener residuos del usuario", e)
         }
     }
 

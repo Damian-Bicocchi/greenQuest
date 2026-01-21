@@ -37,13 +37,17 @@ class AdapterArticulo(val listaArticulo: List<Articulo>) : RecyclerView.Adapter<
     ) {
         val item  = listaArticulo[position]
 
-        holder.nombreArticulo.text = item.nombre
-        holder.imagenArticulo.setImageResource(item.imagen?: R.drawable.podium)
-        if(item.adquirido){
-            holder.nombreArticulo.text = "Adquirido"
 
+        holder.imagenArticulo.setImageResource(item.imagen?: R.drawable.podium)
+        holder.nombreArticulo.text = item.nombre
+        if(item.adquirido){
+            holder.nombreArticulo.alpha = 0.5f
+            holder.imagenArticulo.alpha = 0.5f
+            holder.valorArticulo.alpha = 0.5f
+            holder.valorArticulo.text = "Adquirido"
+        }else {
+            holder.valorArticulo.text = item.valor
         }
-        holder.valorArticulo.text = item.valor
     }
 
     override fun getItemCount(): Int {
