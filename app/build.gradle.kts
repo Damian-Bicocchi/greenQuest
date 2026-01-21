@@ -117,4 +117,6 @@ dependencies {
     implementation(libs.androidx.camera.extensions)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(libs.osmdroid)
+    implementation(libs.osmbonuspack)
 }
