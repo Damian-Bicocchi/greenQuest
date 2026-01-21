@@ -13,8 +13,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +21,8 @@ import com.example.greenquest.adapters.AdapterHistorialItem
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
+import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
+import com.example.greenquest.fragments.arguments.ReporteArgumentos
 import com.example.greenquest.viewmodel.EstadisticaViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -43,14 +43,14 @@ import java.util.Date
 import java.util.Locale
 
 
-
-
 class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var estadisticaViewModel: EstadisticaViewModel
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
+
+    private var adapterHistorialItem: AdapterHistorialItem? = null
 
 
 
@@ -72,10 +72,15 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
         super.onViewCreated(view, savedInstanceState)
 
         estadisticaViewModel.obtenerResiduos()
+        val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
+
 
 
         val tabsLineChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_line_chart)
         val tabsPieChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_pie_chart)
+        val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
 
         tabsPieChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(p0: TabLayout.Tab?) {
@@ -113,48 +118,57 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                 Log.d("estadisticasLogging", "onTabReselected")
             }
         })
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.obtenerResiduos()
-                estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
-                    val listaFinal = if (lista.size > 3) lista.subList(0,2) else lista
-                    val adapterHistorialItem = AdapterHistorialItem(listaFinal)
-                    val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
-                    recycler.layoutManager = LinearLayoutManager(requireContext())
-                    recycler.adapter = adapterHistorialItem
+                launch {
+                    estadisticaViewModel.obtenerResiduos()
+                    estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
+                        val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
+
+                        val adapterHistorialItem = AdapterHistorialItem(listaFinal) { residuo ->
+                            findNavController().navigate(
+                                EstadisticasFragmentDirections.actionEstadisticasFragmentToReportarFragment(
+                                    reporteArgumentos = ReporteArgumentos(
+                                        origenHaciaReporte = OrigenHaciaReporte.ESTADISTICA,
+                                        idResiduo = residuo.idResiduo
+                                    )
+                                )
+                            )
+                        }
+                        recycler.adapter = adapterHistorialItem
+                    }
+                }
+                launch {
+                    estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.HOY)
+
+                    estadisticaViewModel.residuosEntreFechas.collect { mapeo ->
+                        showPieChart(mapeo)
+                    }
+                }
+                launch {
+                    estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.HOY)
+
+                    estadisticaViewModel.puntosEntreFechas.collect { cantidadPuntos ->
+                        showPuntosTotales(cantidadPuntos = cantidadPuntos)
+                    }
                 }
             }
         }
 
-        pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
 
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.residuosEntreFechas.collect { mapeo ->
-                    showPieChart(mapeo)
-                }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.puntosEntreFechas.collect {
-                    cantidadPuntos -> showPuntosTotales(cantidadPuntos = cantidadPuntos)
-                }
-            }
-        }
-        val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
         linkTodaActividad.setOnClickListener {
+            Log.d("navegarLogging", "Linea 143")
             findNavController().navigate(
                 R.id.action_estadisticasFragment_to_historialResiduoCompletoFragment
             )
         }
     }
-}
+
 
     private fun showPuntosTotales(cantidadPuntos: Int) {
-        val textoCantidadPuntos = findViewById<TextView>(R.id.texto_cantidad_puntos)
-        val textoStringPuntos = findViewById<TextView>(R.id.texto_string_puntos)
+        val textoCantidadPuntos = view?.findViewById<TextView>(R.id.texto_cantidad_puntos)
+        val textoStringPuntos = view?.findViewById<TextView>(R.id.texto_string_puntos)
 
         textoCantidadPuntos?.text = cantidadPuntos.toString()
         textoStringPuntos?.text = if (cantidadPuntos == 1) "punto" else "puntos"

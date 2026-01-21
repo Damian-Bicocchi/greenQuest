@@ -39,9 +39,6 @@ data class ImageModel(
     @ColumnInfo(name = "image_data")
     val imageData: ByteArray,
 
-    @ColumnInfo(name = "clasificacion_contenedor")
-    val clasificacionContenedor: TipoResiduo,
-
     @ColumnInfo(name = "clasificacion_usuario")
     val clasificacionUsuario: TipoResiduo,
 
@@ -52,7 +49,7 @@ data class ImageModel(
     val idUsuarioReporte: Int,
 
     @ColumnInfo(name = "id_historial_residuo_reportado")
-    val idHistorialResiduoReportado: Long
+    val idHistorialResiduoReportado: String
 ) {
     override fun equals(other: Any?): Boolean {
         // Codigo generado por el IDE

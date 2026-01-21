@@ -97,6 +97,7 @@ class EscanearFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         previewView = view.findViewById(R.id.qr_camara)
+
         observeViewModel()
     }
 
@@ -202,7 +203,8 @@ class EscanearFragment : Fragment() {
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipo_residuo,
-                        puntos = state.payload.puntaje
+                        puntos = state.payload.puntaje,
+                        idResiduo = state.payload.id_residuo
                     )
                     val action =
                         EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)

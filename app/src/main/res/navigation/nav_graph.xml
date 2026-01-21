@@ -17,7 +17,9 @@
 
         <action
             android:id="@+id/action_escanearFragment_to_escaneadoExitoso"
-            app:destination="@id/escaneadoExitosoFragment" />
+            app:destination="@id/escaneadoExitosoFragment"
+            app:popUpTo="@id/escanearFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -32,6 +34,9 @@
         <action
             android:id="@+id/action_escaneadoExitosoFragment_to_escanearFragment"
             app:destination="@id/escanearFragment" />
+        <action
+            android:id="@+id/action_escaneadoExitosoFragment_to_reportarFragment"
+            app:destination="@id/reportarFragment" />
     </fragment>
 
     <fragment
@@ -42,12 +47,22 @@
         <action
             android:id="@+id/action_estadisticasFragment_to_historialResiduoCompletoFragment"
             app:destination="@id/historialResiduoCompletoFragment" />
+        <action
+            android:id="@+id/action_estadisticasFragment_to_reportarFragment"
+            app:destination="@id/reportarFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/historialResiduoCompletoFragment"
         android:name="com.example.greenquest.fragments.HistorialResiduoCompletoFragment"
-        android:label="Historial completo" />
+        android:label="Historial completo" >
+        <action
+            android:id="@+id/action_historialResiduoCompletoFragment_to_reportarFragment"
+            app:destination="@id/reportarFragment" />
+        <action
+            android:id="@+id/action_historialResiduoCompletoFragment_to_estadisticasFragment"
+            app:destination="@id/estadisticasFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/categorizarFragment"
@@ -75,5 +90,23 @@
         android:name="com.example.greenquest.fragments.MiPerfilFragment"
         android:label="Mi perfil"
         tools:layout="@layout/fragment_mi_perfil" />
+    <fragment
+        android:id="@+id/reportarFragment"
+        android:name="com.example.greenquest.fragments.ReportarFragment"
+        android:label="ReportarFragment" >
+
+        <argument
+            android:name="reporteArgumentos"
+            app:argType="com.example.greenquest.fragments.arguments.ReporteArgumentos" />
+        <action
+            android:id="@+id/action_reportarFragment_to_escanearFragment"
+            app:destination="@id/escanearFragment" />
+        <action
+            android:id="@+id/action_reportarFragment_to_historialResiduoCompletoFragment"
+            app:destination="@id/historialResiduoCompletoFragment" />
+        <action
+            android:id="@+id/action_reportarFragment_to_estadisticasFragment"
+            app:destination="@id/estadisticasFragment" />
+    </fragment>
 
 </navigation>

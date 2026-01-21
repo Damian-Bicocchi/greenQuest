@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.ui.text.capitalize
@@ -17,14 +18,17 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.Locale.getDefault
 
-class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
-
+class AdapterHistorialItem(
+    val listaResiduos: List<HistorialResiduo>,
+    private val onReportClick: (HistorialResiduo) -> Unit // Callback
+) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
     class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
         val iconoLogoResiduo = view.findViewById<ImageView>(R.id.icono_logo_residuo)
         val textoNombreResiduo = view.findViewById<TextView>(R.id.texto_nombre_residuo)
         val textoFechaResiduo = view.findViewById<TextView>(R.id.texto_fecha_residuo)
-        val textoHoraResiduo = view.findViewById<TextView>(R.id.texto_hora_residuo)
         val textoPuntaje = view.findViewById<TextView>(R.id.texto_puntos_extra)
+
+        val botonReportar = view.findViewById<Button>(R.id.button_denunciar_categoria)
     }
 
     private lateinit var parent: ViewGroup
@@ -41,14 +45,19 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
-        val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        holder.textoFechaResiduo.text = residuoParticular.fecha?.format(formatterFecha)
-        val formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss")
-        holder.textoHoraResiduo.text = residuoParticular.fecha?.format(formatterHora)
+        val fechaFormateada = residuoParticular.fecha?.let { fecha ->
+            val dia = fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            val hora = fecha.format(DateTimeFormatter.ofPattern("HH:mm"))
+            "$dia • $hora"
+        } ?: "Fecha desconocida"
+        holder.textoFechaResiduo.text = fechaFormateada
+
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
         holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
-
+        holder.botonReportar.setOnClickListener {
+            onReportClick(residuoParticular)
+        }
 
     }
 
@@ -62,7 +71,7 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
             TipoResiduo.BASURA -> R.drawable.ic_basura
 
         }
-        return drawableId?.let {
+        return drawableId.let {
             ContextCompat.getDrawable(parent.context, it)
         } ?: ContextCompat.getDrawable(parent.context, R.drawable.ic_basura)
     }

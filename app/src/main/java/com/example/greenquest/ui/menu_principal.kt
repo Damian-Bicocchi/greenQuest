@@ -31,7 +31,7 @@ class menu_principal : AppCompatActivity() {
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
 
-        // NavController
+
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.frame_container) as NavHostFragment
 
@@ -60,7 +60,7 @@ class menu_principal : AppCompatActivity() {
         }
     }
 
-    private fun setToolbar(titulo: String, mostrarToolbar: Boolean = true) {
+    fun setToolbar(titulo: String, mostrarToolbar: Boolean = true) {
         binding.toolbarContainer.visibility =
             if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo

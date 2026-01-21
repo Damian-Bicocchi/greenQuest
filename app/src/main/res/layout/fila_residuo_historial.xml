@@ -1,82 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="1dp"
-    android:paddingVertical="8dp"
-    android:background="@color/accent_color">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/accent_color">
 
-    <!-- Campo "+N" compacto -->
-    <TextView
-    android:id="@+id/texto_puntos_extra"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="+31"
-    android:textSize="40sp"
-    android:textColor="@color/texto_sobre_acento_de_fondo"
-    android:textStyle="bold"
-    android:paddingHorizontal="4dp"
-    android:paddingVertical="2dp"
-    android:gravity="center"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginEnd="1dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
-    <ImageView
-    android:id="@+id/icono_logo_residuo"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:tint="@color/texto_sobre_acento_de_fondo"/>
+        <ImageView
+            android:id="@+id/icono_logo_residuo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:tint="@color/texto_sobre_acento_de_fondo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_vidrio" />
 
-    <TextView
-    android:id="@+id/texto_nombre_residuo"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:text="Nombre del Residuo"
-    android:textSize="22sp"
-    android:textColor="@color/texto_sobre_acento_de_fondo"
-    android:maxLines="1"
-    android:ellipsize="end"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/layout_fecha_residuo"
-    app:layout_constraintStart_toEndOf="@+id/icono_logo_residuo"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginStart="12dp"/>
+        <LinearLayout
+            android:id="@+id/container_textos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/texto_puntos_extra"
+            app:layout_constraintStart_toEndOf="@+id/icono_logo_residuo"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-    android:id="@+id/layout_fecha_residuo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:layout_marginEnd="16dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toStartOf="@+id/texto_puntos_extra"
-    app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/texto_nombre_residuo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Plástico"
+                android:textColor="@color/texto_sobre_acento_de_fondo"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/texto_fecha_residuo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.8"
+                android:text="09/12/2018 • 12:34"
+                android:textColor="@color/texto_sobre_acento_de_fondo"
+                android:textSize="13sp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/texto_fecha_residuo"
+            android:id="@+id/texto_puntos_extra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="09/12/18"
-            android:textSize="18sp"
-            android:textColor="@color/texto_sobre_acento_de_fondo"/>
+            android:layout_marginHorizontal="8dp"
+            android:gravity="center"
+            android:minWidth="50dp"
+            android:text="+31"
+            android:textColor="@color/texto_sobre_acento_de_fondo"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_denunciar_categoria"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/texto_hora_residuo"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_denunciar_categoria"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12:34"
-            android:textSize="18sp"
-            android:textColor="@color/texto_sobre_acento_de_fondo"/>
+            android:text="Reportar"
+            android:textColor="@color/texto_sobre_acento_de_fondo"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
