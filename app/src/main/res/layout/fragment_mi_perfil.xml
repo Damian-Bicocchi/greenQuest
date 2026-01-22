@@ -13,15 +13,17 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="375dp"
-        android:layout_height="37dp"
+        android:layout_width="371dp"
+        android:layout_height="25dp"
         android:layout_marginTop="12dp"
         android:background="@color/fondo_secundario"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configuracionButton">
+        app:layout_constraintTop_toBottomOf="@+id/configuracionButton"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/logros_conseguidos_textview"
@@ -53,31 +55,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/logros_recyclerview"
-        android:layout_width="384dp"
-        android:layout_height="374dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="400dp"
+        android:layout_height="401dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="2dp"
         android:clipToPadding="false"
-        android:paddingBottom="80dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:spanCount="2" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="371dp"
-        android:layout_height="217dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="373dp"
+        android:layout_height="210dp"
+        android:layout_marginTop="28dp"
         android:background="@color/fondo_secundario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -142,6 +143,7 @@
             android:layout_width="163dp"
             android:layout_height="186dp"
             android:layout_marginStart="4dp"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
