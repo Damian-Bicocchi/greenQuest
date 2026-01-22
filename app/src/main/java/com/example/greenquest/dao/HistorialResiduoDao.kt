@@ -76,6 +76,14 @@ interface HistorialResiduoDao {
         idUsuario: Int
     ): Int
 
+    @Query("""
+        SELECT historialResiduoId
+        FROM historial_residuos
+        WHERE id_residuo = :idResiduo
+        LIMIT 1
+    """)
+    suspend fun obtenerIdHistorialDeIdResiduo(idResiduo: String): Long?
+
 
 
 

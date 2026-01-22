@@ -24,7 +24,7 @@ class ConfiguracionFragment : Fragment() {
         inflater: android.view.LayoutInflater,
         container: android.view.ViewGroup?,
         savedInstanceState: android.os.Bundle?
-    ): android.view.View? {
+    ): View? {
         binding = com.example.greenquest.databinding.FragmentConfiguracionBinding.inflate(layoutInflater)
 
 

@@ -58,7 +58,7 @@ class EscanearFragment : Fragment() {
                 startCamera()
             } else {
                 Toast.makeText(requireContext(),
-                    "Permiso de cámara requerido", Toast.LENGTH_LONG).show()
+                    "Permiso de cámara requerido. Tendrás que ir a permisos para obtenerlos", Toast.LENGTH_LONG).show()
             }
         }
 

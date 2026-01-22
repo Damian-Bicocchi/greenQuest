@@ -154,5 +154,13 @@ object EstadisticasRepository {
         }
     }
 
+    suspend fun obtenerIdHistorialDeIdResiduo(idResiduo: String): Long?{
+        if (idResiduo.isEmpty()) return null
+
+        return withContext(Dispatchers.IO){
+            historialResiduoDao.obtenerIdHistorialDeIdResiduo(idResiduo = idResiduo)
+        }
+    }
+
 
 }

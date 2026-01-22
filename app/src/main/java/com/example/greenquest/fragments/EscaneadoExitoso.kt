@@ -21,9 +21,13 @@ class EscaneadoExitoso : Fragment(R.layout.fragment_escaneado_exitoso) {
 
         val datos = args.datosEscaneo
 
-        "Reciclaste: ${datos.tipoResiduo}".also { view.findViewById<TextView>(R.id.label_resumen_residuo).text = it }
+        "Reciclaste: ${datos.tipoResiduo}".also {
+            view.findViewById<TextView>(R.id.label_resumen_residuo).text = it
+        }
 
-        "¡Felicidades! Sumaste ${datos.puntos} puntos".also { view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = it }
+        "¡Felicidades! Sumaste ${datos.puntos} puntos".also {
+            view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = it
+        }
 
         view.findViewById<View>(R.id.button_qr_exitoso_continuar)
             .setOnClickListener {

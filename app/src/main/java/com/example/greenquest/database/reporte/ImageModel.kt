@@ -49,7 +49,7 @@ data class ImageModel(
     val idUsuarioReporte: Int,
 
     @ColumnInfo(name = "id_historial_residuo_reportado")
-    val idHistorialResiduoReportado: String
+    val idHistorialResiduoReportado: Long
 ) {
     override fun equals(other: Any?): Boolean {
         // Codigo generado por el IDE
