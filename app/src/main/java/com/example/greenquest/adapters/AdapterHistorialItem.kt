@@ -1,12 +1,14 @@
 package com.example.greenquest.adapters
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.compose.ui.text.capitalize
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.states.reporte.EstadoReporte
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.Locale.getDefault
@@ -55,9 +58,18 @@ class AdapterHistorialItem(
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
         holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
-        holder.botonReportar.setOnClickListener {
-            onReportClick(residuoParticular)
+        if (residuoParticular.estadoReporte == EstadoReporte.SIN_REPORTE){
+            holder.botonReportar.setOnClickListener {
+                onReportClick(residuoParticular)
+            }
+        } else {
+            holder.botonReportar.text = "Reportado"
+            holder.botonReportar.isEnabled = false
+            holder.botonReportar.setOnClickListener {
+                Log.d("reporteLogging", "Aca debería haber un mejor manejo ")
+            }
         }
+
 
     }
 

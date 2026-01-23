@@ -29,8 +29,11 @@ class EstadisticaViewModel : ViewModel() {
     fun obtenerResiduos(){
         viewModelScope.launch {
             try {
-                val lista = EstadisticasRepository.obtenerTodosLosResiduos(UsuarioRepository.obtenerIdUsuarioActual())
+                val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
+                val lista = EstadisticasRepository.obtenerTodosLosResiduos(idUsuario = idUsuario)
                 _residuos.value = lista
+
+                Log.e("reporteLogging", "la lista es $lista y el idDe usuario es $idUsuario")
             }
             catch (e: Exception){
                 Log.e("estadisticaLogging", "hubo un error en obtenerResiduos ${e.message}")

@@ -1,11 +1,13 @@
 package com.example.greenquest.repository
 
+import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
 import com.example.greenquest.database.estadisticas.ResumenResiduo
+import com.example.greenquest.states.reporte.EstadoReporte
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -19,12 +21,13 @@ object EstadisticasRepository {
         GreenQuestApp.instance.database.historialResiduoDao()
     }
     suspend fun insertarResiduoAlHistorial(payload: QrPayloadResiduo){
+        Log.e("reporteLogging", "Inserto al historial $payload")
         withContext(Dispatchers.IO){
             historialResiduoDao.insertarResiduoAlHistorial(
                 HistorialResiduo(
                     historialResiduoId = 0,
                     idResiduo = payload.id_residuo,
-                    idUsuario = UsuarioRepository.getUserProfile().id!!,
+                    idUsuario = UsuarioRepository.obtenerIdUsuarioActual(),
                     fecha = OffsetDateTime.now(),
                     tipoResiduo = payload.tipo_residuo,
                     puntosDados = payload.puntaje
@@ -40,6 +43,7 @@ object EstadisticasRepository {
                 idUsuario = idUsuario
             )
         }
+        Log.e("reporteLogging", "la lista es $lista")
         return lista
     }
 
@@ -159,6 +163,14 @@ object EstadisticasRepository {
 
         return withContext(Dispatchers.IO){
             historialResiduoDao.obtenerIdHistorialDeIdResiduo(idResiduo = idResiduo)
+        }
+    }
+
+    suspend fun actualizarEstadoReporte(idHistorialResiduo: Long,estadoReporte: EstadoReporte){
+        if (idHistorialResiduo <= 0) return
+
+        return withContext(Dispatchers.IO){
+            historialResiduoDao
         }
     }
 

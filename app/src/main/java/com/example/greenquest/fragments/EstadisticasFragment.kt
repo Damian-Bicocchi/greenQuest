@@ -50,7 +50,6 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
 
-    private var adapterHistorialItem: AdapterHistorialItem? = null
 
 
 

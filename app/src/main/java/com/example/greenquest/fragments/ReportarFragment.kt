@@ -1,5 +1,6 @@
 package com.example.greenquest.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -16,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageView
@@ -31,7 +33,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
-import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.viewmodel.ReporteViewModel
 
 class ReportarFragment : Fragment() {
@@ -43,6 +44,8 @@ class ReportarFragment : Fragment() {
 
     private var fullImageBitmap: Bitmap? = null
     private var thumbnailBitmap: Bitmap? = null
+
+    private var tipoResiduoSeleccionado: TipoResiduo? = null
 
     // UI elements
     private lateinit var buttonAbrirCamara: Button
@@ -67,7 +70,7 @@ class ReportarFragment : Fragment() {
             if (granted) {
                 startCamera()
             } else {
-                if (shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA)){
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)){
                     showPermissionDialog()
                 } else {
                     showPermanentDenialDialog()
@@ -80,10 +83,10 @@ class ReportarFragment : Fragment() {
 
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.CAMERA
+                Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
@@ -106,7 +109,26 @@ class ReportarFragment : Fragment() {
 
         val buttonEnviarReporte = view.findViewById<Button>(R.id.button_enviar_reporte)
 
-        cargarSpinnerCategorias(view.findViewById(R.id.select_clasificacion_correcta))
+        val selectClasificacion: Spinner = view.findViewById(R.id.select_clasificacion_correcta)
+
+        cargarSpinnerCategorias(selectClasificacion)
+
+
+        selectClasificacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val seleccion = if (position > 0) {
+                    parent.getItemAtPosition(position) as TipoResiduo
+                } else {
+                    null
+                }
+                reporteViewModel.seleccionarTipoResiduo(seleccion)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                reporteViewModel.seleccionarTipoResiduo(null)
+            }
+        }
+
 
         imgThumbnail = view.findViewById(R.id.image_thumbnail_reportar)
 
@@ -123,21 +145,23 @@ class ReportarFragment : Fragment() {
 
         buttonEnviarReporte.setOnClickListener {
 
+            fullImageBitmap?.let {
+                bitmap ->
+                reporteViewModel.processReport(idResiduo = idResiduo, imageData = bitmap)
+                volverAlOrigenUI()
+            } ?: run {
+                Toast.makeText(
+                    requireContext(),
+                    "Debe tomar primer una foto del residuo",
+                    Toast.LENGTH_SHORT
+                )
+            }
+
         }
 
         val volver = view.findViewById<TextView>(R.id.link_volver_reporte)
         volver.setOnClickListener {
-            when (origen) {
-                OrigenHaciaReporte.ESCANEAR -> {
-                    findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEscanearFragment())
-                }
-                OrigenHaciaReporte.ESTADISTICA -> {
-                    findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEstadisticasFragment())
-                }
-                OrigenHaciaReporte.HISTORIALCOMPLETO -> {
-                    findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToHistorialResiduoCompletoFragment())
-                }
-            }
+            volverAlOrigenUI()
         }
     }
 
@@ -200,26 +224,39 @@ class ReportarFragment : Fragment() {
 
 
     private fun cargarSpinnerCategorias(spinner: Spinner) {
-        val adapter = object : ArrayAdapter<TipoResiduo>(
+        val categoriasOrdenadas = TipoResiduo.entries.sortedBy { it.name }
+
+        val listaConVacio = mutableListOf<TipoResiduo?>(null).apply {
+            addAll(categoriasOrdenadas)
+        }
+
+        val adapter = object : ArrayAdapter<TipoResiduo?>(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            TipoResiduo.entries.toTypedArray()
+            listaConVacio
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = super.getView(position, convertView, parent)
+                val view = convertView ?: LayoutInflater.from(context)
+                    .inflate(android.R.layout.simple_spinner_item, parent, false)
+
                 val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.text = getItem(position)?.name ?: "" // Texto por defecto
                 textView.setTextColor(
                     ContextCompat.getColor(context, R.color.texto_normal)
                 )
                 return view
             }
+
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,
                 parent: ViewGroup
             ): View {
-                val view = super.getDropDownView(position, convertView, parent)
+                val view = convertView ?: LayoutInflater.from(context)
+                    .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
+
                 val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.text = getItem(position)?.name ?: "" // Texto por defecto
                 textView.setTextColor(
                     ContextCompat.getColor(context, R.color.texto_normal)
                 )
@@ -227,24 +264,23 @@ class ReportarFragment : Fragment() {
             }
         }
 
-        adapter.setDropDownViewResource(R.layout.dropdown_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
-
 
     private fun chequearPermisoCamara() {
         when {
             ContextCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.CAMERA
+                Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
                 startCamera()
             }
-            shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                 showPermissionDialog()
             }
             else -> {
-                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
     }
@@ -254,7 +290,7 @@ class ReportarFragment : Fragment() {
             .setTitle("Permiso de cámara requerido")
             .setMessage("Para tomar fotos de residuos, necesitamos acceso a tu cámara. ¿Quieres conceder el permiso ahora?")
             .setPositiveButton("SÍ, CONCEDER PERMISO") { _, _ ->
-                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
             .setNegativeButton("AHORA NO") { _, _ ->
                 Toast.makeText(requireContext(),
@@ -287,4 +323,21 @@ class ReportarFragment : Fragment() {
         }
     }
 
+    private fun volverAlOrigenUI() {
+        when (origen) {
+            OrigenHaciaReporte.ESCANEAR -> {
+                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEscanearFragment())
+            }
+
+            OrigenHaciaReporte.ESTADISTICA -> {
+                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEstadisticasFragment())
+            }
+
+            OrigenHaciaReporte.HISTORIALCOMPLETO -> {
+                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToHistorialResiduoCompletoFragment())
+            }
+        }
+    }
+
 }
+

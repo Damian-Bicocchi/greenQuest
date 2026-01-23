@@ -9,10 +9,10 @@ import com.example.greenquest.database.user.User
 
 data class ImageWithDetails(
     @Embedded
-    val image: ImageModel,
+    val image: ReporteData,
 
     @Relation(
-        parentColumn = "id_historial_residuo_reportado",
+        parentColumn = "fk_id_historial_residuo_reportado",
         entityColumn = "historialResiduoId"
     )
     val historial: HistorialResiduo,

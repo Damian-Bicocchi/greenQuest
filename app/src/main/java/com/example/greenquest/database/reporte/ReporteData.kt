@@ -22,16 +22,17 @@ import java.time.OffsetDateTime
         ForeignKey(
             entity = HistorialResiduo::class,
             parentColumns = ["historialResiduoId"],
-            childColumns = ["id_historial_residuo_reportado"],
+            childColumns = ["fk_id_historial_residuo_reportado"],
             onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
         Index("id_usuario_reporte"),
-        Index("id_historial_residuo_reportado")
+        Index("id_residuo"),
+        Index("fk_id_historial_residuo_reportado")
     ]
 )
-data class ImageModel(
+data class ReporteData(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_imagen_reportada")
     val idImagenReportada: Long = 0,
@@ -48,15 +49,18 @@ data class ImageModel(
     @ColumnInfo(name = "id_usuario_reporte")
     val idUsuarioReporte: Int,
 
-    @ColumnInfo(name = "id_historial_residuo_reportado")
-    val idHistorialResiduoReportado: Long
+    @ColumnInfo(name = "id_residuo")
+    val id_residuo: String,
+
+    @ColumnInfo("fk_id_historial_residuo_reportado")
+    val fkIdHistorialResiduoReportado: Long
 ) {
     override fun equals(other: Any?): Boolean {
         // Codigo generado por el IDE
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ImageModel
+        other as ReporteData
 
         if (idImagenReportada != other.idImagenReportada) return false
         if (!imageData.contentEquals(other.imageData)) return false

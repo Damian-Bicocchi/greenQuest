@@ -10,7 +10,7 @@ import com.example.greenquest.database.user.User
 import com.example.greenquest.dao.TriviaDao
 import com.example.greenquest.dao.UserDao
 import com.example.greenquest.database.estadisticas.HistorialResiduo
-import com.example.greenquest.database.reporte.ImageModel
+import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.database.trivia.OpcionesTrivia
 import com.example.greenquest.database.trivia.PreguntaTrivia
 import com.example.greenquest.database.trivia.RespuestaUsuario
@@ -22,7 +22,7 @@ import com.example.greenquest.database.trivia.RespuestaUsuario
         OpcionesTrivia::class,
         RespuestaUsuario::class,
         HistorialResiduo::class,
-        ImageModel::class],
+        ReporteData::class],
     version = 4,
     exportSchema = false
 )
