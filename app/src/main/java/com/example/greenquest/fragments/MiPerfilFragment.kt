@@ -21,7 +21,7 @@ import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.viewmodel.MiPerfilModel
-
+import androidx.fragment.app.setFragmentResultListener
 import kotlinx.coroutines.launch
 
 
@@ -115,6 +115,13 @@ class MiPerfilFragment : Fragment() {
         return  binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFragmentResultListener("foto_perfil_result") { _, bundle ->
+            val resId = bundle.getInt("imagenResId")
+            binding.imagenDePerfil.setImageResource(resId) // 👈 se actualiza al toque
+        }    }
 
     companion object {
         // TODO: Rename and change types and number of parameters
@@ -162,7 +169,7 @@ class MiPerfilFragment : Fragment() {
             binding.usernameEditperfil.setText(usuario.userName.toString())
             binding.usernameEditperfil.setEnabled(false)
             binding.descripcionEditperfil.setEnabled(false)
-
+            binding.imagenDePerfil.setImageResource(usuario.imagen?:R.drawable.outline_person_24)
             miPerfilModel.chequearYActualizarLogros(usuario)
             binding.logrosRecyclerview.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
         }

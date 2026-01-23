@@ -5,6 +5,7 @@ import com.example.greenquest.Provider.LogroProvider
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.user.User
+import com.example.greenquest.repository.UsuarioRepository
 
 class MiPerfilModel : ViewModel() {
 

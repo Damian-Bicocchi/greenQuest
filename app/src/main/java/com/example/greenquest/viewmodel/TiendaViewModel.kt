@@ -13,9 +13,9 @@ class TiendaViewModel {
     fun obtenerArticulosDisponibles(): List<Articulo>{
 
         return listOf(
-            Articulo(1, "Planta de interior", "500 puntos", R.drawable.metal10, false),
-            Articulo(2, "Kit de reciclaje", "300 puntos", R.drawable.metal10, false),
-            Articulo(3, "Bicicleta ecológica", "1500 puntos", R.drawable.metal10, false),
+            Articulo(1, "Planta de interior", "500 puntos", R.drawable.outline_person_24, false),
+            Articulo(2, "Kit de reciclaje", "300 puntos", R.drawable.plastico50, false),
+            Articulo(3, "Bicicleta ecológica", "1500 puntos", R.drawable.metal100, false),
             Articulo(4, "Botella reutilizable", "200 puntos", R.drawable.metal10, false),
             Articulo(5, "Panel solar portátil", "2500 puntos", R.drawable.metal10, false),
             Articulo(3, "Bicicleta ecológica", "1500 puntos", R.drawable.metal10, false),

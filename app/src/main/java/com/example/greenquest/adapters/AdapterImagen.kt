@@ -3,6 +3,7 @@ package com.example.greenquest.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import com.example.greenquest.R
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,8 @@ import com.example.greenquest.Articulo
 import com.example.greenquest.databinding.FilaFotosPerfilBinding
 
 class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<AdapterImagen.ViewHolder>() {
+
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,6 +30,12 @@ class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<Adapt
         val item = articulos[position]
         holder.imagenArticulo.setImageResource(item.imagen ?: R.drawable.outline_person_24)
         holder.botonSeleccionar.id = item.id
+
+        holder.botonSeleccionar.setOnClickListener {
+            val imageView =  holder.itemView.rootView.findViewById<ImageView>(R.id.imagenActualCambiarImagen)
+            imageView.setImageResource(item.imagen ?: R.drawable.outline_person_24)
+            imageView.id = item.imagen ?: R.drawable.outline_person_24
+        }
     }
 
     override fun getItemCount(): Int {
@@ -36,7 +45,7 @@ class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<Adapt
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         val imagenArticulo = view.findViewById<ImageView>(R.id.imagenSeleccionar)
-        val botonSeleccionar = view.findViewById<ImageView>(R.id.buttonSeleccionar)
+        val botonSeleccionar = view.findViewById<Button>(R.id.buttonSeleccionar)
     }
 
 

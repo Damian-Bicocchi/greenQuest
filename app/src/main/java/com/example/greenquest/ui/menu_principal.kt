@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
 import com.example.greenquest.fragments.MiPerfilFragment
@@ -13,7 +14,9 @@ import com.example.greenquest.fragments.EscanearFragment
 import com.example.greenquest.fragments.TiendaFragment
 import com.example.greenquest.fragments.TopGlobal
 import com.example.greenquest.fragments.TriviaFragment
+import com.example.greenquest.repository.UsuarioRepository
 import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.launch
 
 class menu_principal : AppCompatActivity() {
     private lateinit var binding: ActivityToolbarBinding
@@ -44,6 +47,10 @@ class menu_principal : AppCompatActivity() {
             topGlobalFragment = TopGlobal()
             showFragment(topGlobalFragment!!)
             navigation.selectedItemId = R.id.topGlobalFragment
+        }
+
+        lifecycleScope.launch {
+            miPerfil.setImageResource(UsuarioRepository.obtenerUsuarioLocal()!!.imagen ?: R.drawable.outline_person_24)
         }
     }
 
