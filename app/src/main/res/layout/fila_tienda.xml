@@ -8,11 +8,11 @@
     android:paddingBottom="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="178dp"
-        android:layout_height="216dp"
+        android:layout_width="177dp"
+        android:layout_height="211dp"
         android:background="@drawable/radius_color_secundario"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="37dp">
+        tools:layout_editor_absoluteX="48dp"
+        tools:layout_editor_absoluteY="-6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="92dp"

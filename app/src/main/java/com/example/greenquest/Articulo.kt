@@ -5,5 +5,5 @@ data class Articulo(
     val nombre: String,
     val valor: String,
     val imagen: Int ?,
-    val adquirido: Boolean
+    var adquirido: Boolean
 )
