@@ -83,7 +83,7 @@ class AdapterArticulo(val listaArticulo: List<Articulo>) : RecyclerView.Adapter<
                     }
                 }
             }
-            holder.valorArticulo.text = item.valor
+            holder.valorArticulo.text = "${item.valor} puntos"
         }
     }
 

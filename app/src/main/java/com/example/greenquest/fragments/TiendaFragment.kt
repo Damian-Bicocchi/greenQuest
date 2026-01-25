@@ -26,14 +26,24 @@ class TiendaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentTiendaBinding.inflate(inflater, container, false)
         val recyclerView =  binding.MiTiendaRV
         recyclerView.adapter = AdapterArticulo(tiendaViewModel.obtenerArticulosDisponibles())
         lifecycleScope.launch {
             usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+            usuario.monedas += 100000 // Para pruebas
+            UsuarioRepository.guardarUsuarioLocal(usuario)
             binding.textviewCantMonedas.text = usuario.monedas.toString()
         }
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+            binding.textviewCantMonedas.text = usuario.monedas.toString()
+        }
+    }
 }

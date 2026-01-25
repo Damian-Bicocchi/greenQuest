@@ -35,11 +35,12 @@ class FotoDialogFragment : DialogFragment() {
         lifecycleScope.launch {
             val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
             binding.imagenActualCambiarImagen.setImageResource(usuario.imagen ?: com.example.greenquest.R.drawable.outline_person_24 )
-        }
 
-        recyclerView.adapter = AdapterImagen(
-            TiendaViewModel().obtenerArticulosDisponibles()
-        )
+
+            recyclerView.adapter = AdapterImagen(
+                TiendaViewModel().articulosAdquiridosIds(usuario)
+            )
+        }
 
         binding.buttonCancelar.setOnClickListener {
             dialog?.dismiss()
@@ -48,7 +49,7 @@ class FotoDialogFragment : DialogFragment() {
         binding.buttonGuardar.setOnClickListener {
             lifecycleScope.launch {
                 val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-                val nuevaImagenId = binding.imagenActualCambiarImagen.id
+                val nuevaImagenId = binding.imagenActualCambiarImagen.tag as Int
                 usuario.imagen = nuevaImagenId
                 UsuarioRepository.actualizarUsuarioLocal(usuario)
                 setFragmentResult(
