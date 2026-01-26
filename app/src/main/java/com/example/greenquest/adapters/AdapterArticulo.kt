@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.collection.buildIntFloatMap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.Articulo
 import com.example.greenquest.R
@@ -17,73 +18,86 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AdapterArticulo(val listaArticulo: List<Articulo>) : RecyclerView.Adapter<AdapterArticulo.ViewHolder>() {
-
-    lateinit var binding : FilaTiendaBinding
+class AdapterArticulo(val listaArticulo: List<Articulo>,
+                      private val onCompraExitosa: () -> Unit
+) : RecyclerView.Adapter<AdapterArticulo.ViewHolder>() {
 
     private var adapterScope = CoroutineScope(Dispatchers.Main)
 
     private val tiendaViewModel = TiendaViewModel()
 
-    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val nombreArticulo = view.findViewById<TextView>(binding.nombreArticuloTienda.id)
-        val imagenArticulo = view.findViewById<ImageView>(binding.imagenArticulo.id)
-        val valorArticulo = view.findViewById<TextView>(binding.textviewPrecioArticulo.id)
+
+    inner class ViewHolder(binding : FilaTiendaBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        val binding = binding
+
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        binding = FilaTiendaBinding.inflate(
+        val binding = FilaTiendaBinding.inflate(
             android.view.LayoutInflater.from(parent.context),
             parent,
             false
         )
 
 
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int
-    ) {
-        val item  = listaArticulo[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = listaArticulo[position]
 
-        holder.imagenArticulo.setImageResource(item.imagen?: R.drawable.podium)
-        holder.nombreArticulo.text = item.nombre
-        if(item.adquirido){
-            holder.nombreArticulo.alpha = 0.5f
-            holder.imagenArticulo.alpha = 0.5f
-            holder.valorArticulo.alpha = 0.5f
-            holder.valorArticulo.text = "Adquirido"
-            binding.textviewPrecioArticulo.setOnClickListener {
-               Toast.makeText(holder.itemView.context, "Ya has adquirido este artículo", Toast.LENGTH_SHORT).show()
+        holder.binding.imagenArticulo.setImageResource(item.imagen ?: R.drawable.podium)
+        holder.binding.nombreArticuloTienda.text = item.nombre
+
+        holder.binding.nombreArticuloTienda.alpha = 1f
+        holder.binding.imagenArticulo.alpha = 1f
+        holder.binding.textviewPrecioArticulo.alpha = 1f
+
+        if (item.adquirido) {
+            holder.binding.nombreArticuloTienda.alpha = 0.5f
+            holder.binding.imagenArticulo.alpha = 0.5f
+            holder.binding.textviewPrecioArticulo.alpha = 0.5f
+            holder.binding.textviewPrecioArticulo.text = "Adquirido"
+
+            holder.binding.textviewPrecioArticulo.setOnClickListener {
+                Toast.makeText(holder.itemView.context, "Ya has adquirido este artículo", Toast.LENGTH_SHORT).show()
             }
-        }else {
-            binding.textviewPrecioArticulo.setOnClickListener {
+        } else {
+            holder.binding.textviewPrecioArticulo.text = "${item.valor} puntos"
+
+            holder.binding.textviewPrecioArticulo.setOnClickListener {
+
+                val pos = holder.bindingAdapterPosition
+                if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
+
                 adapterScope.launch {
-                    if (tiendaViewModel.comprarArticulo(item)) {
-                        holder.nombreArticulo.alpha = 0.5f
-                        holder.imagenArticulo.alpha = 0.5f
-                        holder.valorArticulo.alpha = 0.5f
-                        holder.valorArticulo.text = "Adquirido"
+                    val comprado = tiendaViewModel.comprarArticulo(listaArticulo[pos])
+
+                    if (comprado) {
+
+                        notifyItemChanged(pos)
+
                         Toast.makeText(
                             holder.itemView.context,
-                            "Has comprado ${item.nombre} por ${item.valor} monedas",
+                            "Artículo comprado",
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        onCompraExitosa()
+
                     } else {
                         Toast.makeText(
                             holder.itemView.context,
-                            "No tienes suficientes monedas para comprar ${item.nombre}",
+                            "No tenés monedas suficientes",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
             }
-            holder.valorArticulo.text = "${item.valor} puntos"
         }
     }
 
