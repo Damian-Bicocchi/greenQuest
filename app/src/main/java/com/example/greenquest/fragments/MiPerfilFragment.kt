@@ -22,6 +22,8 @@ import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.viewmodel.MiPerfilModel
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.launch
 
 
@@ -39,7 +41,7 @@ class MiPerfilFragment : Fragment() {
     private var subrayarConseguidos = false
     private var subrayarFaltantes = false
 
-    private val miPerfilModel = MiPerfilModel()
+    private val miPerfilModel : MiPerfilModel by viewModels()
 
     private lateinit var binding: FragmentMiPerfilBinding
 

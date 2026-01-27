@@ -1,6 +1,8 @@
 package com.example.greenquest.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.greenquest.Articulo
+import com.example.greenquest.Provider.ArticulosProvider
 import com.example.greenquest.Provider.LogroProvider
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.apiParameters.TipoResiduo
@@ -18,6 +20,16 @@ class MiPerfilModel : ViewModel() {
 
     }
 
+    suspend fun articulosAdquiridosIds(): List<Articulo> {
+        val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+        val listaArticulos = mutableListOf<Articulo>()
+        val articulos = ArticulosProvider.articulosTienda
+        for(articuloId in usuario.articulos_adquiridos) {
+            listaArticulos.add(articulos.first { it.id == articuloId })
+
+        }
+        return listaArticulos
+    }
 
 
 }

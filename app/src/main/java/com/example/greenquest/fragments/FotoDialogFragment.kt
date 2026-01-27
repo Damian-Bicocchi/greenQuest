@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.R
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.adapters.AdapterImagen
 import com.example.greenquest.databinding.DialogoLayoutBinding
 import com.example.greenquest.repository.UsuarioRepository
+import com.example.greenquest.viewmodel.MiPerfilModel
 import com.example.greenquest.viewmodel.TiendaViewModel
 import kotlinx.coroutines.launch
 
@@ -24,6 +26,7 @@ class FotoDialogFragment : DialogFragment() {
     private lateinit var recyclerView : RecyclerView
     private lateinit var binding : DialogoLayoutBinding
 
+    private val miPerfilModel : MiPerfilModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +41,7 @@ class FotoDialogFragment : DialogFragment() {
 
 
             recyclerView.adapter = AdapterImagen(
-                TiendaViewModel().articulosAdquiridosIds(usuario)
+                miPerfilModel.articulosAdquiridosIds()
             )
         }
 
@@ -49,7 +52,11 @@ class FotoDialogFragment : DialogFragment() {
         binding.buttonGuardar.setOnClickListener {
             lifecycleScope.launch {
                 val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-                val nuevaImagenId = binding.imagenActualCambiarImagen.tag as Int
+                val nuevaImagenId = binding.imagenActualCambiarImagen.tag as? Int
+                if (nuevaImagenId ==null  || nuevaImagenId == usuario.imagen) {
+                    dialog?.dismiss()
+                    return@launch
+                }
                 usuario.imagen = nuevaImagenId
                 UsuarioRepository.actualizarUsuarioLocal(usuario)
                 setFragmentResult(
