@@ -10,9 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="177dp"
         android:layout_height="211dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/radius_color_secundario"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="-6dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="92dp"

@@ -31,5 +31,11 @@ class MiPerfilModel : ViewModel() {
         return listaArticulos
     }
 
-
+    suspend fun actualizarFotoDePerfil(imagenId: Int?): Boolean{
+        val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+        if(imagenId == null || usuario.imagen == imagenId) return false
+        usuario.imagen = imagenId
+        UsuarioRepository.actualizarUsuarioLocal(usuario)
+        return true
+    }
 }

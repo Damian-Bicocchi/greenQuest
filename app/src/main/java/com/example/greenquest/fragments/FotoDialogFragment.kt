@@ -51,20 +51,17 @@ class FotoDialogFragment : DialogFragment() {
 
         binding.buttonGuardar.setOnClickListener {
             lifecycleScope.launch {
-                val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
                 val nuevaImagenId = binding.imagenActualCambiarImagen.tag as? Int
-                if (nuevaImagenId ==null  || nuevaImagenId == usuario.imagen) {
+                if (!miPerfilModel.actualizarFotoDePerfil(nuevaImagenId)) {
                     dialog?.dismiss()
                     return@launch
                 }
-                usuario.imagen = nuevaImagenId
-                UsuarioRepository.actualizarUsuarioLocal(usuario)
                 setFragmentResult(
                     "foto_perfil_result",
-                    Bundle().apply { putInt("imagenResId", nuevaImagenId) }
+                    Bundle().apply { putInt("imagenResId", nuevaImagenId!!) }
                 )
                 val miPerfil : ImageView = requireActivity().findViewById(com.example.greenquest.R.id.miPerfil)
-                miPerfil.setImageResource(nuevaImagenId)
+                miPerfil.setImageResource(nuevaImagenId!!)
                 dialog?.dismiss()
             }
         }

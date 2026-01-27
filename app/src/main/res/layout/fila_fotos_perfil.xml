@@ -8,9 +8,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="159dp"
         android:layout_height="196dp"
-        android:layout_marginTop="2dp"
         android:background="@color/fondo_secundario"
         android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
