@@ -17,9 +17,9 @@
         android:icon="@drawable/escanear"
         android:title="@string/title_bottom_scanner"/>
     <item
-        android:id="@+id/categorizarFragment"
+        android:id="@+id/estadisticaFragment"
         android:icon="@drawable/trash_outline"
-        android:title="@string/title_bottom_report"/>
+        android:title="@string/title_bottom_estadistica"/>
     <item
         android:id="@+id/triviaFragment"
         android:icon="@drawable/people_outline"

@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.greenquest"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -116,6 +116,7 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.extensions)
     implementation(libs.kotlinx.serialization.json)
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     implementation(libs.osmdroid)
     implementation(libs.osmbonuspack)

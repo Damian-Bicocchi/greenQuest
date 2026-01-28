@@ -1,4 +1,4 @@
-package com.example.greenquest.viewmodel
+package com.example.greenquest.states
 
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 

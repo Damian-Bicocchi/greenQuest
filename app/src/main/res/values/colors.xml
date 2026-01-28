@@ -26,4 +26,20 @@
     <color name="white">#FFFFFF</color>
     <color name="boton_configiuracion">#6E738D</color>
 
+    <color name="color_plastico">#4CAF50</color>
+    <color name="color_vidrio">#2196F3</color>
+    <color name="color_carton">#FF9800</color>
+    <color name="color_metal">#9E9E9E</color>
+    <color name="color_basura">#F44336</color>
+    <color name="color_papel">#03A9F4</color>
+
+    <array name="pieChartColorArray">
+        <item>@color/color_plastico</item>
+        <item>@color/color_vidrio</item>
+        <item>@color/color_carton</item>
+        <item>@color/color_metal</item>
+        <item>@color/color_basura</item>
+        <item>@color/color_papel</item>
+    </array>
+
 </resources>
