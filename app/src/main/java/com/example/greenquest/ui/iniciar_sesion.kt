@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.databinding.ActivityIniciarSesionBinding
 import com.example.greenquest.viewmodel.InicioSesionModel
@@ -59,29 +60,26 @@ class iniciar_sesion : ComponentActivity() {
             startActivity(intent)
         }
         botonIniciarSesion.setOnClickListener {
-            chequeoIniciarSesion()
+            val userName = binding.usernameInput.text.toString()
+            val password = binding.passwordInput.text.toString()
+            viewModel.iniciarSesion(userName, password)
         }
-
-
-
-
-    }
-
-
-
-    private fun chequeoIniciarSesion() {
-        val userName = binding.usernameInput.text.toString()
-        val password = binding.passwordInput.text.toString()
-
-        viewModel.iniciarSesion(userName, password).observe(this) { resultado ->
-        if (resultado == "OK") {
-            Toast.makeText(this, "Inicio de sesión exitoso.", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, menu_principal::class.java))
-        } else {
-            Toast.makeText(this, resultado.toString(), Toast.LENGTH_LONG).show()
-        }
-
-
+        lifecycleScope.launch {
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                viewModel.status.collect { resultado ->
+                    resultado ?: return@collect
+                    if (resultado == "OK") {
+                        Toast.makeText(
+                            this@iniciar_sesion,
+                            "Inicio de sesión exitoso.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
+                    } else {
+                        Toast.makeText(this@iniciar_sesion, resultado, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
 
     }

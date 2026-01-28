@@ -125,4 +125,6 @@
     <string name="tab_title_del_mes">Este mes</string>
     <string name="tab_title_del_año">Este año</string>
     <string name="tab_historico">Histórico</string>
+    <string name="camera_permission_required">Permiso de cámara requerido</string>
+    <string name="give_permission">Dar permisos</string>
 </resources>

@@ -14,7 +14,7 @@ object EstacionRepository {
         }
     }
 
-    suspend fun station(idStation: Integer): Estacion? {
+    suspend fun station(idStation: Int): Estacion? {
         return try {
             api.station(idStation)
         } catch (_: Exception) {

@@ -51,5 +51,5 @@ interface EstacionService {
     suspend fun stations(): List<Estacion>
 
     @GET("estaciones/{id_estacion}")
-    suspend fun station(@Path("id_estacion") idStation: Integer): Estacion
+    suspend fun station(@Path("id_estacion") idStation: Int): Estacion
 }

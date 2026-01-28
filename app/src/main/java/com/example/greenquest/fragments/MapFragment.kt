@@ -26,6 +26,7 @@ import com.example.greenquest.apiParameters.Estacion
 import com.example.greenquest.databinding.FragmentMapBinding
 import com.example.greenquest.ui.menu_principal
 import com.example.greenquest.viewmodel.MapViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -58,7 +59,7 @@ class MapFragment : Fragment() {
                 (mView.findViewById<View>(R.id.bubble_moreinfo)) as Button
             btn.setOnClickListener { _ ->
                 activity?.let { activity ->
-                    val dialogBuilder = AlertDialog.Builder(activity)
+                    val dialogBuilder = MaterialAlertDialogBuilder(activity)
                     dialogBuilder.setMessage("¿Trazar ruta?")
                         .setPositiveButton("Confirmar") { _, _ ->
                             viewLifecycleOwner.lifecycleScope.launch {
@@ -110,13 +111,13 @@ class MapFragment : Fragment() {
                     requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) -> {
-                    AlertDialog.Builder(requireContext())
-                        .setTitle("Esta opción requiere la ubicación")
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Mapa de Estaciones")
                         .setMessage("Para acceder al mapa de las estaciones se requiere que la aplicación tenga acceso a tu ubicación")
-                        .setPositiveButton("Aceptar") { _, _ ->
+                        .setPositiveButton("Dar permisos") { _, _ ->
                             requirePermission()
                         }
-                        .setNegativeButton("Cancelar", null)
+                        .setNegativeButton("Volver", null)
                         .create()
                         .show()
                 }

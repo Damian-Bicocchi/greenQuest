@@ -6,6 +6,7 @@
         <item name="materialButtonStyle">@style/Widget.GreenQuest.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.GreenQuest.Button.Outlined</item>
         <item name="popupMenuStyle">@style/Widget.GreenQuest.PopupMenu</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.GreenQuest.MaterialAlertDialog</item>
     </style>
 
     <style name="Widget.GreenQuest.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
@@ -43,9 +44,23 @@
         <item name="cornerRadius">8dp</item>
     </style>
 
+    <style name="DialogTitleStyle" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/texto_normal</item>
+    </style>
+
     <style name="BottomNavitation">
         <item name="android:background" >@color/bottom_navigation_background</item>
         <item name="itemIconTint">@color/texto_oscuro</item>
         <item name="itemTextColor">@color/texto_oscuro</item>
+    </style>
+
+    <style name="ThemeOverlay.GreenQuest.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorPrimary">@color/accent_color</item>
+        <item name="colorSecondary">@color/accent_color</item>
+        <item name="colorSurface">@color/fondo_primario</item>
+        <item name="colorOnSurface">@color/texto_normal</item>
+        <item name="alertDialogStyle">@style/MaterialAlertDialog.Material3</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.GreenQuest.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.GreenQuest.Button</item>
     </style>
 </resources>

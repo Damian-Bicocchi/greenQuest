@@ -15,6 +15,7 @@ import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.databinding.FragmentTriviaBinding
 import com.example.greenquest.states.trivia.EstadoTrivia
 import com.example.greenquest.viewmodel.TriviaViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class TriviaFragment : Fragment() {
@@ -80,7 +81,7 @@ class TriviaFragment : Fragment() {
         val explicacion = triviaViewModel.explicacionState.value ?: ""
         val titulo = if (esCorrecta) "\uD83D\uDC4C\u200B\uD83D\uDC4C\u200B Muy bien \uD83D\uDC4C\u200B\uD83D\uDC4C\u200B" else "❌\u200B❌\u200B"
         val mensaje = if (esCorrecta) "Excelente: $explicacion" else explicacion
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        val builder = MaterialAlertDialogBuilder(requireContext())
         builder
             .setMessage(mensaje)
             .setTitle(titulo)
