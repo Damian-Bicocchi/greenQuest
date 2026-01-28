@@ -254,6 +254,7 @@ class EscanearFragment : Fragment() {
                         tipoResiduo = state.payload.tipo_residuo,
                         puntos = state.payload.puntaje
                     )
+                    lastErrorMessage = null
                     val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.frame_container, fragment)
