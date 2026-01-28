@@ -1,13 +1,14 @@
 package com.example.greenquest
 
-import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
-import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
+import com.example.greenquest.apiParameters.Estacion
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.PuntosUsuario
 import com.example.greenquest.apiParameters.RankingEntry
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
+import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
+import com.example.greenquest.apiParameters.scanning.ReclamarResiduoRequest
 import com.example.greenquest.apiParameters.estadisticas.ResiduoItem
 import retrofit2.Response
 import retrofit2.http.Body
@@ -32,9 +33,13 @@ interface EstacionService {
     @GET("ranking/semanal/")
     suspend fun rankingWeekly(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
 
+
+    @GET("ranking/")
+    suspend fun rankingHistorical(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>
+
     @GET("ranking/posicion/")
     suspend fun rankingPosition(
-        @Query("id_user") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
+        @Query("id_usuario") id: Int, @Query("tipo_residuo") tipoResiduo: TipoResiduo? = null
     ): PosicionRanking
 
     @GET("residuos/{id_usuario}/")
@@ -42,5 +47,9 @@ interface EstacionService {
         @Path("id_usuario") idUsuario: Int
     ): List<List<ResiduoItem>>
 
+    @GET("estaciones/")
+    suspend fun stations(): List<Estacion>
 
+    @GET("estaciones/{id_estacion}")
+    suspend fun station(@Path("id_estacion") idStation: Integer): Estacion
 }

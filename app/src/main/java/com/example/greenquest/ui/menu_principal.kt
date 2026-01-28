@@ -7,9 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
-import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.CategorizarFragment
 import com.example.greenquest.fragments.EscanearFragment
+import com.example.greenquest.fragments.MapFragment
+import com.example.greenquest.fragments.MiPerfilFragment
 import com.example.greenquest.fragments.EstadisticasFragment
 import com.example.greenquest.fragments.TiendaFragment
 import com.example.greenquest.fragments.TopGlobal
@@ -22,9 +23,9 @@ class menu_principal : AppCompatActivity() {
     private var topAmigosFragment: TiendaFragment? = null
     private var escanearFragment: EscanearFragment? = null
     private var categorizarFragment: CategorizarFragment? = null
-    private var miPefilFragment : MiPerfilFragment? = null
-
-    private var triviaFragment : TriviaFragment? = null
+    private var miPefilFragment: MiPerfilFragment? = null
+    private var triviaFragment: TriviaFragment? = null
+    private var mapFragment: MapFragment? = null
 
     private var estadisticasFragment : EstadisticasFragment? = null
 
@@ -32,6 +33,7 @@ class menu_principal : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityToolbarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -42,6 +44,13 @@ class menu_principal : AppCompatActivity() {
         miPerfil.setOnClickListener {
             miPefilFragment = MiPerfilFragment()
             showFragment(miPefilFragment!!)
+        }
+        val map = binding.map
+        map.setOnClickListener {
+            if (mapFragment == null) {
+                mapFragment = MapFragment()
+            }
+            showFragment(mapFragment!!)
         }
         if (savedInstanceState == null) {
             topGlobalFragment = TopGlobal()
@@ -59,6 +68,7 @@ class menu_principal : AppCompatActivity() {
                 showFragment(topGlobalFragment!!)
                 true
             }
+
             R.id.topAmigosFragment -> {
                 if (topAmigosFragment == null) {
                     topAmigosFragment = TiendaFragment()
@@ -66,6 +76,7 @@ class menu_principal : AppCompatActivity() {
                 showFragment(topAmigosFragment!!)
                 true
             }
+
             R.id.escanearFragment -> {
                 if (escanearFragment == null) {
                     escanearFragment = EscanearFragment()
@@ -80,6 +91,7 @@ class menu_principal : AppCompatActivity() {
                 showFragment(estadisticasFragment!!)
                 true
             }
+
             R.id.triviaFragment -> {
                 if (triviaFragment == null) {
                     triviaFragment = TriviaFragment()
@@ -102,6 +114,7 @@ class menu_principal : AppCompatActivity() {
             is CategorizarFragment -> setToolbar("Categorizar", true)
             is TriviaFragment -> setToolbar("Trivia", true)
             is MiPerfilFragment -> setToolbar("Mi Perfil", true)
+            is MapFragment -> setToolbar("Mapa", true)
             is EscanearFragment -> setToolbar("", false)
             is EstadisticasFragment -> setToolbar("Estadísticas de usuario", true)
             else -> setToolbar("", true)
