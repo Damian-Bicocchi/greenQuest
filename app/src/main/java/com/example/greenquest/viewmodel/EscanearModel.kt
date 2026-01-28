@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.greenquest.repository.LogrosRepository
-import com.example.greenquest.repository.MonedasRepository
 import com.example.greenquest.repository.ScannerRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.google.android.gms.tasks.Task

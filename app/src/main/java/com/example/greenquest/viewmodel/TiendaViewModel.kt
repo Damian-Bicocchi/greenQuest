@@ -8,6 +8,7 @@ import com.example.greenquest.Provider.ArticulosProvider
 import com.example.greenquest.R
 import com.example.greenquest.adapters.AdapterArticulo
 import com.example.greenquest.database.user.User
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 
 class TiendaViewModel : ViewModel() {
@@ -28,10 +29,11 @@ class TiendaViewModel : ViewModel() {
         }
     }
 
-    fun articulosAdquiridosIds(usuario : User): List<Articulo> {
-        val listaArticulos = mutableListOf<Articulo>()
+    suspend fun articulosAdquiridosIds(usuario : User): List<Articulo> {
+        val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
         val articulos = obtenerArticulosDisponibles()
-        for(articuloId in usuario.articulos_adquiridos) {
+        val listaArticulos = mutableListOf<Articulo>()
+        for(articuloId in TiendaAdquiridosRepository.obtenerArticulosAdquiridosUsuario(usuario.uid)) {
             listaArticulos.add(articulos.first { it.id == articuloId })
 
         }
@@ -40,18 +42,15 @@ class TiendaViewModel : ViewModel() {
     suspend fun comprarArticulo(articulo: Articulo): Boolean {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
         Log.d("TIENDA", "Intentando comprar articulo ${articulo.id} por ${articulo.valor} monedas. Usuario tiene ${usuario.articulos_adquiridos} articulosIds")
-        if(usuario.monedas >= articulo.valor) {
-            usuario.monedas -= articulo.valor
-            usuario.articulos_adquiridos.add(articulo.id)
+        if(TiendaAdquiridosRepository.comprarArticulo(articulo.valor,articulo.id,usuario.uid)) {
             articulo.adquirido = true
-            UsuarioRepository.actualizarUsuarioLocal(usuario)
             return true
         }else{
             return false
         }
     }
     suspend fun actualizarMonedasUsuario(): String {
-        val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-        return usuario.monedas.toString()
+        val idUsuario = UsuarioRepository.obtenerUsuarioLocal()!!.uid
+        return TiendaAdquiridosRepository.obtenerMonedasUsuario(idUsuario).toString()
     }
 }

@@ -75,9 +75,7 @@ class AdapterArticulo(val listaArticulo: List<Articulo>,
                 if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
                 adapterScope.launch {
-                    val comprado = tiendaViewModel.comprarArticulo(listaArticulo[pos])
-
-                    if (comprado) {
+                    if (tiendaViewModel.comprarArticulo(listaArticulo[pos])) {
 
                         notifyItemChanged(pos)
 

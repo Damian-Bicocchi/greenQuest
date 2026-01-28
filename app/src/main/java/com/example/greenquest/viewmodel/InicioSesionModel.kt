@@ -8,6 +8,8 @@ import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.Request
+import com.example.greenquest.database.TiendaAdquiridos
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 
 class InicioSesionModel: ViewModel() {
@@ -33,10 +35,10 @@ class InicioSesionModel: ViewModel() {
                 TokenDataStoreProvider.get().saveRefreshToken(body.refresh)
 
                 val id = UsuarioRepository.getUserProfile()
-
+                val tiendaAdquiridos = TiendaAdquiridosRepository.obtenerTiendaPorUsuario(id.id!!)!!
                 UsuarioRepository.guardarUsuarioLocal(
                     User(
-                        uid = id.id!!,
+                        uid = id.id,
                         userName = userName,
                         password = password,
                         puntos = 0,

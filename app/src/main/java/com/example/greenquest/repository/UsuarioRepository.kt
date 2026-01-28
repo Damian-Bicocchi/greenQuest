@@ -25,6 +25,7 @@ object UsuarioRepository {
         GreenQuestApp.instance.database.userDao()
     }
 
+    private var usuario: User? = null
     suspend fun signup(username: String, password: String): Response<AuthSuccessResponse> {
         return authApi.signup(Request(username, password))
     }
@@ -71,20 +72,32 @@ object UsuarioRepository {
         return api.score().puntos
     }
 
-    suspend fun obtenerUsuarioLocal(): User? =
-        withContext(Dispatchers.IO) {
-            userDao.getFirstUser()
+    suspend fun obtenerUsuarioLocal(): User?{
+        if (usuario == null) {
+            return withContext(Dispatchers.IO) {
+                userDao.getFirstUser()
+            }
+        }else{
+            return usuario
         }
+    }
 
-    suspend fun guardarUsuarioLocal(user: User) =
+
+    suspend fun guardarUsuarioLocal(user: User){
         withContext(Dispatchers.IO) {
             userDao.insert(user)
         }
+        usuario = user
+    }
 
-    suspend fun eliminarUsuarioLocal(user: User) =
+
+    suspend fun eliminarUsuarioLocal(user: User){
+        usuario = null
         withContext(Dispatchers.IO) {
             userDao.delete(user)
+        }
     }
+
 
     suspend fun cantReciduosUsuario(id : Int){
         try{

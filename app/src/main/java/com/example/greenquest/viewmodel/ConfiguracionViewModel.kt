@@ -1,6 +1,7 @@
 package com.example.greenquest.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 
 class ConfiguracionViewModel: ViewModel() {
@@ -10,6 +11,7 @@ class ConfiguracionViewModel: ViewModel() {
         if (usuarioLocal != null) {
             UsuarioRepository.eliminarUsuarioLocal(usuarioLocal)
         }
+        TiendaAdquiridosRepository.limpiarSesion()
         return UsuarioRepository.logout()
     }
 }
