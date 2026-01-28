@@ -36,6 +36,7 @@ roomRuntime = "2.8.4"
 viewbinding = "9.0.0"
 osmdroid = "6.1.20"
 osmbonuspack = "6.9.0"
+mpandroidchart = "v3.1.0"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
@@ -90,6 +91,7 @@ androidx-cardview = { group = "androidx.cardview", name = "cardview", version.re
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 osmdroid = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroid"  }
 osmbonuspack = { module = "com.github.MKergall:osmbonuspack", version.ref = "osmbonuspack"  }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
