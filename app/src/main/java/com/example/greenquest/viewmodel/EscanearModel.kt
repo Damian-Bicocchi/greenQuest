@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.ScannerRepository
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -33,17 +34,13 @@ class EscanearModel: ViewModel() {
                             // Procesamos el codigo de barras
                             val payload = ScannerRepository.processBarcode(barcode = barcode)
 
-                            // Reclamamos el residuo
                             val response = ScannerRepository.reclamarResiduo(payload.id_residuo)
 
                             if (response.error.isNullOrEmpty()){
                                 withContext(Dispatchers.Main) {
                                     _scanState.value = ScanState.QRDetected(payload)
                                 }
-                                // Agregarle monedas. Tantas monedas como puntajes da
-                                //MonedasRepository.addMonedas(payload.puntaje)
-
-                                // Contabilizar para logros
+                                TiendaAdquiridosRepository.addMonedas(payload.puntaje, UsuarioRepository.obtenerUsuarioLocal()!!.uid)
                                 UsuarioRepository.incrementarCantidadResiduoLocal(payload.tipo_residuo)
 
                             } else {

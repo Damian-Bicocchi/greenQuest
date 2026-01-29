@@ -7,6 +7,7 @@ import com.example.greenquest.Provider.LogroProvider
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.user.User
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 
 class MiPerfilModel : ViewModel() {
@@ -22,9 +23,10 @@ class MiPerfilModel : ViewModel() {
 
     suspend fun articulosAdquiridosIds(): List<Articulo> {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
+        val listaArticulosAdquiridos = TiendaAdquiridosRepository.obtenerArticulosAdquiridosUsuario(usuario.uid)
         val listaArticulos = mutableListOf<Articulo>()
         val articulos = ArticulosProvider.articulosTienda
-        for(articuloId in usuario.articulos_adquiridos) {
+        for(articuloId in listaArticulosAdquiridos) {
             listaArticulos.add(articulos.first { it.id == articuloId })
 
         }
