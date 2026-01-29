@@ -28,7 +28,7 @@ interface EstacionService {
     suspend fun getUserData(): UserInfoResponse
 
     @GET("puntos/")
-    suspend fun score(@Query("id_user") id: Int? = null): PuntosUsuario
+    suspend fun score(@Query("id_user") idUser: Int? = null): PuntosUsuario
 
     @GET("ranking/semanal/")
     suspend fun rankingWeekly(@Query("tipo_residuo") tipoResiduo: TipoResiduo? = null): List<RankingEntry>

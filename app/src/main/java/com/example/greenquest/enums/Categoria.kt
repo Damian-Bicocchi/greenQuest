@@ -14,8 +14,4 @@ enum class Categoria(@param:StringRes @field:StringRes private val stringId: Int
     PAPEL(R.string.categoryPapel, TipoResiduo.PAPEL);
 
     fun getString(context: Context): String = context.getString(stringId)
-
-    override fun toString(): String {
-        return super.toString()
-    }
 }

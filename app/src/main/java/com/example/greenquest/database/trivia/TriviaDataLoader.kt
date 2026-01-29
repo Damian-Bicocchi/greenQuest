@@ -34,7 +34,7 @@ class TriviaDataLoader() {
                 val trivia = gson.fromJson(jsonString, TriviaMetadata::class.java)
                 return@withContext trivia.version
             } catch (e: Exception) {
-                Log.e("triviaLogging", "hubo error ${e} al parsear el json")
+                Log.e("triviaLogging", "hubo error $e al parsear el json")
                 return@withContext -1
             }
         }

@@ -1,6 +1,5 @@
 package com.example.greenquest.repository
 
-import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
@@ -10,13 +9,10 @@ import retrofit2.Response
 import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.RankingEntry
-import com.example.greenquest.apiParameters.RefreshRequest
-import com.example.greenquest.apiParameters.RefreshResponse
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 
 object UsuarioRepository {
     private val api = RetrofitInstance.api
@@ -70,12 +66,12 @@ object UsuarioRepository {
 
     suspend fun rankingPosition(tipoResiduo: TipoResiduo? = null): Int {
         // La api solo devuelve la posición del ranking total, no del semanal!
-        val rank = obtenerUsuarioLocal()?.let { api.rankingPosition(it.uid) }
+        val rank = obtenerUsuarioLocal()?.let { api.rankingPosition(it.uid, tipoResiduo) }
         return rank?.posicion ?: Int.MIN_VALUE
     }
 
-    suspend fun score(tipoResiduo: TipoResiduo? = null): Int {
-        return api.score().puntos
+    suspend fun score(idUser: Int? = null): Int {
+        return api.score(idUser).puntos
     }
 
     suspend fun obtenerUsuarioLocal(): User? =

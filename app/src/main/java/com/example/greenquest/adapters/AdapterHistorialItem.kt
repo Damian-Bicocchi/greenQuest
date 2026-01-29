@@ -6,25 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.compose.ui.text.capitalize
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.Locale.getDefault
 
-class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
+class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : RecyclerView.Adapter<AdapterHistorialItem.ViewHolder>() {
 
-    class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
-        val iconoLogoResiduo = view.findViewById<ImageView>(R.id.icono_logo_residuo)
-        val textoNombreResiduo = view.findViewById<TextView>(R.id.texto_nombre_residuo)
-        val textoFechaResiduo = view.findViewById<TextView>(R.id.texto_fecha_residuo)
-        val textoHoraResiduo = view.findViewById<TextView>(R.id.texto_hora_residuo)
-        val textoPuntaje = view.findViewById<TextView>(R.id.texto_puntos_extra)
+    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        val iconoLogoResiduo: ImageView = view.findViewById(R.id.icono_logo_residuo)
+        val textoNombreResiduo: TextView = view.findViewById(R.id.texto_nombre_residuo)
+        val textoFechaResiduo: TextView = view.findViewById(R.id.texto_fecha_residuo)
+        val textoHoraResiduo: TextView = view.findViewById(R.id.texto_hora_residuo)
+        val textoPuntaje: TextView = view.findViewById(R.id.texto_puntos_extra)
     }
 
     private lateinit var parent: ViewGroup
@@ -32,13 +29,13 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): viewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fila_residuo_historial, parent, false)
         this.parent = parent
-        return viewHolder(view = view)
+        return ViewHolder(view = view)
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
         val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")

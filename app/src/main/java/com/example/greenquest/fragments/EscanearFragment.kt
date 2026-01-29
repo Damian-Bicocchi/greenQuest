@@ -251,7 +251,7 @@ class EscanearFragment : Fragment() {
                     qrAlreadyDetected = true
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
-                        tipoResiduo = state.payload.tipo_residuo,
+                        tipoResiduo = state.payload.tipoResiduo,
                         puntos = state.payload.puntaje
                     )
                     lastErrorMessage = null

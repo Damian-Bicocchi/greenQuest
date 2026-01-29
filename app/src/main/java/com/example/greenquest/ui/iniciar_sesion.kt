@@ -24,7 +24,7 @@ class iniciar_sesion : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val chequeo = lifecycleScope.launch {
+        lifecycleScope.launch {
             val token = TokenDataStoreProvider.get().getAccessToken()
 
             if (!token.isNullOrEmpty()) {
@@ -37,7 +37,7 @@ class iniciar_sesion : ComponentActivity() {
 
         enableEdgeToEdge()
 
-        viewModel = ViewModelProvider(this).get(InicioSesionModel::class.java)
+        viewModel = ViewModelProvider(this)[InicioSesionModel::class.java]
         binding = ActivityIniciarSesionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

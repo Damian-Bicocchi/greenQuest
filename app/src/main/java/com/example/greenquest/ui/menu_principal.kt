@@ -22,7 +22,6 @@ class menu_principal : AppCompatActivity() {
     private var topGlobalFragment: TopGlobal? = null
     private var topAmigosFragment: TiendaFragment? = null
     private var escanearFragment: EscanearFragment? = null
-    private var categorizarFragment: CategorizarFragment? = null
     private var miPefilFragment: MiPerfilFragment? = null
     private var triviaFragment: TriviaFragment? = null
     private var mapFragment: MapFragment? = null

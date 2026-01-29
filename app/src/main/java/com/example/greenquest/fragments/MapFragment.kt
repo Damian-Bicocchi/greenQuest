@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -217,7 +216,7 @@ class MapFragment : Fragment() {
                 viewModel.stations.collect { stations ->
                     for (station in stations) {
                         val poiMarker = Marker(mapView)
-                        poiMarker.relatedObject = station;
+                        poiMarker.relatedObject = station
                         poiMarker.title = station.nombre
                         poiMarker.snippet = "Estación #${station.id}"
                         poiMarker.position = GeoPoint(station.latitud, station.longitud)

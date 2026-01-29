@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.os.BundleCompat
 import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
 
@@ -30,12 +31,22 @@ class EscaneadoExitoso : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
-        val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
+        // val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
         // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
+        // ESTO debería no estar deprecado - Joaco
+        val datos = BundleCompat.getParcelable<DatosEscaneo>(arguments ?: Bundle(), ARG_DATOS, DatosEscaneo::class.java)
+
         datos?.let {
             view.findViewById<TextView>(
-                R.id.label_resumen_residuo).text = "Reciclaste: ${it.tipoResiduo}"
-            view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text = "¡Felicidades! Sumaste " + it.puntos + " puntos"
+                R.id.label_resumen_residuo).text = getString(R.string.you_recycled, it.tipoResiduo)
+            view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text =
+                buildString {
+                    append(getString(R.string.congratulations_you_gained))
+                    append(" ")
+                    append(it.puntos)
+                    append(" ")
+                    append(getString(R.string.points))
+                }
         }
 
         val buttonDenunciar = view.findViewById<View>(R.id.button_denunciar_categoria)

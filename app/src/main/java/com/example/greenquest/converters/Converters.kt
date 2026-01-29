@@ -1,13 +1,10 @@
 package com.example.greenquest.converters
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 object Converters {
-    @RequiresApi(Build.VERSION_CODES.O)
     private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
     @TypeConverter

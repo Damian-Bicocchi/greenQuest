@@ -1,6 +1,5 @@
 package com.example.greenquest.fragments
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
@@ -11,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.example.greenquest.R
 import com.example.greenquest.database.trivia.PreguntaConOpciones
 import com.example.greenquest.databinding.FragmentTriviaBinding
 import com.example.greenquest.states.trivia.EstadoTrivia
@@ -33,7 +33,7 @@ class TriviaFragment : Fragment() {
 
 
     private fun showGameFinished() {
-        binding.triviaPreguntaTexto.text = "Impresionante. Respondiste bien todas las preguntas"
+        binding.triviaPreguntaTexto.text = getString(R.string.every_question_right)
         binding.containerOpciones.visibility = View.INVISIBLE
         binding.botonResponder.visibility = View.INVISIBLE
     }
@@ -45,7 +45,7 @@ class TriviaFragment : Fragment() {
         val radioGroup : RadioGroup = binding.containerOpciones
 
 
-        preguntaConOpciones.opciones?.forEachIndexed { index, opcion ->
+        preguntaConOpciones.opciones?.forEachIndexed { _, opcion ->
             val radioButton = RadioButton(requireContext())
             radioButton.id = View.generateViewId()
             radioButton.text = opcion.textoOpcion
@@ -66,7 +66,7 @@ class TriviaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTriviaBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -5,11 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.adapters.AdapterLogro
-import com.example.greenquest.Logros.Logro
 import com.example.greenquest.LogroProvider
 import com.example.greenquest.R
 import com.example.greenquest.database.user.User
@@ -43,7 +41,7 @@ class MiPerfilFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
         val recyclerView = binding.logrosRecyclerview
@@ -81,19 +79,4 @@ class MiPerfilFragment : Fragment() {
 
         return  binding.root
     }
-
-
-    companion object {
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MiPerfilFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-
 }

@@ -127,4 +127,10 @@
     <string name="tab_historico">Histórico</string>
     <string name="camera_permission_required">Permiso de cámara requerido</string>
     <string name="give_permission">Dar permisos</string>
+    <string name="every_question_right">Impresionante. Respondiste bien todas las preguntas</string>
+    <string name="you_recycled">Reciclaste: %1$s</string>
+    <string name="congratulations_you_gained">"¡Felicidades! Sumaste"</string>
+    <string name="points">puntos</string>
+    <string name="ranking_position">Ranking #%1$d</string>
+    <string name="x_points">%1$d\npuntos</string>
 </resources>

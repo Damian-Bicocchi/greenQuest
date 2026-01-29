@@ -5,17 +5,14 @@ import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
-import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.time.DateTimeException
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 
 object EstadisticasRepository {
     private val historialResiduoDao by lazy {
@@ -26,10 +23,10 @@ object EstadisticasRepository {
             historialResiduoDao.insertarResiduoAlHistorial(
                 HistorialResiduo(
                     historialResiduoId = 0,
-                    idResiduo = payload.id_residuo,
+                    idResiduo = payload.idResiduo,
                     idUsuario = UsuarioRepository.getUserProfile().id!!,
                     fecha = OffsetDateTime.now(),
-                    tipoResiduo = payload.tipo_residuo,
+                    tipoResiduo = payload.tipoResiduo,
                     puntosDados = payload.puntaje
                 )
             )
@@ -59,7 +56,7 @@ object EstadisticasRepository {
         )
         val mapARetornar: HashMap<TipoResiduo, Int> = HashMap()
         for (elemento in listaResumen) {
-            mapARetornar[elemento.tipo_residuo] = elemento.total
+            mapARetornar[elemento.tipoResiduo] = elemento.total
         }
         return mapARetornar
     }

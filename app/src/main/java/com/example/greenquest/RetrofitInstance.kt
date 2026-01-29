@@ -26,7 +26,7 @@ object RetrofitInstance {
             .addInterceptor(AuthInterceptor(TokenDataStoreProvider.get()))
             .authenticator(
                 TokenAuthenticator(
-                    TokenDataStoreProvider.get(), authApi, GreenQuestApp.instance
+                    TokenDataStoreProvider.get(), authApi
                 )
             ).build()
 
