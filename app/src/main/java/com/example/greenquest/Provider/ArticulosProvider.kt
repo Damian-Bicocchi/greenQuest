@@ -6,18 +6,15 @@ import com.example.greenquest.R
 class ArticulosProvider {
     companion object {
         val articulosTienda = listOf(
-            Articulo(1, "Planta de interior", 500, R.drawable.outline_person_24, false),
-            Articulo(2, "Kit de reciclaje", 300, R.drawable.plastico50, false),
-            Articulo(3, "Bicicleta ecológica", 1500, R.drawable.metal100, false),
-            Articulo(4, "Botella reutilizable", 200, R.drawable.metal10, false),
-            Articulo(5, "Panel solar portátil", 2500 , R.drawable.metal10, false),
-            Articulo(6, "Lámpara LED", 800, R.drawable.carton50, false),
-            Articulo(7, "Cargador solar", 1200, R.drawable.plastico10, false),
-            Articulo(8, "Mochila ecológica", 600, R.drawable.podium, false)
-        )
-
-
-
-
+            Articulo(1, "Reciclador Basico", 50,R.drawable.recicladorbasico, false),
+            Articulo(2, "Reciclador Avanzado", 150,R.drawable.recicladorlegend, false),
+            Articulo(3, "Reciclador Experto", 300,R.drawable.recicladorlegend,false),
+            Articulo(4, "Eco Guerrero",500, R.drawable.ecolegend, false),
+            Articulo(5, "Eco Guardiana",800,R.drawable.ecoguardian, false),
+            Articulo(6, "Eco Maestro",1200,R.drawable.ecogodness, false),
+            Articulo(7, "Eco Supremo",2000,R.drawable.superreciclador, false),
+            Articulo(8, "Eco Reina", 2500, R.drawable.ecoqueen, false),
+            Articulo(9, "Eco Legendario", 5000,R.drawable.ecomaster, false)
+            )
     }
 }
