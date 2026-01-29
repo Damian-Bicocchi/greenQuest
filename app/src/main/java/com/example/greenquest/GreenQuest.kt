@@ -40,10 +40,18 @@ class GreenQuestApp : Application() {
     lateinit var database: AppDatabase
         private set
 
+    lateinit var errorHandler: ErrorHandlerProvider
+        private set
+
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        errorHandler = ErrorHandlerProvider(applicationContext)
+
         TokenDataStoreProvider.init(this)
+
+        Thread.setDefaultUncaughtExceptionHandler(errorHandler)
 
         database = Room.databaseBuilder(
             applicationContext, AppDatabase::class.java, "usuarios-db"

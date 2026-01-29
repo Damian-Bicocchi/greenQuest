@@ -1,5 +1,6 @@
 package com.example.greenquest.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,7 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         return ViewHolder(view = view)
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
@@ -44,9 +46,8 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
         holder.textoHoraResiduo.text = residuoParticular.fecha?.format(formatterHora)
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+        @SuppressLint("SetTextI18n")
         holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
-
-
     }
 
     private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo): Drawable? {
@@ -59,7 +60,7 @@ class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : Recycler
             TipoResiduo.BASURA -> R.drawable.ic_basura
 
         }
-        return drawableId?.let {
+        return drawableId.let {
             ContextCompat.getDrawable(parent.context, it)
         } ?: ContextCompat.getDrawable(parent.context, R.drawable.ic_basura)
     }
