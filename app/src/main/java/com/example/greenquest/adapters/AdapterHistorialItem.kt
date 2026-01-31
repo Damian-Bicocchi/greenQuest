@@ -57,7 +57,10 @@ class AdapterHistorialItem(
 
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
-        holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
+        holder.textoPuntaje.text = buildString {
+            append("+")
+            append(residuoParticular.puntosDados)
+        }
         if (residuoParticular.estadoReporte == EstadoReporte.SIN_REPORTE){
             holder.botonReportar.setOnClickListener {
                 onReportClick(residuoParticular)

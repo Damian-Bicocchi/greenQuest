@@ -32,7 +32,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
+import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
+import com.example.greenquest.states.ScanState
+import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.viewmodel.ReporteViewModel
 
 class ReportarFragment : Fragment() {
@@ -112,7 +115,7 @@ class ReportarFragment : Fragment() {
         val selectClasificacion: Spinner = view.findViewById(R.id.select_clasificacion_correcta)
 
         cargarSpinnerCategorias(selectClasificacion)
-
+        observeViewModel()
 
         selectClasificacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -156,6 +159,8 @@ class ReportarFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 )
             }
+
+
 
         }
 
@@ -337,6 +342,49 @@ class ReportarFragment : Fragment() {
                 findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToHistorialResiduoCompletoFragment())
             }
         }
+    }
+
+    private fun observeViewModel() {
+        reporteViewModel.reporteState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                EstadoReporte.SIN_REPORTE -> {
+
+                    Log.d("reporteLogging","Sin cambios")
+                }
+                EstadoReporte.REPORTADO -> {
+                    mostrarDialogoExitoso()
+                }
+                EstadoReporte.REPORTE_FALLIDO -> {
+
+                    mostrarDialogoFallido()
+                }
+            }
+        }
+    }
+
+    private fun mostrarDialogoExitoso() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Reporte exitoso")
+            .setMessage("El reporte se ha enviado correctamente. Muchas gracias por su colaboración")
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                reporteViewModel.resetearEstado()
+                volverAlOrigenUI()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun mostrarDialogoFallido(){
+        Log.d("reporteLogging", "Mostrar Dialogo Fallido")
+        AlertDialog.Builder(requireContext())
+            .setTitle("Reporte fallido")
+            .setMessage(reporteViewModel.reporteMensajeFallido.value)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
+                reporteViewModel.resetearEstado()
+            }
+            .show()
     }
 
 }

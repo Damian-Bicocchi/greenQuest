@@ -25,18 +25,22 @@ class ReporteViewModel : ViewModel(){
 
 
     fun processReport(idResiduo: String, imageData: Bitmap){
+
+        Log.d("reporteLogging", "entramos al processReport")
         if (idResiduo.isEmpty()) {
+            Log.d("reporteLogging", "no hay idResiduo")
             _reportState.value = EstadoReporte.REPORTE_FALLIDO
             _reporteMensajeFallido.value = "Residuo vacío"
             return
         }
 
         if (_tipoResiduoSeleccionado.equals(null)){
+            Log.d("reporteLogging", "No seleccionaste nada")
             _reportState.value = EstadoReporte.REPORTE_FALLIDO
             _reporteMensajeFallido.value = "No seleccionó una categoría"
             return
         }
-
+        Log.d("reporteLogging", "no amigo que hago aca")
 
         viewModelScope.launch {
             try {
@@ -52,6 +56,10 @@ class ReporteViewModel : ViewModel(){
 
     fun seleccionarTipoResiduo(tipo: TipoResiduo?) {
         _tipoResiduoSeleccionado.value = tipo
+    }
+
+    fun resetearEstado(){
+        _reportState.value = EstadoReporte.SIN_REPORTE
     }
 
 
