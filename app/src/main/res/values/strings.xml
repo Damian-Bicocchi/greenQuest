@@ -83,14 +83,15 @@
     <string name="button_escanear_qr">Escanear</string>
     <string name="button_denunciar_categoria">Denunciar categoría incorrecta</string>
     <string name="button_continuar">Continuar</string>
-    <string name="rankingGeneralButton">General</string>
-    <string name="rankingCategorizedButton">Por Tipo</string>
-    <string name="categoryCarton">Carton</string>
+    <string name="rankingGeneralButton">Semanal</string>
+    <string name="rankingCategorizedButton">Histórico</string>
+    <string name="categoryCarton">Cartón</string>
     <string name="categoryPlastico">Plástico</string>
     <string name="categoryVidrio">Vidrio</string>
     <string name="categoryMetal">Metal</string>
     <string name="categoryPapel">Papel</string>
-    <string name="category_select_hint">Tipo</string>
+    <string name="categoryTodos">Todos</string>
+    <string name="category_select_hint">Tipo de residuo</string>
     <string name="cerrar_sesion_button">Cerrar sesión</string>
     <string name="mi_pefil">Mi perfil</string>
     <string name="logros_conseguidos">Logros conseguidos</string>
@@ -108,6 +109,7 @@
 
     <string name="button_responder_pregunta">Responder</string>
     <string name="placeholder_pregunta">Cargando pregunta</string>
+    <string name="unregisteredWeeklyActivity">No se registró actividad en la semana actual, ¡se el primero en hacerlo!</string>
 
 
     <string name="title_historial_residuos">Historial de residuos</string>
@@ -123,11 +125,12 @@
     <string name="tab_title_del_mes">Este mes</string>
     <string name="tab_title_del_año">Este año</string>
     <string name="tab_historico">Histórico</string>
-    <string name="title_reportar">Reportar residuo mal clasificado</string>
-    <string name="texto_boton_camara">Tomar foto del residuo</string>
-    <string name="label_ingresar_clasificacion_correcta">¿Cuál es la clasificación correcta?</string>
-    <string name="title_button_enviar_reporte">Enviar Reporte</string>
-    <string name="vista_previa_de_imagen_para_reporte">Vista previa de imagen para reporte</string>
-    <string name="advertencia_reporte_1">1. Las imágenes que subas serán de uso compartido. No incluyas datos sensibles (identificaciones, menores de edad, tarjetas de crédito....).</string>
-    <string name="advertencia_reporte_2">2. Por favor, trata de centrar bien el residuo en la foto.</string>
+    <string name="camera_permission_required">Permiso de cámara requerido</string>
+    <string name="give_permission">Dar permisos</string>
+    <string name="every_question_right">Impresionante. Respondiste bien todas las preguntas</string>
+    <string name="you_recycled">Reciclaste: %1$s</string>
+    <string name="congratulations_you_gained">"¡Felicidades! Sumaste"</string>
+    <string name="points">puntos</string>
+    <string name="ranking_position">Ranking #%1$d</string>
+    <string name="x_points">%1$d\npuntos</string>
 </resources>

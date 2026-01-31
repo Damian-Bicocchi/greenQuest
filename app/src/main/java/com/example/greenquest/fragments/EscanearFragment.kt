@@ -1,35 +1,42 @@
 package com.example.greenquest.fragments
 
+import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.greenquest.R
-import androidx.core.content.ContextCompat
-import java.util.concurrent.ExecutorService
-import android.Manifest
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.OptIn
+import androidx.appcompat.app.AlertDialog
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
+import androidx.camera.core.resolutionselector.ResolutionStrategy
+import androidx.camera.core.resolutionselector.ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
-import com.example.greenquest.viewmodel.EscanearModel
 import com.example.greenquest.states.ScanState
+import com.example.greenquest.ui.menu_principal
+import com.example.greenquest.viewmodel.EscanearModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
@@ -44,7 +51,7 @@ class EscanearFragment : Fragment() {
     private lateinit var qrScanner: BarcodeScanner
     private lateinit var escanearModel: EscanearModel
 
-    private var errorToast: Toast? = null
+    private var errorDialog: AlertDialog? = null
     private var lastErrorMessage: String? = null
 
     @OptIn(ExperimentalGetImage::class)
@@ -53,12 +60,36 @@ class EscanearFragment : Fragment() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-                startCamera()
-            } else {
-                Toast.makeText(requireContext(),
-                    "Permiso de cámara requerido. Tendrás que ir a permisos para obtenerlos", Toast.LENGTH_LONG).show()
+            ActivityResultContracts.RequestPermission()
+        ) { granted ->
+            when {
+                granted -> startCamera()
+
+                ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    Manifest.permission.CAMERA
+                ) -> {
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Escaner")
+                        .setMessage("Para escanear se requiere permisos de la cámara")
+                        .setPositiveButton("Dar permisos") { _, _ ->
+                            requirePermission()
+                        }
+                        .setNegativeButton("Volver", null)
+                        .create()
+                        .show()
+                }
+
+                else -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Se regresará al menú.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // Request permision directly and if not allowed return to menu
+                    startActivity(Intent(activity, menu_principal::class.java))
+                    requireActivity().finish()
+                }
             }
         }
 
@@ -66,10 +97,10 @@ class EscanearFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (ContextCompat.checkSelfPermission(
-            requireContext(),
+                requireContext(),
                 Manifest.permission.CAMERA
-        ) != PackageManager.PERMISSION_GRANTED
-        ){
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -83,21 +114,21 @@ class EscanearFragment : Fragment() {
     ): View? {
         escanearModel = ViewModelProvider(this)[EscanearModel::class.java]
         if (ContextCompat.checkSelfPermission(
-            requireContext(),
+                requireContext(),
                 Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED
-        ){
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             startCamera()
         }
         // Inflate the layout for this fragment
         return inflater.inflate(
-            R.layout.fragment_escanear, container, false)
+            R.layout.fragment_escanear, container, false
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         previewView = view.findViewById(R.id.qr_camara)
-
         observeViewModel()
     }
 
@@ -129,41 +160,59 @@ class EscanearFragment : Fragment() {
         if (camaraIniciada) return
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
+
         cameraProviderFuture.addListener({
             camaraIniciada = true
             cameraProvider = cameraProviderFuture.get()
 
+
             // Preview
-            val preview = Preview.Builder()
-                .setTargetResolution(android.util.Size(1280, 720))
+            val preview = Preview.Builder().setResolutionSelector(
+                ResolutionSelector.Builder().setAspectRatioStrategy(
+                    AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
+                ).setResolutionStrategy(
+                    ResolutionStrategy(
+                        android.util.Size(1280, 720),
+                        FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
+                    )
+                )
+                    .build()
+            )
                 .build().also {
                     it.surfaceProvider = previewView.surfaceProvider
                 }
 
-            val imageAnalizer = ImageAnalysis.Builder()
-                .setTargetResolution(android.util.Size(1280, 720))
+            val imageAnalizer = ImageAnalysis.Builder().setResolutionSelector(
+                ResolutionSelector.Builder().setAspectRatioStrategy(
+                    AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
+                ).setResolutionStrategy(
+                    ResolutionStrategy(
+                        android.util.Size(1280, 720),
+                        FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER
+                    )
+                )
+                    .setAllowedResolutionMode(ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE)
+                    .build()
+            )
                 .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, {
-                        imageProxy -> processImageProxy(imageProxy)})
+                    it.setAnalyzer(cameraExecutor) { imageProxy -> processImageProxy(imageProxy) }
                 }
 
             // Deteniene todos los usos de la camara, para evitar mayor uso de recursos
             cameraProvider?.unbindAll()
             val camaraTrasera = CameraSelector.DEFAULT_BACK_CAMERA
-            if (cameraProvider?.hasCamera(camaraTrasera) == true){
+            if (cameraProvider?.hasCamera(camaraTrasera) == true) {
                 cameraProvider?.bindToLifecycle(
                     viewLifecycleOwner,
-                    CameraSelector.DEFAULT_BACK_CAMERA
-                    , preview,
+                    CameraSelector.DEFAULT_BACK_CAMERA, preview,
                     imageAnalizer
                 )
             } else {
                 cameraProvider?.bindToLifecycle(
                     viewLifecycleOwner,
-                    CameraSelector.DEFAULT_FRONT_CAMERA
-                    , preview,
+                    CameraSelector.DEFAULT_FRONT_CAMERA, preview,
                     imageAnalizer
                 )
             }
@@ -202,42 +251,51 @@ class EscanearFragment : Fragment() {
                     qrAlreadyDetected = true
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
-                        tipoResiduo = state.payload.tipo_residuo,
-                        puntos = state.payload.puntaje,
-                        idResiduo = state.payload.id_residuo
+                        tipoResiduo = state.payload.tipoResiduo,
+                        puntos = state.payload.puntaje
                     )
-                    val action =
-                        EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)
-
-                    findNavController().navigate(action)
+                    lastErrorMessage = null
+                    val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
                 }
 
                 is ScanState.HappyError -> {
-                    showToastError("¡Oh no! " + state.message)
+                    showError("¡Oh no! " + state.message)
                 }
+
                 is ScanState.Error -> {
-                    showToastError("❌\u200B " + state.message)
+                    showError("❌\u200B " + state.message)
                 }
+
                 is ScanState.QrException -> {
-                    showToastError("ERROR FATAL " + state.message)
+                    showError("ERROR FATAL " + state.message)
                 }
-                ScanState.Idle -> {
-                    Unit
-                }
+
+                ScanState.Idle -> Unit
             }
         }
     }
 
-    private fun showToastError(message: String) {
-        if (message != lastErrorMessage) {
-            errorToast?.cancel()
+    private fun requirePermission() {
+        requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+    }
 
-            errorToast = Toast.makeText(
-                requireContext(),
-                message,
-                Toast.LENGTH_LONG
-            )
-            errorToast?.show()
+    private fun showError(message: String) {
+        if (message != lastErrorMessage) {
+            errorDialog?.cancel()
+
+            errorDialog =
+                MaterialAlertDialogBuilder(requireContext()).setTitle("Error")
+                    .setMessage(message)
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false)
+                    .create()
+            errorDialog?.show()
 
             lastErrorMessage = message
         }

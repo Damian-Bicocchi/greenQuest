@@ -8,7 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
-    private val builder = Retrofit.Builder().baseUrl(Constants.BASEURLEMULADOR)
+    // En local.properties pongan "BASE_URL=http://192.168.0.100:8000/api/" o similar
+    // IMPORTANTE: hagan un gradle clean antes de compilar porque sino NO va a compilar.
+    private val builder = Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
 
     val authApi: AuthService = builder.build().create(AuthService::class.java)
@@ -24,7 +26,7 @@ object RetrofitInstance {
             .addInterceptor(AuthInterceptor(TokenDataStoreProvider.get()))
             .authenticator(
                 TokenAuthenticator(
-                    TokenDataStoreProvider.get(), authApi, GreenQuestApp.instance
+                    TokenDataStoreProvider.get(), authApi
                 )
             ).build()
 

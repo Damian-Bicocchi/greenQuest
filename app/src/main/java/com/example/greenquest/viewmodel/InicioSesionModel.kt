@@ -3,37 +3,45 @@ package com.example.greenquest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.example.greenquest.RetrofitInstance
+import androidx.lifecycle.viewModelScope
+import com.example.greenquest.ChequeosUsuario
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.database.user.User
-import com.example.greenquest.apiParameters.Request
 import com.example.greenquest.repository.UsuarioRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class InicioSesionModel: ViewModel() {
-    private val api = RetrofitInstance.api
+    private val _status = MutableStateFlow<String?>(null)
+    val status: StateFlow<String?> = _status
 
-    fun iniciarSesion(userName: String,password: String ) = liveData {
+    fun iniciarSesion(userName: String,password: String ) {
 
         if (!ChequeosUsuario.camposCompletos(userName,password)) {
-            emit("Rellene todos los campos")
-            return@liveData
+            _status.value = "Rellene todos los campos"
+            return
         }
 
-        try{
-            val response = UsuarioRepository.login(userName,password)
+        viewModelScope.launch(Dispatchers.IO) {
+            try{
+                val response = UsuarioRepository.login(userName,password)
 
-            if(!response.isSuccessful){
-                emit("Usuario o contraseña incorrectos")
-                return@liveData
-            }
-            val body = response.body()
-            if(body != null) {
+                if(!response.isSuccessful){
+                    _status.value = "Usuario o contraseña incorrectos"
+                    return@launch
+                }
+                val body = response.body()
+                if (body == null) {
+                    _status.value = "Error desconocido"
+                    return@launch
+                }
+
                 TokenDataStoreProvider.get().saveAccessToken(body.access)
                 TokenDataStoreProvider.get().saveRefreshToken(body.refresh)
 
                 val id = UsuarioRepository.getUserProfile()
-
                 UsuarioRepository.guardarUsuarioLocal(
                     User(
                         uid = id.id!!,
@@ -44,13 +52,11 @@ class InicioSesionModel: ViewModel() {
                         descripcion = null
                     )
                 )
-                emit("OK")
-            }else{
-                emit("Error desconocido")
+                _status.value = "OK"
+            }catch (e: Exception){
+                Log.d("InicioSesionModel", "Error de conexion", e)
+                _status.value = "Error de conexion"
             }
-        }catch (e: Exception){
-            Log.d("InicioSesionModel", "Error de conexion: ${e.printStackTrace()}")
-            emit("Error de conexion")
         }
 
     }

@@ -9,28 +9,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.database.user.User
 
-class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsuarios.viewHolder>() {
+class AdapterUsuarios(val usuarios: List<User>): RecyclerView.Adapter<AdapterUsuarios.ViewHolder>() {
 
-    class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
-        val rankingUsuarios = view.findViewById<TextView>(R.id.rankingUsuario)
-        val puntosUsuario = view.findViewById<TextView>(R.id.puntosUsuario)
+    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        val rankingUsuarios: TextView = view.findViewById(R.id.rankingUsuario)
+        val puntosUsuario: TextView = view.findViewById(R.id.puntosUsuario)
 
-        val nombreUsuario = view.findViewById<TextView>(R.id.nombre_usuario)
+        val nombreUsuario: TextView = view.findViewById(R.id.nombre_usuario)
 
-        val imagenUsuario = view.findViewById<TextView>(R.id.placeholderImage)
+        val imagenUsuario: TextView = view.findViewById(R.id.placeholderImage)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fila_top_usuario, parent, false)
-        return viewHolder(view)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val usuario = usuarios[position]
         holder.nombreUsuario.text = usuario.userName
-        holder.rankingUsuarios.text= "Ranking #${position + 1}"
-        holder.puntosUsuario.text = "${usuario.puntos}\npuntos"
+        holder.rankingUsuarios.text= holder.rankingUsuarios.context.getString(R.string.ranking_position, position + 1)
+        holder.puntosUsuario.text = holder.puntosUsuario.context.getString(R.string.x_points, usuario.puntos)
         val card = holder.view as CardView
 
         val ctx = holder.view.context

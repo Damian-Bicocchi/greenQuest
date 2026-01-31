@@ -17,7 +17,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button_group_background"
-        app:checkedButton="@id/generalRanking"
+        app:checkedButton="@id/weeklyRanking"
         app:selectionRequired="true"
         app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/generalRanking"
+            android:id="@+id/weeklyRanking"
             style="@style/Theme.GreenQuest.ButtonGroupToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:text="@string/rankingGeneralButton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/categorizedRanking"
+            android:id="@+id/historicalRanking"
             style="@style/Theme.GreenQuest.ButtonGroupToggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,8 +46,9 @@
         android:id="@+id/categorySelectionGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="categorySelection,categorySelectionTextView"/>
+        android:visibility="visible"
+        app:constraint_referenced_ids="categorySelection,categorySelectionTextView" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/categorySelection"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -64,13 +65,14 @@
         android:hint="@string/category_select_hint">
 
         <AutoCompleteTextView
-            android:background="@null"
             android:id="@+id/categorySelectionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:inputType="none"
             android:popupBackground="@drawable/selector_background"
-            android:textColor="@color/texto_sobre_acento_de_fondo"/>
+            android:textColor="@color/texto_sobre_acento_de_fondo"
+            android:title="@string/category_select_hint"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,6 +101,6 @@
         android:textAlignment="center"
         android:gravity="center"
         android:visibility="gone"
-        android:text="No se registró actividad en la semana actual, ¡se el primero en hacerlo!" />
+        android:text="@string/unregisteredWeeklyActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

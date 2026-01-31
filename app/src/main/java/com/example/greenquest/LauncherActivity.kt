@@ -19,13 +19,17 @@ class LauncherActivity: ComponentActivity() {
             val refreshToken = TokenDataStoreProvider.get().getRefreshToken()
             val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
 
+            // Sí, sin este choclo, no cierra la sesión si el token falla en autenticar.
             if (accessToken == null || refreshToken == null || usuarioLocal == null) {
+                usuarioLocal?.let { UsuarioRepository.eliminarUsuarioLocal(it) }
+                TokenDataStoreProvider.get().clearAllTokens()
                 startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
             } else {
                 try{
                     startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 } catch (_: Exception){
                     usuarioLocal.let { UsuarioRepository.eliminarUsuarioLocal(it) }
+                    TokenDataStoreProvider.get().clearAllTokens()
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
                 }
             }

@@ -63,7 +63,7 @@ class EstadisticaViewModel : ViewModel() {
                     val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
                     val cantidadTotal = EstadisticasRepository.obtenerPuntajeEnRangoFecha(periodoResiduo, idUsuario)
                     _puntosEntreFechas.value = cantidadTotal
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     // Manejar error
                     _puntosEntreFechas.value = 0
                 }

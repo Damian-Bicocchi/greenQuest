@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class QrPayloadResiduo(
     @SerialName("ID Residuo")
-    val id_residuo: String,
+    val idResiduo: String,
     @SerialName("Puntos")
     val puntaje: Int,
     @SerialName("Tipo Residuo")
-    val tipo_residuo: TipoResiduo
+    val tipoResiduo: TipoResiduo
 )

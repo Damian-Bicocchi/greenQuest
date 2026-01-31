@@ -1,37 +1,28 @@
 package com.example.greenquest.adapters
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.compose.ui.text.capitalize
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
-import com.example.greenquest.states.reporte.EstadoReporte
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import java.util.Locale.getDefault
 
-class AdapterHistorialItem(
-    val listaResiduos: List<HistorialResiduo>,
-    private val onReportClick: (HistorialResiduo) -> Unit // Callback
-) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
-    class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
-        val iconoLogoResiduo = view.findViewById<ImageView>(R.id.icono_logo_residuo)
-        val textoNombreResiduo = view.findViewById<TextView>(R.id.texto_nombre_residuo)
-        val textoFechaResiduo = view.findViewById<TextView>(R.id.texto_fecha_residuo)
-        val textoPuntaje = view.findViewById<TextView>(R.id.texto_puntos_extra)
+class AdapterHistorialItem(val listaResiduos: List<HistorialResiduo>) : RecyclerView.Adapter<AdapterHistorialItem.ViewHolder>() {
 
-        val botonReportar = view.findViewById<Button>(R.id.button_denunciar_categoria)
+    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        val iconoLogoResiduo: ImageView = view.findViewById(R.id.icono_logo_residuo)
+        val textoNombreResiduo: TextView = view.findViewById(R.id.texto_nombre_residuo)
+        val textoFechaResiduo: TextView = view.findViewById(R.id.texto_fecha_residuo)
+        val textoHoraResiduo: TextView = view.findViewById(R.id.texto_hora_residuo)
+        val textoPuntaje: TextView = view.findViewById(R.id.texto_puntos_extra)
     }
 
     private lateinit var parent: ViewGroup
@@ -39,41 +30,24 @@ class AdapterHistorialItem(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): viewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fila_residuo_historial, parent, false)
         this.parent = parent
-        return viewHolder(view = view)
+        return ViewHolder(view = view)
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
-        val fechaFormateada = residuoParticular.fecha?.let { fecha ->
-            val dia = fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            val hora = fecha.format(DateTimeFormatter.ofPattern("HH:mm"))
-            "$dia • $hora"
-        } ?: "Fecha desconocida"
-        holder.textoFechaResiduo.text = fechaFormateada
-
+        val formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        holder.textoFechaResiduo.text = residuoParticular.fecha?.format(formatterFecha)
+        val formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss")
+        holder.textoHoraResiduo.text = residuoParticular.fecha?.format(formatterHora)
         holder.textoNombreResiduo.text = residuoParticular.tipoResiduo.name.lowercase()
             .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
-        holder.textoPuntaje.text = buildString {
-            append("+")
-            append(residuoParticular.puntosDados)
-        }
-        if (residuoParticular.estadoReporte == EstadoReporte.SIN_REPORTE){
-            holder.botonReportar.setOnClickListener {
-                onReportClick(residuoParticular)
-            }
-        } else {
-            holder.botonReportar.text = "Reportado"
-            holder.botonReportar.isEnabled = false
-            holder.botonReportar.setOnClickListener {
-                Log.d("reporteLogging", "Aca debería haber un mejor manejo ")
-            }
-        }
-
-
+        @SuppressLint("SetTextI18n")
+        holder.textoPuntaje.text = "+" + residuoParticular.puntosDados
     }
 
     private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo): Drawable? {

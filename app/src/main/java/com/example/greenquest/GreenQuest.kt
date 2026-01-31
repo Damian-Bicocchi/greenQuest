@@ -2,7 +2,6 @@ package com.example.greenquest
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -14,7 +13,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -42,10 +40,18 @@ class GreenQuestApp : Application() {
     lateinit var database: AppDatabase
         private set
 
+    lateinit var errorHandler: ErrorHandlerProvider
+        private set
+
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        errorHandler = ErrorHandlerProvider(applicationContext)
+
         TokenDataStoreProvider.init(this)
+
+        Thread.setDefaultUncaughtExceptionHandler(errorHandler)
 
         database = Room.databaseBuilder(
             applicationContext, AppDatabase::class.java, "usuarios-db"

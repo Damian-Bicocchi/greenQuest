@@ -1,21 +1,21 @@
 package com.example.greenquest.fragments
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.greenquest.R
-import com.example.greenquest.apiParameters.TipoResiduo
+import com.example.greenquest.adapters.CategoriaAdapter
 import com.example.greenquest.adapters.GlobalRankingAdapter
 import com.example.greenquest.databinding.FragmentTopGlobalBinding
+import com.example.greenquest.enums.Categoria
 import com.example.greenquest.viewmodel.TopGlobalViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,8 +25,7 @@ class TopGlobal : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: TopGlobalViewModel by viewModels()
     private lateinit var adapter: GlobalRankingAdapter
-    private lateinit var categoryAdapter: ArrayAdapter<TipoResiduo>
-    private var selector: TipoResiduo? = null
+    private lateinit var categoryAdapter: ArrayAdapter<Categoria>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +50,18 @@ class TopGlobal : Fragment() {
         }
 
         context?.let {
-            categoryAdapter = ArrayAdapter(
-                it,
-                R.layout.dropdown_item,
-                TipoResiduo.entries.toTypedArray()
-            )
+            categoryAdapter = CategoriaAdapter(requireContext(), R.layout.dropdown_item)
             binding.categorySelectionTextView.setAdapter(categoryAdapter)
-            binding.categorySelectionTextView.setText(categoryAdapter.getItem(0).toString(), false)
+            val text = categoryAdapter.getItem(0)?.getString(requireContext()) ?: ""
+            binding.categorySelectionTextView.setText(
+                text, false
+            )
             binding.categorySelectionTextView.setOnItemClickListener { _, _, position, _ ->
-                selector = categoryAdapter.getItem(position)
-                viewModel.tipoResiduo = categoryAdapter.getItem(position)
+                val category = categoryAdapter.getItem(position) ?: return@setOnItemClickListener
+                binding.categorySelectionTextView.setText(
+                    category.getString(requireContext()), false
+                )
+                viewModel.tipoResiduo = category.tipoResiduo
                 viewModel.obtenerRanking()
             }
         }
@@ -68,15 +69,13 @@ class TopGlobal : Fragment() {
         binding.rankingSelector.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
-                    R.id.generalRanking -> {
-                        binding.categorySelectionGroup.visibility = View.GONE
-                        viewModel.tipoResiduo = null
+                    R.id.weeklyRanking -> {
+                        viewModel.historical = false
                         viewModel.obtenerRanking()
                     }
 
-                    R.id.categorizedRanking -> {
-                        binding.categorySelectionGroup.visibility = View.VISIBLE
-                        viewModel.tipoResiduo = null
+                    R.id.historicalRanking -> {
+                        viewModel.historical = true
                         viewModel.obtenerRanking()
                     }
                 }
@@ -87,13 +86,10 @@ class TopGlobal : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.ranking.collectLatest {
                     adapter.update(it)
-                    binding.emptyAlternative.visibility =
-                        if (it.isEmpty()) View.VISIBLE else View.GONE
                 }
             }
         }
 
-        // Refresh ranking when fragment becomes visible
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.obtenerRanking()

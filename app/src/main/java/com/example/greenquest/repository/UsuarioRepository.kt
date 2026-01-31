@@ -1,6 +1,6 @@
 package com.example.greenquest.repository
 
-import android.util.Log
+import com.example.greenquest.ErrorHandlerProvider
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
@@ -9,9 +9,8 @@ import com.example.greenquest.apiParameters.Request
 import retrofit2.Response
 import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.LogoutRequest
+import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.RankingEntry
-import com.example.greenquest.apiParameters.RefreshRequest
-import com.example.greenquest.apiParameters.RefreshResponse
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +23,7 @@ object UsuarioRepository {
     private val userDao by lazy {
         GreenQuestApp.instance.database.userDao()
     }
+    private val errorHandler = GreenQuestApp.instance.errorHandler
 
     suspend fun signup(username: String, password: String): Response<AuthSuccessResponse> {
         return authApi.signup(Request(username, password))
@@ -46,7 +46,12 @@ object UsuarioRepository {
     }
 
     suspend fun getUserProfile(): UserInfoResponse {
-        return api.getUserData()
+        return try {
+            api.getUserData()
+        } catch (e: HttpException) {
+            errorHandler.logOutAndBackToMenu(Thread.currentThread(), e)
+            UserInfoResponse()
+        }
     }
 
     suspend fun rankingWeekly(tipoResiduo: TipoResiduo? = null): List<RankingEntry> {
@@ -55,20 +60,40 @@ object UsuarioRepository {
         // RankingEntry.
         return try {
             api.rankingWeekly(tipoResiduo)
-        } catch (_: Exception) {
-            listOf() // TODO: ¿Esto debería manejar el error?
+        } catch (e: HttpException) {
+            errorHandler.logOutAndBackToMenu(Thread.currentThread(), e)
+            emptyList()
+        }
+    }
+
+    suspend fun rankingHistorical(tipoResiduo: TipoResiduo? = null): List<RankingEntry> {
+        return try {
+            api.rankingHistorical(tipoResiduo)
+        } catch (e: Exception) {
+            errorHandler.logOutAndBackToMenu(Thread.currentThread(), e)
+            emptyList()
         }
     }
 
     suspend fun rankingPosition(tipoResiduo: TipoResiduo? = null): Int {
-        // TODO: ALERTA! La api solo devuelve la posición del ranking total, no del semanal!
-        val rank = obtenerUsuarioLocal()?.let { api.rankingPosition(it.uid) }
+        // La api solo devuelve la posición del ranking total, no del semanal!
+        val rank = obtenerUsuarioLocal()?.let { try {
+                api.rankingPosition(it.uid, tipoResiduo)
+            } catch (e: Exception) {
+                errorHandler.logOutAndBackToMenu(Thread.currentThread(), e)
+                PosicionRanking(Int.MIN_VALUE)
+            }
+        }
         return rank?.posicion ?: Int.MIN_VALUE
     }
 
-    @Deprecated("No se usa en ningún momento en greenQuest")
-    suspend fun score(tipoResiduo: TipoResiduo? = null): Int {
-        return api.score().puntos
+    suspend fun score(idUser: Int? = null): Int {
+        return try {
+            api.score(idUser).puntos
+        } catch (e: Exception) {
+            errorHandler.logOutAndBackToMenu(Thread.currentThread(), e)
+            Int.MIN_VALUE
+        }
     }
 
     suspend fun obtenerUsuarioLocal(): User? =

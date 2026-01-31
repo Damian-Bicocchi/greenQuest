@@ -1,4 +1,4 @@
-package com.example.greenquest.Logros
+package com.example.greenquest.logros
 
 import com.example.greenquest.apiParameters.TipoResiduo
 

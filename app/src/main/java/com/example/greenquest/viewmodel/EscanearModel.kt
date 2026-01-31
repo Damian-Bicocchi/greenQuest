@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.EstadisticasRepository
-import com.example.greenquest.repository.LogrosRepository
-import com.example.greenquest.repository.MonedasRepository
 import com.example.greenquest.repository.ScannerRepository
 import com.example.greenquest.states.ScanState
 import com.google.android.gms.tasks.Task
@@ -39,7 +37,7 @@ class EscanearModel: ViewModel() {
                             val payload = ScannerRepository.processBarcode(barcode = barcode)
 
                             // Reclamamos el residuo
-                            val response = ScannerRepository.reclamarResiduo(payload.id_residuo)
+                            val response = ScannerRepository.reclamarResiduo(payload.idResiduo)
 
                             if (response.error.isNullOrEmpty()){
                                 withContext(Dispatchers.Main) {
@@ -53,7 +51,7 @@ class EscanearModel: ViewModel() {
 
                                 // Crear elemento del historial
                                 EstadisticasRepository.insertarResiduoAlHistorial(payload)
-                                Log.d("estadisticaLogging", "Se inserto el payload ${payload.id_residuo} de ${payload.tipo_residuo} y con puntaje ${payload.puntaje}")
+                                Log.d("estadisticaLogging", "Se inserto el payload ${payload.idResiduo} de ${payload.tipoResiduo} y con puntaje ${payload.puntaje}")
 
                             } else {
                                 withContext(Dispatchers.Main) {

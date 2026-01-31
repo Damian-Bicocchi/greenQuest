@@ -13,6 +13,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@drawable/radius_color_secundario">
 
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="16dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/world"
+            android:clickable="true"/>
+
         <TextView
             android:id="@+id/nombreFragmentActualTextView"
             android:layout_width="wrap_content"

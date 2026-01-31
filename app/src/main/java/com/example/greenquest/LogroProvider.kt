@@ -1,9 +1,7 @@
 package com.example.greenquest
 
-import androidx.lifecycle.compose.rememberLifecycleOwner
-import com.example.greenquest.Logros.Logro
+import com.example.greenquest.logros.Logro
 import com.example.greenquest.apiParameters.TipoResiduo
-import com.example.greenquest.repository.UsuarioRepository
 
 class LogroProvider {
     companion object {

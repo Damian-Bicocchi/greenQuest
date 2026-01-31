@@ -47,8 +47,10 @@ class GlobalRankingAdapter(private var dataset: List<RankingEntry>) :
             if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString()
         }.subSequence(0, 1)
         holder.usernameView.text = dataset[position].username
-        holder.rankingView.text = "Ranking #${position + 1}"
-        holder.scoreView.text = "${dataset[position].total_puntos}\npuntos"
+        holder.rankingView.text =
+            holder.rankingView.context.getString(R.string.ranking_position, position + 1)
+        holder.scoreView.text =
+            holder.scoreView.context.getString(R.string.x_points, dataset[position].total_puntos)
     }
 
     override fun getItemCount() = dataset.size

@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.Logros.Logro
+import com.example.greenquest.logros.Logro
 import com.example.greenquest.R
 
 class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterLogro.ViewHolder>(){
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val nombreLogro = view.findViewById<TextView>(R.id.nombreLogro)
-        val descripcionLogro = view.findViewById<TextView>(R.id.descripcionLogro)
-        val imagenLogro = view.findViewById<ImageView>(R.id.imagenLogro)
+        val nombreLogro: TextView = view.findViewById(R.id.nombreLogro)
+        val descripcionLogro: TextView = view.findViewById(R.id.descripcionLogro)
+        val imagenLogro: ImageView = view.findViewById(R.id.imagenLogro)
 
     }
 

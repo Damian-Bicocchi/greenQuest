@@ -1,7 +1,5 @@
 package com.example.greenquest
 
-import android.content.Context
-import android.content.Intent
 import com.example.greenquest.apiParameters.RefreshRequest
 import com.example.greenquest.repository.UsuarioRepository
 import kotlinx.coroutines.runBlocking
@@ -11,7 +9,7 @@ import okhttp3.Route
 
 
 class TokenAuthenticator(
-    private val tokenStore: TokenDataStore, private val api: AuthService, private val context: Context
+    private val tokenStore: TokenDataStore, private val api: AuthService
 ) : Authenticator {
     private var retryCount = 0
     private val maxRetries = 2
@@ -61,10 +59,5 @@ class TokenAuthenticator(
             UsuarioRepository.obtenerUsuarioLocal()
                 ?.let { UsuarioRepository.eliminarUsuarioLocal(it) }
         }
-        val intent = Intent(context, LauncherActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context.startActivity(intent)
     }
 }

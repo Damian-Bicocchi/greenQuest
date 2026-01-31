@@ -23,16 +23,18 @@ object TriviaRepository {
     private val triviaDataLoader = TriviaDataLoader()
 
     suspend fun inicializarData(context: Context){
-        sharedPreferences = context.getSharedPreferences(Prefs(context = context).SHARED_NAME, 0)
+        val appCtx = context.applicationContext
+        val prefs = Prefs(appCtx)
+
+        sharedPreferences = appCtx.getSharedPreferences(Prefs.SHARED_NAME, Context.MODE_PRIVATE)
 
         withContext(Dispatchers.IO){
-            val versionTriviaApp = Prefs(context = context).getTriviaVersion()
+            val versionTriviaApp = prefs.getTriviaVersion()
             val versionTriviaJson = triviaDataLoader.getJsonVersion(context)
             if (versionTriviaJson == -1) return@withContext
             if (versionTriviaApp < versionTriviaJson){
                 cargarDataDeJson(context = context)
-                Prefs(context = context).saveTriviaVersion(versionTriviaJson)
-
+                prefs.saveTriviaVersion(versionTriviaJson)
             }
         }
     }

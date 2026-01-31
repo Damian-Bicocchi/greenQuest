@@ -21,7 +21,7 @@ class registrar_cuenta : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        viewModel = ViewModelProvider(this).get(RegistroViewModel::class.java)
+        viewModel = ViewModelProvider(this)[RegistroViewModel::class.java]
 
         val botonRegistrarCuenta = binding.registrarCuentaButton
         val botonCancelar = binding.cancelarRegistro
