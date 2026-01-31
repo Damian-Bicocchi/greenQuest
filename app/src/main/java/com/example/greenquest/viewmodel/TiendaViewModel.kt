@@ -29,16 +29,6 @@ class TiendaViewModel : ViewModel() {
         }
     }
 
-    suspend fun articulosAdquiridosIds(usuario : User): List<Articulo> {
-        val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-        val articulos = obtenerArticulosDisponibles()
-        val listaArticulos = mutableListOf<Articulo>()
-        for(articuloId in TiendaAdquiridosRepository.obtenerArticulosAdquiridosUsuario(usuario.uid)) {
-            listaArticulos.add(articulos.first { it.id == articuloId })
-
-        }
-        return listaArticulos
-    }
     suspend fun comprarArticulo(articulo: Articulo): Boolean {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
         Log.d("TIENDA", "Intentando comprar articulo ${articulo.id} por ${articulo.valor} monedas. Usuario tiene ${usuario.articulos_adquiridos} articulosIds")

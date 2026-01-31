@@ -13,6 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EstacionService {
@@ -25,9 +26,10 @@ interface EstacionService {
     @GET("datos_usuario/")
     suspend fun getUserData(): UserInfoResponse
 
-    @GET("residuos/")
-    suspend fun cantReciduosUsuario(@Query("id_user") id :Int? = null):List<RecursoRecicladoDTO>
-
+    @GET("residuos/{id_user}/")
+    suspend fun cantReciduosUsuario(
+        @Path("id_user") id: Int
+    ): List<RecursoRecicladoDTO>
     @GET("puntos/")
     suspend fun score(@Query("id_user") id: Int? = null): PuntosUsuario
 

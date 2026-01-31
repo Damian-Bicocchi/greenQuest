@@ -27,6 +27,12 @@ class LogroProvider {
             }
         }
 
+        fun cerrarSesionLogros(){
+            for (logro in logros){
+                logro.obtenido = false
+            }
+        }
+
         val logros = listOf(
             Logro(
                 imagen = R.drawable.carton10,
@@ -137,7 +143,7 @@ class LogroProvider {
                 nombre = "Papelero Avanzado",
                 descripcion = "Recicla 50 objetos de papel",
                 tipoResiduo = TipoResiduo.PAPEL,
-                requisitoCantidad = 10,
+                requisitoCantidad = 50,
                 obtenido = false
             ),
             Logro(

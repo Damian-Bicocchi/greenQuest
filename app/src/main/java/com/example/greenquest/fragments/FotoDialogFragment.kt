@@ -39,7 +39,6 @@ class FotoDialogFragment : DialogFragment() {
             val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
             binding.imagenActualCambiarImagen.setImageResource(usuario.imagen ?: com.example.greenquest.R.drawable.outline_person_24 )
 
-
             recyclerView.adapter = AdapterImagen(
                 miPerfilModel.articulosAdquiridosIds()
             )

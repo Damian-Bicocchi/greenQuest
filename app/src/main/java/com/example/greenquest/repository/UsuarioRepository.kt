@@ -105,7 +105,7 @@ object UsuarioRepository {
             val usuario = obtenerUsuarioLocal()
             if (usuario != null) {
                 for (item in recursosReciclados) {
-                    Log.d("UsuarioRepository", "Tipo residuo: ${item.nombre}, Cantidad: ${item.cantidad}")
+                    Log.d("UsuarioRepository", "Tipo residuo: ${item.nombre}, Cantidad: ${item.cantidad}, id usuario: $id")
                     usuario.incrementarCantidadResiduo(item.nombre, item.cantidad)
                 }
                 actualizarUsuarioLocal(usuario)
