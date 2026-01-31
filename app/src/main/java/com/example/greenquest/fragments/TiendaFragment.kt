@@ -44,5 +44,13 @@ class TiendaFragment : Fragment() {
         return binding.root
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            lifecycleScope.launch {
+                binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()
+            }
+        }
+    }
 }
 

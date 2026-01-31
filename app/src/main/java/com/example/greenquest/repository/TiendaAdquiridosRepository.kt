@@ -6,11 +6,12 @@ import com.example.greenquest.dao.TiendaDao
 import com.example.greenquest.database.AppDatabase
 import com.example.greenquest.database.TiendaAdquiridos
 import com.example.greenquest.database.user.User
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 object TiendaAdquiridosRepository {
 
     private var tiendaUsuario : TiendaAdquiridos? = null
-
     private val tiendaDao by lazy {
         GreenQuestApp.instance.database.tiendaDao()
     }
