@@ -157,10 +157,10 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
 
         linkTodaActividad.setOnClickListener {
-            Log.d("navegarLogging", "Linea 143")
-            findNavController().navigate(
-                R.id.action_estadisticasFragment_to_historialResiduoCompletoFragment
-            )
+            val action = EstadisticasFragmentDirections.actionEstadisticasFragmentToHistorialResiduoCompletoFragment()
+
+            findNavController().navigate(action)
+
         }
     }
 

@@ -252,7 +252,8 @@ class EscanearFragment : Fragment() {
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipoResiduo,
-                        puntos = state.payload.puntaje
+                        puntos = state.payload.puntaje,
+                        idResiduo = state.payload.idResiduo
                     )
                     lastErrorMessage = null
                     val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)

@@ -15,6 +15,7 @@ lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.2"
 composeBom = "2026.01.00"
 loggingInterceptor = "5.3.2"
+navigationSafeArgsGradlePlugin = "2.7.7"
 recyclerview = "1.4.0"
 fragment = "1.8.9"
 material = "1.13.0"
@@ -37,6 +38,8 @@ viewbinding = "9.0.0"
 osmdroid = "6.1.20"
 osmbonuspack = "6.9.0"
 mpandroidchart = "v3.1.0"
+navigationFragmentKtxVersion = "2.9.7"
+navigationUiKtxVersion = "2.9.7"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
@@ -50,6 +53,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastorePreferences" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-datastore-preferences-rxjava3 = { module = "androidx.datastore:datastore-preferences-rxjava3", version.ref = "datastorePreferences" }
+androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
@@ -92,6 +96,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 osmdroid = { module = "org.osmdroid:osmdroid-android", version.ref = "osmdroid"  }
 osmbonuspack = { module = "com.github.MKergall:osmbonuspack", version.ref = "osmbonuspack"  }
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart"}
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
