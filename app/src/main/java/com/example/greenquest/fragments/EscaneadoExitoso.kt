@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.BundleCompat
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
@@ -20,6 +21,8 @@ private const val ARG_DATOS = "datos_escaneo"
 
 
 class EscaneadoExitoso : Fragment() {
+
+    private val args: EscaneadoExitosoArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +35,10 @@ class EscaneadoExitoso : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val datos = args.datosEscaneo
 
-        // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
-        val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
-        // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
-        // ESTO debería no estar deprecado - Joaco
-        //val datos = BundleCompat.getParcelable<DatosEscaneo>(arguments ?: Bundle(), ARG_DATOS, DatosEscaneo::class.java)
-
-        Log.d("escanearLogging", "datos es ${datos?.idResiduo} - ${datos?.puntos} - ${datos?.tipoResiduo}")
-        datos?.let {
+        Log.d("escanearLogging", "datos es ${datos.idResiduo} - ${datos.puntos} - ${datos.tipoResiduo}")
+        datos.let {
             view.findViewById<TextView>(
                 R.id.label_resumen_residuo).text = getString(R.string.you_recycled, it.tipoResiduo)
             view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text =
@@ -64,7 +62,7 @@ class EscaneadoExitoso : Fragment() {
         buttonDenunciar.setOnClickListener {
             val reporteArgumentos = ReporteArgumentos(
                 origenHaciaReporte = OrigenHaciaReporte.ESCANEAR,
-                idResiduo = datos!!.idResiduo
+                idResiduo = datos.idResiduo
             )
             val action = EscaneadoExitosoDirections.actionEscaneadoExitosoFragmentToReportarFragment(reporteArgumentos = reporteArgumentos)
             findNavController().navigate(action)
@@ -72,4 +70,6 @@ class EscaneadoExitoso : Fragment() {
         }
 
     }
+
+
 }

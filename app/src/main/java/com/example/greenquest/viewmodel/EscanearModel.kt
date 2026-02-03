@@ -30,7 +30,6 @@ class EscanearModel: ViewModel() {
 
     fun processImage(image: InputImage, onFinished: ()-> Unit) {
 
-
         viewModelScope.launch {
             try {
 
@@ -42,7 +41,12 @@ class EscanearModel: ViewModel() {
                     try {
                         // Procesamos el codigo de barras
                         val payload = ScannerRepository.processBarcode(barcode = barcode)
-
+                        if (payload.idResiduo.isEmpty()) {
+                            withContext(Dispatchers.Main){
+                                _scanState.value = ScanState.HappyError("El QR ingresado no pertenece al de un contenedor inteligente")
+                            }
+                            return@launch
+                        }
                         // Reclamamos el residuo
                         val response = ScannerRepository.reclamarResiduo(payload.idResiduo)
 

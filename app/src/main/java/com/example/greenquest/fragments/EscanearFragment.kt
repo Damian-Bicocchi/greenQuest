@@ -54,6 +54,7 @@ class EscanearFragment : Fragment() {
 
     private var errorDialog: AlertDialog? = null
     private var lastErrorMessage: String? = null
+    private var bloquearEscaneo: Boolean = false
 
     @OptIn(ExperimentalGetImage::class)
     private var isProcessing = false
@@ -142,6 +143,7 @@ class EscanearFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        qrAlreadyDetected = false
         cameraProvider?.unbindAll()
         cameraProvider = null
     }
@@ -149,22 +151,19 @@ class EscanearFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         camaraIniciada = false
+        qrAlreadyDetected = false
         cameraProvider?.unbindAll()
 
     }
-
 
     private fun startCamera() {
         if (camaraIniciada) return
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
-
         cameraProviderFuture.addListener({
             camaraIniciada = true
             cameraProvider = cameraProviderFuture.get()
 
-
-            // Preview
             val preview = Preview.Builder().setResolutionSelector(
                 ResolutionSelector.Builder().setAspectRatioStrategy(
                     AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
@@ -233,8 +232,12 @@ class EscanearFragment : Fragment() {
             mediaImage,
             imageProxy.imageInfo.rotationDegrees
         )
+
         escanearModel.processImage(image){
-            isProcessing = false
+            if (!bloquearEscaneo){
+                isProcessing = false
+
+            }
             imageProxy.close()
         }
     }
@@ -246,6 +249,7 @@ class EscanearFragment : Fragment() {
                     // return@observe hace que se salga del lambda pero NO de observeViewModel
                     if (qrAlreadyDetected) return@observe
                     qrAlreadyDetected = true
+                    bloquearEscaneo = true
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipoResiduo,
@@ -253,6 +257,7 @@ class EscanearFragment : Fragment() {
                         idResiduo = state.payload.idResiduo
                     )
                     lastErrorMessage = null
+                    bloquearEscaneo = false
                     val action = EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)
                     findNavController().navigate(action)
                 }
@@ -279,20 +284,21 @@ class EscanearFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        if (message != lastErrorMessage) {
-            errorDialog?.cancel()
+        bloquearEscaneo = true
+        errorDialog?.cancel()
 
-            errorDialog =
-                MaterialAlertDialogBuilder(requireContext()).setTitle("Error")
-                    .setMessage(message)
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setCancelable(false)
-                    .create()
-            errorDialog?.show()
+        errorDialog =
+            MaterialAlertDialogBuilder(requireContext()).setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    bloquearEscaneo = false
+                    isProcessing = false
+                }
+                .setCancelable(false)
+                .create()
+        errorDialog?.show()
 
-            lastErrorMessage = message
-        }
     }
+
 }
