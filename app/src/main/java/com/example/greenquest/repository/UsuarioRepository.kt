@@ -1,5 +1,6 @@
 package com.example.greenquest.repository
 
+import android.util.Log
 import com.example.greenquest.ErrorHandlerProvider
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
@@ -25,6 +26,7 @@ object UsuarioRepository {
     }
     private val errorHandler = GreenQuestApp.instance.errorHandler
 
+    private var usuario: User? = null
     suspend fun signup(username: String, password: String): Response<AuthSuccessResponse> {
         return authApi.signup(Request(username, password))
     }
@@ -96,20 +98,62 @@ object UsuarioRepository {
         }
     }
 
-    suspend fun obtenerUsuarioLocal(): User? =
-        withContext(Dispatchers.IO) {
-            userDao.getFirstUser()
+    suspend fun obtenerUsuarioLocal(): User?{
+        if (usuario == null) {
+            return withContext(Dispatchers.IO) {
+                userDao.getFirstUser()
+            }
+        }else{
+            return usuario
         }
+    }
 
-    suspend fun guardarUsuarioLocal(user: User) =
+
+    suspend fun guardarUsuarioLocal(user: User){
         withContext(Dispatchers.IO) {
             userDao.insert(user)
         }
+        usuario = user
+    }
 
-    suspend fun eliminarUsuarioLocal(user: User) =
+
+    suspend fun eliminarUsuarioLocal(user: User){
+        usuario = null
         withContext(Dispatchers.IO) {
             userDao.delete(user)
+        }
     }
+
+
+    suspend fun cantReciduosUsuario(id : Int){
+        try{
+            val recursosReciclados = api.cantReciduosUsuario(id)
+            val usuario = obtenerUsuarioLocal()
+            if (usuario != null) {
+                for (item in recursosReciclados) {
+                    Log.d("UsuarioRepository", "Tipo residuo: ${item.nombre}, Cantidad: ${item.cantidad}, id usuario: $id")
+                    usuario.incrementarCantidadResiduo(item.nombre, item.cantidad)
+                }
+                actualizarUsuarioLocal(usuario)
+            }
+        }
+        catch (e: Exception) {
+            Log.e("UsuarioRepository", "Error al obtener residuos del usuario", e)
+        }
+    }
+
+    suspend fun incrementarCantidadResiduoLocal(tipoResiduo: TipoResiduo){
+        val usuario = obtenerUsuarioLocal()
+        if (usuario != null) {
+            usuario.incrementarCantidadResiduo(tipoResiduo)
+            actualizarUsuarioLocal(usuario)
+        }
+    }
+
+    suspend fun actualizarUsuarioLocal(user: User) =
+        withContext(Dispatchers.IO) {
+            userDao.updateUser(user)
+        }
 
     suspend fun obtenerIdUsuarioActual(): Int {
         val id = withContext(Dispatchers.IO){
@@ -117,5 +161,6 @@ object UsuarioRepository {
         }
         return id
     }
+
 }
 

@@ -1,7 +1,9 @@
-package com.example.greenquest
+package com.example.greenquest.Provider
 
 import com.example.greenquest.logros.Logro
+import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
+import com.example.greenquest.repository.UsuarioRepository
 
 class LogroProvider {
     companion object {
@@ -17,6 +19,18 @@ class LogroProvider {
         fun chequearYActualizarLogros(tipoResiduo: TipoResiduo, cantidadReciclada: Int) {
             for(logro in logrosNoObtenidos()) {
                 logro.chequearCumplimiento(cantidadReciclada, tipoResiduo)
+            }
+        }
+
+        fun obtenerLogrosObtenidosPrimero():List<Logro>{
+            return logros.sortedByDescending{
+                it.obtenido
+            }
+        }
+
+        fun cerrarSesionLogros(){
+            for (logro in logros){
+                logro.obtenido = false
             }
         }
 
@@ -130,7 +144,7 @@ class LogroProvider {
                 nombre = "Papelero Avanzado",
                 descripcion = "Recicla 50 objetos de papel",
                 tipoResiduo = TipoResiduo.PAPEL,
-                requisitoCantidad = 10,
+                requisitoCantidad = 50,
                 obtenido = false
             ),
             Logro(

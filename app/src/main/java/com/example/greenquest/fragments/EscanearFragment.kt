@@ -243,7 +243,7 @@ class EscanearFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        escanearModel.scanState.observe(viewLifecycleOwner) { state ->
+        escanearModel.scanState.observe(viewLifecycleOwner) { state :ScanState ->
             when (state) {
                 is ScanState.QRDetected -> {
                     // return@observe hace que se salga del lambda pero NO de observeViewModel
@@ -278,6 +278,7 @@ class EscanearFragment : Fragment() {
             }
         }
     }
+
 
     private fun requirePermission() {
         requestPermissionLauncher.launch(Manifest.permission.CAMERA)

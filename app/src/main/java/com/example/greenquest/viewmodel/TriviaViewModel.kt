@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.database.trivia.PreguntaConOpciones
+import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.TriviaRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.states.trivia.EstadoTrivia
@@ -69,6 +70,7 @@ class TriviaViewModel: ViewModel() {
                 _explicacionState.value = explicacionCargada
                 if (esCorrecta) {
                     _gameState.value = EstadoTrivia.CORRECTO
+                    TiendaAdquiridosRepository.addMonedas(10, UsuarioRepository.obtenerUsuarioLocal()!!.uid)
                 } else {
                     _gameState.value = EstadoTrivia.INCORRECTO
                 }

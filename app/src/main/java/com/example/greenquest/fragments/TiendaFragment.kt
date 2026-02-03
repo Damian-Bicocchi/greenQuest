@@ -5,14 +5,52 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.R
+import com.example.greenquest.adapters.AdapterArticulo
+import com.example.greenquest.adapters.AdapterLogro
+import com.example.greenquest.database.user.User
+import com.example.greenquest.repository.UsuarioRepository
+import kotlinx.coroutines.launch
+import com.example.greenquest.databinding.*
+import com.example.greenquest.viewmodel.TiendaViewModel
 
 class TiendaFragment : Fragment() {
+
+    private val tiendaViewModel : TiendaViewModel by viewModels()
+
+    private lateinit var binding : FragmentTiendaBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_top_amigos, container, false)
+
+        binding = FragmentTiendaBinding.inflate(inflater, container, false)
+        val recyclerView =  binding.MiTiendaRV
+
+        lifecycleScope.launch {
+            tiendaViewModel.actualizarArticulosAdquiridos()
+            binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()
+
+        }
+        recyclerView.adapter = AdapterArticulo(tiendaViewModel.obtenerArticulosDisponibles()){
+            lifecycleScope.launch {
+                binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()
+            }
+        }
+
+        return binding.root
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            lifecycleScope.launch {
+                binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()
+            }
+        }
+    }
 }
+
