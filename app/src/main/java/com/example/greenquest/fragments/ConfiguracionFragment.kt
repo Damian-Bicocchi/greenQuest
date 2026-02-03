@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.greenquest.dialog.AcercaDeDialogFragment
 import com.example.greenquest.ui.iniciar_sesion
 import com.example.greenquest.viewmodel.ConfiguracionViewModel
 import kotlinx.coroutines.launch
@@ -23,6 +24,11 @@ class ConfiguracionFragment : Fragment() {
     ): android.view.View {
         binding = com.example.greenquest.databinding.FragmentConfiguracionBinding.inflate(layoutInflater)
 
+
+        binding.acercaDe.setOnClickListener {
+            val acercaDeDialog = AcercaDeDialogFragment()
+            acercaDeDialog.show(parentFragmentManager, "AcercaDeDialogFragment")
+        }
 
 
         binding.cerrarSesionButton.setOnClickListener{

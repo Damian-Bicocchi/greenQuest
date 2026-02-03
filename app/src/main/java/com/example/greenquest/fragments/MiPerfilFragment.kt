@@ -24,6 +24,7 @@ import com.example.greenquest.viewmodel.MiPerfilModel
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import com.example.greenquest.dialog.FotoDialogFragment
 import kotlinx.coroutines.launch
 
 
