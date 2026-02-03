@@ -151,7 +151,6 @@ class ReportarFragment : Fragment() {
             fullImageBitmap?.let {
                 bitmap ->
                 reporteViewModel.processReport(idResiduo = idResiduo, imageData = bitmap)
-                volverAlOrigenUI()
             } ?: run {
                 Toast.makeText(
                     requireContext(),
@@ -365,7 +364,7 @@ class ReportarFragment : Fragment() {
     private fun mostrarDialogoExitoso() {
         AlertDialog.Builder(requireContext())
             .setTitle("Reporte exitoso")
-            .setMessage("El reporte se ha enviado correctamente. Muchas gracias por su colaboración")
+            .setMessage("El reporte se ha enviado correctamente. Muchas gracias por tu colaboración")
             .setPositiveButton("Aceptar") { dialog, _ ->
                 dialog.dismiss()
                 reporteViewModel.resetearEstado()

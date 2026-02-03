@@ -27,6 +27,7 @@ import com.example.greenquest.viewmodel.EstadisticaViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -49,8 +50,6 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -185,9 +184,8 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
         }
         pieChart.clear()
         val pieEntries : ArrayList<PieEntry> = ArrayList()
+        val colors = mutableListOf<Int>()
 
-        val colorArray = resources.getIntArray(R.array.pieChartColorArray)
-        val colors = colorArray.toList()
 
         for (elem in mapeo.keys){
             pieEntries.add(
@@ -196,15 +194,20 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                     elem.toString()
                 )
             )
+            colors.add(
+                ContextCompat.getColor(requireContext(), elem.colorRes)
+            )
         }
 
-        val pieDataSet = PieDataSet(pieEntries, "Tipos de residuos")
+
+        val pieDataSet = PieDataSet(pieEntries, "")
         pieDataSet.formSize = 10f // Color del cuadradito al lado del texto
         pieDataSet.valueTextSize = 25f // Tamaño del texto en el grafico
         pieDataSet.colors = colors
 
         val pieData = PieData(pieDataSet)
-        pieData.setValueFormatter(PercentFormatter())
+        pieData.setValueFormatter(IntegerFormatter())
+
         pieChart.description.isEnabled = false
         pieChart.extraBottomOffset = 10f // Ajusta márgenes externos
         pieChart.extraLeftOffset = 10f
@@ -213,12 +216,30 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
         pieChart.setUsePercentValues(false) // Hace que no se usen valores porcentuales
         pieChart.isClickable = false
         pieChart.isScrollContainer = false
-        pieChart.isRotationEnabled = false // Lo pondria en true porque es relajante girarlo
+        pieChart.isRotationEnabled = true // Lo pondria en true porque es relajante girarlo
 
         pieChart.holeRadius = 0f
         pieChart.transparentCircleRadius = 0f
         pieChart.animateXY(1000,1000)
         pieChart.data = pieData
+
+        val legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        legend.orientation = Legend.LegendOrientation.HORIZONTAL
+        legend.setDrawInside(false)
+
+        legend.textSize = 12f
+        legend.textColor = ContextCompat.getColor(requireContext(), R.color.texto_normal)
+
+        legend.form = Legend.LegendForm.SQUARE
+        legend.formSize = 14f
+        legend.formToTextSpace = 8f
+        legend.xEntrySpace = 16f
+        legend.yEntrySpace = 8f
+
+
+
         pieChart.invalidate()
     }
 
@@ -323,4 +344,10 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
 
 
+}
+
+class IntegerFormatter : ValueFormatter(){
+    override fun getFormattedValue(value: Float): String? {
+        return "" + (value.toInt())
+    }
 }

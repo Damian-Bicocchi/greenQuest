@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.states.ScanState
@@ -149,10 +150,7 @@ class EscanearFragment : Fragment() {
         super.onPause()
         camaraIniciada = false
         cameraProvider?.unbindAll()
-        val toolbarContainer = requireActivity().findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.GONE
+
     }
 
 
@@ -205,13 +203,13 @@ class EscanearFragment : Fragment() {
             val camaraTrasera = CameraSelector.DEFAULT_BACK_CAMERA
             if (cameraProvider?.hasCamera(camaraTrasera) == true) {
                 cameraProvider?.bindToLifecycle(
-                    viewLifecycleOwner,
+                    this,
                     CameraSelector.DEFAULT_BACK_CAMERA, preview,
                     imageAnalizer
                 )
             } else {
                 cameraProvider?.bindToLifecycle(
-                    viewLifecycleOwner,
+                    this,
                     CameraSelector.DEFAULT_FRONT_CAMERA, preview,
                     imageAnalizer
                 )
@@ -235,11 +233,10 @@ class EscanearFragment : Fragment() {
             mediaImage,
             imageProxy.imageInfo.rotationDegrees
         )
-        escanearModel.processImage(image)
-            .addOnCompleteListener {
-                isProcessing = false
-                imageProxy.close()
-            }
+        escanearModel.processImage(image){
+            isProcessing = false
+            imageProxy.close()
+        }
     }
 
     private fun observeViewModel() {
@@ -256,11 +253,8 @@ class EscanearFragment : Fragment() {
                         idResiduo = state.payload.idResiduo
                     )
                     lastErrorMessage = null
-                    val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment)
-                        .addToBackStack(null)
-                        .commit()
+                    val action = EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)
+                    findNavController().navigate(action)
                 }
 
                 is ScanState.HappyError -> {

@@ -13,8 +13,11 @@ import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class EscanearModel: ViewModel() {
@@ -25,55 +28,55 @@ class EscanearModel: ViewModel() {
     val scanState: LiveData<ScanState> = _scanState
 
 
-    fun processImage(image: InputImage): Task<List<Barcode>> {
-        return qrScanner.process(image)
-            .addOnSuccessListener { barcodes ->
-                viewModelScope.launch {
-                    var cantBarcodes = 0
-                    for (barcode in barcodes){
-                        cantBarcodes++
-                        try {
-                            // Procesamos el codigo de barras
-                            val payload = ScannerRepository.processBarcode(barcode = barcode)
+    fun processImage(image: InputImage, onFinished: ()-> Unit) {
 
-                            // Reclamamos el residuo
-                            val response = ScannerRepository.reclamarResiduo(payload.idResiduo)
 
-                            if (response.error.isNullOrEmpty()){
-                                withContext(Dispatchers.Main) {
-                                    _scanState.value = ScanState.QRDetected(payload)
-                                }
-                                // Agregarle monedas. Tantas monedas como puntajes da
-                                //MonedasRepository.addMonedas(payload.puntaje)
+        viewModelScope.launch {
+            try {
 
-                                // Contabilizar para logros
-                                //LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
+                val barcodes = qrScanner.process(image).await()
+                if (barcodes.isEmpty()) return@launch
+                var cantBarcodes = 0
+                for (barcode in barcodes) {
+                    cantBarcodes++
+                    try {
+                        // Procesamos el codigo de barras
+                        val payload = ScannerRepository.processBarcode(barcode = barcode)
 
-                                // Crear elemento del historial
-                                EstadisticasRepository.insertarResiduoAlHistorial(payload)
-                                Log.d("estadisticaLogging", "Se inserto el payload ${payload.idResiduo} de ${payload.tipoResiduo} y con puntaje ${payload.puntaje}")
+                        // Reclamamos el residuo
+                        val response = ScannerRepository.reclamarResiduo(payload.idResiduo)
 
-                            } else {
-                                withContext(Dispatchers.Main) {
-                                    _scanState.value = ScanState.HappyError(response.error)
-                                }
-                            }
-                        } catch (e : Exception){
-                            if (cantBarcodes >= barcodes.size){
-                                withContext(Dispatchers.Main) {
-                                    Log.e("greenQuest", "La excepcion fue " + e.message)
-                                    _scanState.value = ScanState.QrException("Hubo un error inesperado")
-                                }
+                        if (response.error.isNullOrEmpty()){
+
+                            // Agregarle monedas. Tantas monedas como puntajes da
+                            //MonedasRepository.addMonedas(payload.puntaje)
+
+                            // Contabilizar para logros
+                            //LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
+
+                            // Crear elemento del historial
+                            EstadisticasRepository.insertarResiduoAlHistorial(payload)
+
+                            withContext(Dispatchers.Main) {
+                                _scanState.value = ScanState.QRDetected(payload)
                             }
 
+                            Log.d("estadisticaLogging", "Se inserto el payload ${payload.idResiduo} de ${payload.tipoResiduo} y con puntaje ${payload.puntaje}")
+
+                        } else {
+                            withContext(Dispatchers.Main) {
+                                _scanState.value = ScanState.HappyError(response.error)
+                            }
                         }
+                    } catch (e: Exception) {
+                        Log.e("escanearLogging", "Hubo un error en process Image -> $e")
                     }
                 }
+            } catch (e: Exception) {
+                Log.e("escanearLogging", "LA excepecion ocurre en linea 70 $e")
+            } finally {
+                onFinished()
             }
-            .addOnFailureListener { e ->
-                Log.e("greenQuest", "Error en el procesado de la imagen $e")
-                _scanState.value = ScanState.QrException("ERROR INESPERADO")
-            }
-
+        }
     }
 }

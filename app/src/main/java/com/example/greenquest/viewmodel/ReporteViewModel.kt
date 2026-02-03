@@ -26,21 +26,17 @@ class ReporteViewModel : ViewModel(){
 
     fun processReport(idResiduo: String, imageData: Bitmap){
 
-        Log.d("reporteLogging", "entramos al processReport")
         if (idResiduo.isEmpty()) {
-            Log.d("reporteLogging", "no hay idResiduo")
             _reportState.value = EstadoReporte.REPORTE_FALLIDO
             _reporteMensajeFallido.value = "Residuo vacío"
             return
         }
 
         if (_tipoResiduoSeleccionado.equals(null)){
-            Log.d("reporteLogging", "No seleccionaste nada")
             _reportState.value = EstadoReporte.REPORTE_FALLIDO
             _reporteMensajeFallido.value = "No seleccionó una categoría"
             return
         }
-        Log.d("reporteLogging", "no amigo que hago aca")
 
         viewModelScope.launch {
             try {
@@ -48,6 +44,7 @@ class ReporteViewModel : ViewModel(){
                     imageData = imageData,
                     clasificacionUsuario = _tipoResiduoSeleccionado.value!!,
                     idResiduo = idResiduo)
+                _reportState.value = EstadoReporte.REPORTADO
             } catch (e: Exception){
                 Log.e("reporteLogging", "Excepción en processReport $e")
             }

@@ -44,7 +44,7 @@ class menu_principal : AppCompatActivity() {
                 R.id.categorizarFragment -> setToolbar("Categorizar")
                 R.id.triviaFragment -> setToolbar("Trivia")
                 R.id.miPerfil-> setToolbar("Mi Perfil")
-                R.id.escanearFragment -> setToolbar("", false)
+                R.id.escanearFragment -> setToolbar("Escanear", false)
                 R.id.estadisticasFragment -> setToolbar("Estadísticas de usuario")
                 R.id.configuracionFragment -> setToolbar("Configuración")
                 R.id.escaneadoExitosoFragment -> setToolbar("Escaneado exitoso")
@@ -56,8 +56,10 @@ class menu_principal : AppCompatActivity() {
     }
 
     fun setToolbar(titulo: String, mostrarToolbar: Boolean = true) {
-        binding.toolbarContainer.visibility =
-            if (mostrarToolbar) View.VISIBLE else View.GONE
+
+        binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo
+        if (titulo.length >= 22) binding.nombreFragmentActualTextView.textSize = 26f
+        else binding.nombreFragmentActualTextView.textSize = 28f
     }
 }
