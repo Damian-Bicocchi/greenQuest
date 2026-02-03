@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 
+@Deprecated("Sin uso en esta versión de greenQuest")
 data class ImageWithHistorial(
     @Embedded
     val image: ReporteData,

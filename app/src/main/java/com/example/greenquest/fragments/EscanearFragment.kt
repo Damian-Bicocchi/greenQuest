@@ -138,12 +138,14 @@ class EscanearFragment : Fragment() {
         super.onResume()
         qrAlreadyDetected = false
         lastErrorMessage = ""
+        bloquearEscaneo = false
         startCamera()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         qrAlreadyDetected = false
+        bloquearEscaneo = false
         cameraProvider?.unbindAll()
         cameraProvider = null
     }
@@ -152,6 +154,7 @@ class EscanearFragment : Fragment() {
         super.onPause()
         camaraIniciada = false
         qrAlreadyDetected = false
+        bloquearEscaneo = false
         cameraProvider?.unbindAll()
 
     }

@@ -89,7 +89,11 @@
         android:id="@+id/miPerfil"
         android:name="com.example.greenquest.fragments.MiPerfilFragment"
         android:label="Mi perfil"
-        tools:layout="@layout/fragment_mi_perfil" />
+        tools:layout="@layout/fragment_mi_perfil" >
+        <action
+            android:id="@+id/action_miPerfil_to_configuracionFragment"
+            app:destination="@id/configuracionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportarFragment"
         android:name="com.example.greenquest.fragments.ReportarFragment"

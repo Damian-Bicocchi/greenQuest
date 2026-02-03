@@ -78,7 +78,7 @@ object TriviaRepository {
                     triviaDao.insertarOpciones(opciones)
                 }
             } catch (e: Exception) {
-                Log.e("greenQuest", "Error cargando datos desde JSON ${e}")
+                Log.e("greenQuest", "Error cargando datos desde JSON $e")
             }
         }
     }

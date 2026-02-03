@@ -7,17 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.BundleCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
-import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
 import com.example.greenquest.fragments.arguments.ReporteArgumentos
-
-
-private const val ARG_DATOS = "datos_escaneo"
 
 
 class EscaneadoExitoso : Fragment() {

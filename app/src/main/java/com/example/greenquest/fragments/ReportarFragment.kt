@@ -32,9 +32,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
-import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
-import com.example.greenquest.states.ScanState
 import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.viewmodel.ReporteViewModel
 

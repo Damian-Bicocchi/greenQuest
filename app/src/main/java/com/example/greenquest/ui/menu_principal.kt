@@ -31,9 +31,18 @@ class menu_principal : AppCompatActivity() {
         // Conectar BottomNavigation con el grafo
         binding.bottomNavigation.setupWithNavController(navController)
 
-        // Click en perfil (toolbar)
         binding.miPerfil.setOnClickListener {
-            navController.navigate(R.id.miPerfil)
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, inclusive = false, saveState = true)
+                .build()
+
+            try {
+                navController.navigate(R.id.miPerfil, null, navOptions)
+            } catch (_: Exception) {
+                navController.navigate(R.id.miPerfil)
+            }
         }
 
         // Toolbar dinámica según destino
@@ -59,7 +68,7 @@ class menu_principal : AppCompatActivity() {
 
         binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo
-        if (titulo.length >= 22) binding.nombreFragmentActualTextView.textSize = 26f
+        if (titulo.length >= 20) binding.nombreFragmentActualTextView.textSize = 26f
         else binding.nombreFragmentActualTextView.textSize = 28f
     }
 }

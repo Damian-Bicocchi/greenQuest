@@ -1,42 +1,26 @@
 package com.example.greenquest.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.greenquest.adapters.AdapterLogro
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.LogroProvider
-import com.example.greenquest.R
+import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.database.user.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.repository.UsuarioRepository
-
 import kotlinx.coroutines.launch
 
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class MiPerfilFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
 
     private lateinit var usuario : User
     private lateinit var binding: FragmentMiPerfilBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,11 +41,8 @@ class MiPerfilFragment : Fragment() {
         }
 
         binding.configuracionButton.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, ConfiguracionFragment())
-                .commit()
-
-
+            val action = MiPerfilFragmentDirections.actionMiPerfilToConfiguracionFragment()
+            findNavController().navigate(action)
         }
 
         binding.logrosConseguidosTextview.setOnClickListener {
