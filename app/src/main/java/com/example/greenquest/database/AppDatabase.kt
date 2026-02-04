@@ -3,6 +3,7 @@ package com.example.greenquest.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.greenquest.dao.TiendaDao
 import com.example.greenquest.converters.Converters
 import com.example.greenquest.dao.HistorialResiduoDao
 import com.example.greenquest.dao.ImageReportDao
@@ -22,14 +23,16 @@ import com.example.greenquest.database.trivia.RespuestaUsuario
         OpcionesTrivia::class,
         RespuestaUsuario::class,
         HistorialResiduo::class,
+        TiendaAdquiridos::class,
         ReporteData::class],
-    version = 4,
+    version = 9,
     exportSchema = false
 )
-@TypeConverters(Converters::class)
+@TypeConverters(com.example.greenquest.database.converter.ConverterList::class, Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun triviaDao(): TriviaDao
+    abstract fun tiendaDao(): TiendaDao
 
     abstract fun historialResiduoDao(): HistorialResiduoDao
 

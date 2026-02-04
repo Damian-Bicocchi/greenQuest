@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+
 object RetrofitInstance {
     // En local.properties pongan "BASE_URL=http://192.168.0.100:8000/api/" o similar
     // IMPORTANTE: hagan un gradle clean antes de compilar porque sino NO va a compilar.
@@ -32,3 +33,5 @@ object RetrofitInstance {
 
     val api: EstacionService = builder.client(client).build().create(EstacionService::class.java)
 }
+
+

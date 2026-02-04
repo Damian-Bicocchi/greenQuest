@@ -5,6 +5,7 @@ import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.PuntosUsuario
 import com.example.greenquest.apiParameters.RankingEntry
+import com.example.greenquest.apiParameters.RecursoRecicladoDTO
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
 import com.example.greenquest.apiParameters.scanning.ReclamarResiduoGenericResponse
@@ -27,6 +28,10 @@ interface EstacionService {
     @GET("datos_usuario/")
     suspend fun getUserData(): UserInfoResponse
 
+    @GET("residuos/{id_user}/")
+    suspend fun cantReciduosUsuario(
+        @Path("id_user") id: Int
+    ): List<RecursoRecicladoDTO>
     @GET("puntos/")
     suspend fun score(@Query("id_user") idUser: Int? = null): PuntosUsuario
 

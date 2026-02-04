@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.EstadisticasRepository
+import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.ScannerRepository
+import com.example.greenquest.repository.TiendaAdquiridosRepository
+import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.states.ScanState
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -17,7 +20,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class EscanearModel: ViewModel() {
@@ -52,20 +54,17 @@ class EscanearModel: ViewModel() {
 
                         if (response.error.isNullOrEmpty()){
 
-                            // Agregarle monedas. Tantas monedas como puntajes da
-                            //MonedasRepository.addMonedas(payload.puntaje)
-
-                            // Contabilizar para logros
-                            //LogrosRepository.incrementarContadorResiduo(payload.tipo_residuo)
 
                             // Crear elemento del historial
                             EstadisticasRepository.insertarResiduoAlHistorial(payload)
+                            TiendaAdquiridosRepository.addMonedas(payload.puntaje, UsuarioRepository.obtenerUsuarioLocal()!!.uid)
+                            UsuarioRepository.incrementarCantidadResiduoLocal(payload.tipoResiduo)
+
 
                             withContext(Dispatchers.Main) {
                                 _scanState.value = ScanState.QRDetected(payload)
                             }
 
-                            Log.d("estadisticaLogging", "Se inserto el payload ${payload.idResiduo} de ${payload.tipoResiduo} y con puntaje ${payload.puntaje}")
 
                         } else {
                             withContext(Dispatchers.Main) {
@@ -84,3 +83,4 @@ class EscanearModel: ViewModel() {
         }
     }
 }
+

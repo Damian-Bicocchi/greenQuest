@@ -42,6 +42,8 @@ class AdapterLogro(val listaLogros: List<Logro>) : RecyclerView.Adapter<AdapterL
             holder.descripcionLogro.alpha = 0.3f
         } else {
             holder.imagenLogro.alpha = 1.0f
+            holder.nombreLogro.alpha = 1.0f
+            holder.descripcionLogro.alpha = 1.0f
         }
 
 

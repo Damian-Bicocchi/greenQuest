@@ -19,6 +19,7 @@ object EstadisticasRepository {
     private val historialResiduoDao by lazy {
         GreenQuestApp.instance.database.historialResiduoDao()
     }
+
     suspend fun insertarResiduoAlHistorial(payload: QrPayloadResiduo){
         withContext(Dispatchers.IO){
             historialResiduoDao.insertarResiduoAlHistorial(
