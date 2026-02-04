@@ -112,5 +112,9 @@
             android:id="@+id/action_reportarFragment_to_estadisticasFragment"
             app:destination="@id/estadisticasFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.greenquest.fragments.MapFragment"
+        android:label="MapFragment" />
 
 </navigation>

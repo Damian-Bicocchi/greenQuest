@@ -44,6 +44,19 @@ class menu_principal : AppCompatActivity() {
                 navController.navigate(R.id.miPerfil)
             }
         }
+        binding.map.setOnClickListener {
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, inclusive = false, saveState = true)
+                .build()
+
+            try {
+                navController.navigate(R.id.mapFragment, null, navOptions = navOptions)
+            } catch (_:Exception) {
+                navController.navigate(R.id.mapFragment)
+            }
+        }
 
         // Toolbar dinámica según destino
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -59,6 +72,7 @@ class menu_principal : AppCompatActivity() {
                 R.id.escaneadoExitosoFragment -> setToolbar("Escaneado exitoso")
                 R.id.historialResiduoCompletoFragment -> setToolbar("Historial de reciclado")
                 R.id.reportarFragment -> setToolbar("Reportar clasificación")
+                R.id.mapFragment -> setToolbar("Mapa de contenedores")
                 else -> setToolbar("")
             }
         }

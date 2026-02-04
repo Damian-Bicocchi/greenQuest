@@ -84,7 +84,7 @@ object TriviaRepository {
     }
 
     suspend fun obtenerPreguntaAleatoria(): PreguntaConOpciones? {
-        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta(UsuarioRepository.obtenerUsuarioLocal()!!.uid)
+        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta(UsuarioRepository.obtenerIdUsuarioActual())
         return pregunta
     }
 
