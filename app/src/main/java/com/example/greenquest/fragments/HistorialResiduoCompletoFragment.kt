@@ -10,11 +10,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
 import com.example.greenquest.adapters.AdapterHistorialItem
 import com.example.greenquest.database.estadisticas.HistorialResiduo
+import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
+import com.example.greenquest.fragments.arguments.ReporteArgumentos
 import com.example.greenquest.viewmodel.EstadisticaViewModel
 import kotlinx.coroutines.launch
 
@@ -45,7 +48,17 @@ class HistorialResiduoCompletoFragment : Fragment() {
 
                 estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
 
-                    val adapterHistorialItem = AdapterHistorialItem(lista)
+                    val adapterHistorialItem = AdapterHistorialItem(lista) {
+                        residuo ->
+                        findNavController().navigate(
+                            HistorialResiduoCompletoFragmentDirections.actionHistorialResiduoCompletoFragmentToReportarFragment(
+                                reporteArgumentos = ReporteArgumentos(
+                                    idResiduo = residuo.idResiduo,
+                                    origenHaciaReporte = OrigenHaciaReporte.HISTORIALCOMPLETO
+                                )
+                            )
+                        )
+                    }
                     val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial_completo)
                     recycler.layoutManager = LinearLayoutManager(requireContext())
                     recycler.adapter = adapterHistorialItem
@@ -56,11 +69,10 @@ class HistorialResiduoCompletoFragment : Fragment() {
         val botonVolver = view.findViewById<TextView>(R.id.link_volver_a_estadisticas)
         botonVolver.setOnClickListener {
 
-            val fragment = EstadisticasFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            findNavController()
+                .navigate(
+                    HistorialResiduoCompletoFragmentDirections
+                        .actionHistorialResiduoCompletoFragmentToEstadisticasFragment())
 
         }
 

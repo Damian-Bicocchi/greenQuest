@@ -1,37 +1,17 @@
 package com.example.greenquest.ui
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
-import com.example.greenquest.fragments.CategorizarFragment
-import com.example.greenquest.fragments.EscanearFragment
-import com.example.greenquest.fragments.MapFragment
-import com.example.greenquest.fragments.EstadisticasFragment
-import com.example.greenquest.fragments.MiPerfilFragment
-import com.example.greenquest.fragments.TiendaFragment
-import com.example.greenquest.fragments.TopGlobal
-import com.example.greenquest.fragments.TriviaFragment
-import com.example.greenquest.repository.UsuarioRepository
 import com.google.android.material.navigation.NavigationBarView
-import kotlinx.coroutines.launch
 
 class menu_principal : AppCompatActivity() {
+
     private lateinit var binding: ActivityToolbarBinding
-    private var topGlobalFragment: TopGlobal? = null
-    private var tiendaFragment: TiendaFragment? = null
-    private var escanearFragment: EscanearFragment? = null
-    private var miPefilFragment: MiPerfilFragment? = null
-    private var triviaFragment: TriviaFragment? = null
-    private var mapFragment: MapFragment? = null
-
-    private var estadisticasFragment : EstadisticasFragment? = null
-
-    private var currentFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,104 +21,68 @@ class menu_principal : AppCompatActivity() {
 
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
-        navigation.setOnItemSelectedListener { item -> onNavigationItemSelectedListener(item) }
-        val miPerfil = binding.miPerfil
-        miPerfil.setOnClickListener {
-            miPefilFragment = MiPerfilFragment()
-            showFragment(miPefilFragment!!)
-        }
-        val map = binding.map
-        map.setOnClickListener {
-            if (mapFragment == null) {
-                mapFragment = MapFragment()
+
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.frame_container) as NavHostFragment
+
+        val navController = navHostFragment.navController
+
+        // Conectar BottomNavigation con el grafo
+        binding.bottomNavigation.setupWithNavController(navController)
+
+        binding.miPerfil.setOnClickListener {
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, inclusive = false, saveState = true)
+                .build()
+
+            try {
+                navController.navigate(R.id.miPerfil, null, navOptions)
+            } catch (_: Exception) {
+                navController.navigate(R.id.miPerfil)
             }
-            showFragment(mapFragment!!)
         }
-        if (savedInstanceState == null) {
-            topGlobalFragment = TopGlobal()
-            showFragment(topGlobalFragment!!)
-            navigation.selectedItemId = R.id.topGlobalFragment
+        binding.map.setOnClickListener {
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, inclusive = false, saveState = true)
+                .build()
+
+            try {
+                navController.navigate(R.id.mapFragment, null, navOptions = navOptions)
+            } catch (_:Exception) {
+                navController.navigate(R.id.mapFragment)
+            }
         }
 
-        lifecycleScope.launch {
-            miPerfil.setImageResource(UsuarioRepository.obtenerUsuarioLocal()!!.imagen ?: R.drawable.outline_person_24)
+        // Toolbar dinámica según destino
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.topGlobalFragment -> setToolbar("Top Global")
+                R.id.tiendaFragment -> setToolbar("Tienda")
+                R.id.categorizarFragment -> setToolbar("Categorizar")
+                R.id.triviaFragment -> setToolbar("Trivia")
+                R.id.miPerfil-> setToolbar("Mi Perfil")
+                R.id.escanearFragment -> setToolbar("Escanear", false)
+                R.id.estadisticasFragment -> setToolbar("Estadísticas de usuario")
+                R.id.configuracionFragment -> setToolbar("Configuración")
+                R.id.escaneadoExitosoFragment -> setToolbar("Escaneado exitoso")
+                R.id.historialResiduoCompletoFragment -> setToolbar("Historial de reciclado")
+                R.id.reportarFragment -> setToolbar("Reportar clasificación")
+                R.id.mapFragment -> setToolbar("Mapa de contenedores")
+                else -> setToolbar("")
+            }
         }
     }
 
-    private val onNavigationItemSelectedListener: (MenuItem) -> Boolean = { item ->
-        when (item.itemId) {
-            R.id.topGlobalFragment -> {
-                if (topGlobalFragment == null) {
-                    topGlobalFragment = TopGlobal()
-                }
-                showFragment(topGlobalFragment!!)
-                true
-            }
-            R.id.tiendaFragment-> {
-                if (tiendaFragment == null) {
-                    tiendaFragment = TiendaFragment()
-                }
-                showFragment(tiendaFragment!!)
-                true
-            }
+    fun setToolbar(titulo: String, mostrarToolbar: Boolean = true) {
 
-            R.id.escanearFragment -> {
-                if (escanearFragment == null) {
-                    escanearFragment = EscanearFragment()
-                }
-                showFragment(escanearFragment!!)
-                true
-            }
-            R.id.estadisticaFragment -> {
-                if (estadisticasFragment == null) {
-                    estadisticasFragment = EstadisticasFragment()
-                }
-                showFragment(estadisticasFragment!!)
-                true
-            }
-
-            R.id.triviaFragment -> {
-                if (triviaFragment == null) {
-                    triviaFragment = TriviaFragment()
-                }
-                showFragment(triviaFragment!!)
-                true
-            }
-
-            else -> false
-        }
-    }
-
-    private fun showFragment(fragment: Fragment) {
-        if (fragment == currentFragment) return
-
-        // ✅ Actualizar toolbar ANTES o DESPUÉS del commit (da igual mientras sea siempre)
-        when (fragment) {
-            is TopGlobal -> setToolbar("Top Global", true)
-            is TiendaFragment -> setToolbar("Tienda", true)
-            is CategorizarFragment -> setToolbar("Categorizar", true)
-            is TriviaFragment -> setToolbar("Trivia", true)
-            is MiPerfilFragment -> setToolbar("Mi Perfil", true)
-            is MapFragment -> setToolbar("Mapa", true)
-            is EscanearFragment -> setToolbar("", false)
-            is EstadisticasFragment -> setToolbar("Estadísticas de usuario", true)
-            else -> setToolbar("", true)
-        }
-
-        supportFragmentManager.beginTransaction().apply {
-            currentFragment?.let { hide(it) }
-
-            if (fragment.isAdded) show(fragment)
-            else add(R.id.frame_container, fragment)
-
-            commit()
-        }
-
-        currentFragment = fragment
-    }
-
-    private fun setToolbar(titulo : String, mostrarToolbar : Boolean = true){
         binding.toolbarContainer.visibility = if (mostrarToolbar) View.VISIBLE else View.GONE
         binding.nombreFragmentActualTextView.text = titulo
+        if (titulo.length >= 20) binding.nombreFragmentActualTextView.textSize = 26f
+        else binding.nombreFragmentActualTextView.textSize = 28f
     }
 }

@@ -59,7 +59,8 @@
                             android:text="@string/link_toda_mi_actividad"
                             android:textColor="@color/accent_color"
                             android:clickable="true"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp"
+                            android:linksClickable="true"/>
 
                     </RelativeLayout>
 

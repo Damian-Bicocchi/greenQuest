@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.states.ScanState
@@ -53,6 +54,7 @@ class EscanearFragment : Fragment() {
 
     private var errorDialog: AlertDialog? = null
     private var lastErrorMessage: String? = null
+    private var bloquearEscaneo: Boolean = false
 
     @OptIn(ExperimentalGetImage::class)
     private var isProcessing = false
@@ -136,11 +138,14 @@ class EscanearFragment : Fragment() {
         super.onResume()
         qrAlreadyDetected = false
         lastErrorMessage = ""
+        bloquearEscaneo = false
         startCamera()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        qrAlreadyDetected = false
+        bloquearEscaneo = false
         cameraProvider?.unbindAll()
         cameraProvider = null
     }
@@ -148,25 +153,20 @@ class EscanearFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         camaraIniciada = false
+        qrAlreadyDetected = false
+        bloquearEscaneo = false
         cameraProvider?.unbindAll()
-        val toolbarContainer = requireActivity().findViewById<View>(
-            R.id.toolbar_container
-        )
-        toolbarContainer.visibility = View.GONE
-    }
 
+    }
 
     private fun startCamera() {
         if (camaraIniciada) return
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
-
         cameraProviderFuture.addListener({
             camaraIniciada = true
             cameraProvider = cameraProviderFuture.get()
 
-
-            // Preview
             val preview = Preview.Builder().setResolutionSelector(
                 ResolutionSelector.Builder().setAspectRatioStrategy(
                     AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
@@ -205,13 +205,13 @@ class EscanearFragment : Fragment() {
             val camaraTrasera = CameraSelector.DEFAULT_BACK_CAMERA
             if (cameraProvider?.hasCamera(camaraTrasera) == true) {
                 cameraProvider?.bindToLifecycle(
-                    viewLifecycleOwner,
+                    this,
                     CameraSelector.DEFAULT_BACK_CAMERA, preview,
                     imageAnalizer
                 )
             } else {
                 cameraProvider?.bindToLifecycle(
-                    viewLifecycleOwner,
+                    this,
                     CameraSelector.DEFAULT_FRONT_CAMERA, preview,
                     imageAnalizer
                 )
@@ -235,11 +235,14 @@ class EscanearFragment : Fragment() {
             mediaImage,
             imageProxy.imageInfo.rotationDegrees
         )
-        escanearModel.processImage(image)
-            .addOnCompleteListener {
+
+        escanearModel.processImage(image){
+            if (!bloquearEscaneo){
                 isProcessing = false
-                imageProxy.close()
+
             }
+            imageProxy.close()
+        }
     }
 
     private fun observeViewModel() {
@@ -249,17 +252,17 @@ class EscanearFragment : Fragment() {
                     // return@observe hace que se salga del lambda pero NO de observeViewModel
                     if (qrAlreadyDetected) return@observe
                     qrAlreadyDetected = true
+                    bloquearEscaneo = true
                     cameraProvider?.unbindAll()
                     val datosEscaneo = DatosEscaneo(
                         tipoResiduo = state.payload.tipoResiduo,
-                        puntos = state.payload.puntaje
+                        puntos = state.payload.puntaje,
+                        idResiduo = state.payload.idResiduo
                     )
                     lastErrorMessage = null
-                    val fragment = EscaneadoExitoso.newInstance(datosEscaneo = datosEscaneo)
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.frame_container, fragment)
-                        .addToBackStack(null)
-                        .commit()
+                    bloquearEscaneo = false
+                    val action = EscanearFragmentDirections.actionEscanearFragmentToEscaneadoExitoso(datosEscaneo = datosEscaneo)
+                    findNavController().navigate(action)
                 }
 
                 is ScanState.HappyError -> {
@@ -285,20 +288,21 @@ class EscanearFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        if (message != lastErrorMessage) {
-            errorDialog?.cancel()
+        bloquearEscaneo = true
+        errorDialog?.cancel()
 
-            errorDialog =
-                MaterialAlertDialogBuilder(requireContext()).setTitle("Error")
-                    .setMessage(message)
-                    .setPositiveButton("OK") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setCancelable(false)
-                    .create()
-            errorDialog?.show()
+        errorDialog =
+            MaterialAlertDialogBuilder(requireContext()).setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, _ ->
+                    dialog.dismiss()
+                    bloquearEscaneo = false
+                    isProcessing = false
+                }
+                .setCancelable(false)
+                .create()
+        errorDialog?.show()
 
-            lastErrorMessage = message
-        }
     }
+
 }
