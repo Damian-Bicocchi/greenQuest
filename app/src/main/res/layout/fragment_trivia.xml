@@ -1,73 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <include layout="@layout/activity_adapter"></include>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    android:padding="2dp">
+
+    <include layout="@layout/activity_adapter" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_contenedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="12dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@color/fondo_secundario">
+
+            <TextView
+                android:id="@+id/trivia_pregunta_texto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/placeholder_pregunta"
+                android:textColor="@color/texto_normal"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
+            <RadioGroup
+                android:id="@+id/container_opciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
 
-                <!-- Texto de la Pregunta -->
-                <TextView
-                    android:id="@+id/trivia_pregunta_texto"
+                <RadioButton
+                    android:id="@+id/opcion_ejemplo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    android:textStyle="bold"
-                    android:textSize="28sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:lineSpacingExtra="4dp"
-                    android:text="@string/placeholder_pregunta"
-                    android:layout_gravity="center"
-                    android:gravity="center"/>
+                    android:padding="12dp"
+                    android:text="Opción de ejemplo"
+                    android:textSize="20sp"
+                    android:background="@color/acento_de_fondo"
+                    />
+            </RadioGroup>
 
-                <!-- Contenedor DINAMICO para opciones -->
-                <RadioGroup
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/container_opciones"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="16dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/boton_responder"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/button_responder_pregunta"
+                android:textAllCaps="true"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                android:background="@color/accent_color"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"/>
-                </RadioGroup>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
-                    <Button
-                        android:id="@+id/boton_responder"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/button_responder_pregunta"
-                        android:enabled="true"
-                        android:background="@color/accent_color"
-                        android:textColor="@color/texto_oscuro"/>
-                </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

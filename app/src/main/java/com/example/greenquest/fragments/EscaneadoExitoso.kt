@@ -7,17 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.os.BundleCompat
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
-import com.example.greenquest.database.escaneo.DatosEscaneo
-import com.example.greenquest.repository.UsuarioRepository
-
-
-private const val ARG_DATOS = "datos_escaneo"
+import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
+import com.example.greenquest.fragments.arguments.ReporteArgumentos
 
 
 class EscaneadoExitoso : Fragment() {
+
+    private val args: EscaneadoExitosoArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,14 +29,10 @@ class EscaneadoExitoso : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val datos = args.datosEscaneo
 
-        // Uso esta función deprecada para que se puedan usar versiones anteriores a la 12 de android
-        // val datos = arguments?.getParcelable<DatosEscaneo>(ARG_DATOS)
-        // val datos = arguments?.getParcelable(ARG_DATOS, DatosEscaneo::class.java)
-        // ESTO debería no estar deprecado - Joaco
-        val datos = BundleCompat.getParcelable<DatosEscaneo>(arguments ?: Bundle(), ARG_DATOS, DatosEscaneo::class.java)
-
-        datos?.let {
+        Log.d("escanearLogging", "datos es ${datos.idResiduo} - ${datos.puntos} - ${datos.tipoResiduo}")
+        datos.let {
             view.findViewById<TextView>(
                 R.id.label_resumen_residuo).text = getString(R.string.you_recycled, it.tipoResiduo)
             view.findViewById<TextView>(R.id.qr_mensaje_felicidades).text =
@@ -54,32 +49,21 @@ class EscaneadoExitoso : Fragment() {
         val buttonContinuar = view.findViewById<View>(R.id.button_qr_exitoso_continuar)
 
         buttonContinuar.setOnClickListener {
-            val fragment = EscanearFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            val action = EscaneadoExitosoDirections.actionEscaneadoExitosoFragmentToEscanearFragment()
+            findNavController().navigate(action)
         }
 
         buttonDenunciar.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "No implementado",
-                Toast.LENGTH_LONG).show()
+            val reporteArgumentos = ReporteArgumentos(
+                origenHaciaReporte = OrigenHaciaReporte.ESCANEAR,
+                idResiduo = datos.idResiduo
+            )
+            val action = EscaneadoExitosoDirections.actionEscaneadoExitosoFragmentToReportarFragment(reporteArgumentos = reporteArgumentos)
+            findNavController().navigate(action)
 
         }
 
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance(datosEscaneo: DatosEscaneo): EscaneadoExitoso {
-            val fragment = EscaneadoExitoso()
-            val args = Bundle()
-            args.putParcelable(ARG_DATOS, datosEscaneo)
-            fragment.arguments = args
-            return fragment
-        }
-    }
 }

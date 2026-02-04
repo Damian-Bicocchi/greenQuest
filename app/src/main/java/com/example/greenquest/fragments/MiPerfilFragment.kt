@@ -24,6 +24,7 @@ import com.example.greenquest.viewmodel.MiPerfilModel
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import com.example.greenquest.dialog.FotoDialogFragment
 import kotlinx.coroutines.launch
 
@@ -69,7 +70,7 @@ class MiPerfilFragment : Fragment() {
             binding.usernameEditperfil.setText(usuario.userName.toString())
             binding.usernameEditperfil.setEnabled(false)
             binding.descripcionEditperfil.setEnabled(false)
-            binding.descripcionEditperfil.setText("${usuario.descripcion ?: "¡Hola! Soy nuevo en GreenQuest."}")
+            binding.descripcionEditperfil.setText(usuario.descripcion ?: "¡Hola! Soy nuevo en GreenQuest.")
             binding.imagenDePerfil.setImageResource(usuario.imagen?:R.drawable.outline_person_24)
             miPerfilModel.chequearYActualizarLogros(usuario)
             recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
@@ -82,9 +83,9 @@ class MiPerfilFragment : Fragment() {
 
 
         binding.configuracionButton.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, ConfiguracionFragment())
-                .commit()
+            val action = MiPerfilFragmentDirections.actionMiPerfilToConfiguracionFragment()
+            findNavController().navigate(action)
+
         }
 
         binding.logrosConseguidosTextview.setOnClickListener {

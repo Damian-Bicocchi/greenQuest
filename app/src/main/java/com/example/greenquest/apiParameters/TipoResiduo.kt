@@ -1,31 +1,39 @@
 package com.example.greenquest.apiParameters
 
+import androidx.annotation.ColorRes
+import com.example.greenquest.R
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.Locale.getDefault
 
 @Serializable
-enum class TipoResiduo {
+enum class TipoResiduo(@ColorRes val colorRes: Int) {
+
     @SerialName("Carton")
-    CARTON,
+    CARTON(R.color.color_carton),
 
     @SerialName("Plastico")
-    PLASTICO,
+    PLASTICO(R.color.color_plastico),
 
     @SerialName("Vidrio")
-    VIDRIO,
+    VIDRIO(R.color.color_vidrio),
 
     @SerialName("Metal")
-    METAL,
+    METAL(R.color.color_metal),
 
     @SerialName("Papel")
-    PAPEL,
+    PAPEL(R.color.color_papel),
 
     @SerialName("Basura")
-    BASURA;
+    BASURA(R.color.color_basura);
 
     @OptIn(ExperimentalSerializationApi::class)
-    override fun toString() = serializer().descriptor.getElementName(ordinal).lowercase()
-        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
+    override fun toString() =
+        serializer().descriptor.getElementName(ordinal)
+            .lowercase()
+            .replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString()
+            }
 }
+

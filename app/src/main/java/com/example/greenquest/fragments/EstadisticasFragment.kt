@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
@@ -19,10 +20,13 @@ import com.example.greenquest.adapters.AdapterHistorialItem
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
+import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
+import com.example.greenquest.fragments.arguments.ReporteArgumentos
 import com.example.greenquest.viewmodel.EstadisticaViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -30,7 +34,6 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
@@ -39,13 +42,12 @@ import java.util.Date
 import java.util.Locale
 
 
-class EstadisticasFragment : Fragment() {
+class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var estadisticaViewModel: EstadisticaViewModel
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +67,16 @@ class EstadisticasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        estadisticaViewModel.obtenerResiduos()
+        val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+        pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
+
+
 
         val tabsLineChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_line_chart)
         val tabsPieChart = view.findViewById<TabLayout>(R.id.tab_layout_periodos_pie_chart)
+        val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
 
         tabsPieChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(p0: TabLayout.Tab?) {
@@ -105,47 +114,53 @@ class EstadisticasFragment : Fragment() {
                 Log.d("estadisticasLogging", "onTabReselected")
             }
         })
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.obtenerResiduos()
-                estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
-                    val listaFinal = if (lista.size > 3) lista.subList(0,2) else lista
-                    val adapterHistorialItem = AdapterHistorialItem(listaFinal)
-                    val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
-                    recycler.layoutManager = LinearLayoutManager(requireContext())
-                    recycler.adapter = adapterHistorialItem
+                launch {
+                    estadisticaViewModel.obtenerResiduos()
+                    estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
+                        val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
+
+                        val adapterHistorialItem = AdapterHistorialItem(listaFinal) { residuo ->
+                            findNavController().navigate(
+                                EstadisticasFragmentDirections.actionEstadisticasFragmentToReportarFragment(
+                                    reporteArgumentos = ReporteArgumentos(
+                                        origenHaciaReporte = OrigenHaciaReporte.ESTADISTICA,
+                                        idResiduo = residuo.idResiduo
+                                    )
+                                )
+                            )
+                        }
+                        recycler.adapter = adapterHistorialItem
+                    }
+                }
+                launch {
+                    estadisticaViewModel.obtenerResiduosPorPeriodo(PeriodoResiduo.HOY)
+
+                    estadisticaViewModel.residuosEntreFechas.collect { mapeo ->
+                        showPieChart(mapeo)
+                    }
+                }
+                launch {
+                    estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.HOY)
+
+                    estadisticaViewModel.puntosEntreFechas.collect { cantidadPuntos ->
+                        showPuntosTotales(cantidadPuntos = cantidadPuntos)
+                    }
                 }
             }
         }
 
-        pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.residuosEntreFechas.collect { mapeo ->
-                    showPieChart(mapeo)
-                }
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                estadisticaViewModel.puntosEntreFechas.collect {
-                    cantidadPuntos -> showPuntosTotales(cantidadPuntos = cantidadPuntos)
-                }
-            }
-        }
-        val linkTodaActividad = view.findViewById<TextView>(R.id.link_toda_actividad)
 
         linkTodaActividad.setOnClickListener {
-            val fragment = HistorialResiduoCompletoFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, fragment)
-                .addToBackStack(null)
-                .commit()
+            val action = EstadisticasFragmentDirections.actionEstadisticasFragmentToHistorialResiduoCompletoFragment()
+
+            findNavController().navigate(action)
 
         }
     }
+
 
     private fun showPuntosTotales(cantidadPuntos: Int) {
         val textoCantidadPuntos = view?.findViewById<TextView>(R.id.texto_cantidad_puntos)
@@ -167,9 +182,8 @@ class EstadisticasFragment : Fragment() {
         }
         pieChart.clear()
         val pieEntries : ArrayList<PieEntry> = ArrayList()
+        val colors = mutableListOf<Int>()
 
-        val colorArray = resources.getIntArray(R.array.pieChartColorArray)
-        val colors = colorArray.toList()
 
         for (elem in mapeo.keys){
             pieEntries.add(
@@ -178,15 +192,20 @@ class EstadisticasFragment : Fragment() {
                     elem.toString()
                 )
             )
+            colors.add(
+                ContextCompat.getColor(requireContext(), elem.colorRes)
+            )
         }
 
-        val pieDataSet = PieDataSet(pieEntries, "Tipos de residuos")
+
+        val pieDataSet = PieDataSet(pieEntries, "")
         pieDataSet.formSize = 10f // Color del cuadradito al lado del texto
         pieDataSet.valueTextSize = 25f // Tamaño del texto en el grafico
         pieDataSet.colors = colors
 
         val pieData = PieData(pieDataSet)
-        pieData.setValueFormatter(PercentFormatter())
+        pieData.setValueFormatter(IntegerFormatter())
+
         pieChart.description.isEnabled = false
         pieChart.extraBottomOffset = 10f // Ajusta márgenes externos
         pieChart.extraLeftOffset = 10f
@@ -195,12 +214,30 @@ class EstadisticasFragment : Fragment() {
         pieChart.setUsePercentValues(false) // Hace que no se usen valores porcentuales
         pieChart.isClickable = false
         pieChart.isScrollContainer = false
-        pieChart.isRotationEnabled = false // Lo pondria en true porque es relajante girarlo
+        pieChart.isRotationEnabled = true // Lo pondria en true porque es relajante girarlo
 
         pieChart.holeRadius = 0f
         pieChart.transparentCircleRadius = 0f
         pieChart.animateXY(1000,1000)
         pieChart.data = pieData
+
+        val legend = pieChart.legend
+        legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+        legend.orientation = Legend.LegendOrientation.HORIZONTAL
+        legend.setDrawInside(false)
+
+        legend.textSize = 12f
+        legend.textColor = ContextCompat.getColor(requireContext(), R.color.texto_normal)
+
+        legend.form = Legend.LegendForm.SQUARE
+        legend.formSize = 14f
+        legend.formToTextSpace = 8f
+        legend.xEntrySpace = 16f
+        legend.yEntrySpace = 8f
+
+
+
         pieChart.invalidate()
     }
 
@@ -305,4 +342,10 @@ class EstadisticasFragment : Fragment() {
 
 
 
+}
+
+class IntegerFormatter : ValueFormatter(){
+    override fun getFormattedValue(value: Float): String? {
+        return "" + (value.toInt())
+    }
 }

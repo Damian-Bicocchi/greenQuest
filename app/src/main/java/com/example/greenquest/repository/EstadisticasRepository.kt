@@ -6,6 +6,7 @@ import com.example.greenquest.database.escaneo.QrPayloadResiduo
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
 import com.example.greenquest.database.estadisticas.ResumenResiduo
+import com.example.greenquest.states.reporte.EstadoReporte
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -89,7 +90,7 @@ object EstadisticasRepository {
                 obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
 
             }
-            PeriodoResiduo.AÑO -> {
+            PeriodoResiduo.ANIO -> {
                 val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
                 val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
                 obtenerResiduosParaRango(inicioDeResumen, finDeResumen, idUsuario)
@@ -127,7 +128,7 @@ object EstadisticasRepository {
                 obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
             }
 
-            PeriodoResiduo.AÑO -> {
+            PeriodoResiduo.ANIO -> {
                 val inicioDeResumen = fechaHoy.withDayOfYear(1).atStartOfDay().atOffset(ZoneOffset.UTC)
                 val finDeResumen = fechaHoy.atTime(LocalTime.MAX).atOffset(ZoneOffset.UTC)
                 obtenerPuntosParaRango(inicioDeResumen.toLocalDate(), finDeResumen.toLocalDate(), idUsuario)
@@ -154,6 +155,23 @@ object EstadisticasRepository {
             cantidadPuntos
         }
     }
+
+    suspend fun obtenerIdHistorialDeIdResiduo(idResiduo: String): Long?{
+        if (idResiduo.isEmpty()) return null
+
+        return withContext(Dispatchers.IO){
+            historialResiduoDao.obtenerIdHistorialDeIdResiduo(idResiduo = idResiduo)
+        }
+    }
+
+    suspend fun actualizarEstadoReporte(idHistorialResiduo: Long,estadoReporte: EstadoReporte){
+        if (idHistorialResiduo <= 0) return
+
+        return withContext(Dispatchers.IO){
+            historialResiduoDao
+        }
+    }
+
 
 
 }

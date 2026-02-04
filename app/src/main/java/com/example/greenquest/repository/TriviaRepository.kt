@@ -78,13 +78,13 @@ object TriviaRepository {
                     triviaDao.insertarOpciones(opciones)
                 }
             } catch (e: Exception) {
-                Log.e("greenQuest", "Error cargando datos desde JSON ${e}")
+                Log.e("greenQuest", "Error cargando datos desde JSON $e")
             }
         }
     }
 
     suspend fun obtenerPreguntaAleatoria(): PreguntaConOpciones? {
-        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta(UsuarioRepository.obtenerUsuarioLocal()!!.uid)
+        val pregunta = triviaDao.obtenerPreguntaConOpcionesCompleta(UsuarioRepository.obtenerIdUsuarioActual())
         return pregunta
     }
 

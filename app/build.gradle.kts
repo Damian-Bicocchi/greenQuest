@@ -6,6 +6,8 @@ plugins {
     kotlin("plugin.serialization") version "1.9.0"
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
+
 }
 
 val properties = gradleLocalProperties(rootDir, providers)
@@ -64,6 +66,8 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.cardview)
+    implementation(libs.navigation.fragment.ktx)
+    implementation(libs.navigation.ui.ktx)
     testImplementation(libs.junit.jupiter)
     implementation(libs.androidx.databinding.runtime)
 
@@ -120,4 +124,5 @@ dependencies {
 
     implementation(libs.osmdroid)
     implementation(libs.osmbonuspack)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 }

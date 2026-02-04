@@ -52,14 +52,14 @@ class TriviaFragment : Fragment() {
             radioGroup.addView(radioButton)
             radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
 
-            radioButton.setOnClickListener { onOptionSelected(opcion.opcionId, it) }
+            radioButton.setOnClickListener { onOptionSelected(opcion.opcionId) }
 
         }
 
 
     }
 
-    private fun onOptionSelected(opcionId: Long, optionView: View) {
+    private fun onOptionSelected(opcionId: Long) {
         selectedOptionId = opcionId
     }
 

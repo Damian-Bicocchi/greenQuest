@@ -26,12 +26,13 @@
     <color name="white">#FFFFFF</color>
     <color name="boton_configiuracion">#6E738D</color>
 
-    <color name="color_plastico">#4CAF50</color>
-    <color name="color_vidrio">#2196F3</color>
-    <color name="color_carton">#FF9800</color>
-    <color name="color_metal">#9E9E9E</color>
-    <color name="color_basura">#F44336</color>
-    <color name="color_papel">#03A9F4</color>
+    <color name="color_plastico">#2E7D32</color>
+    <color name="color_vidrio">#1565C0</color>
+    <color name="color_carton">#EF6C00</color>
+    <color name="color_metal">#757575</color>
+    <color name="color_basura">#C62828</color>
+    <color name="color_papel">#4FC3F7</color>
+
 
     <array name="pieChartColorArray">
         <item>@color/color_plastico</item>
