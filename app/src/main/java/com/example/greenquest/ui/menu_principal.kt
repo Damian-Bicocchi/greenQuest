@@ -37,7 +37,12 @@ class menu_principal : AppCompatActivity() {
                 .setRestoreState(true)
                 .setPopUpTo(navController.graph.startDestinationId, inclusive = false, saveState = true)
                 .build()
+            navController.navigate(R.id.miPerfil, null, navOptions)
 
+            // 2) si quedó parado en Configuración, volvés al root (Perfil)
+            if (navController.currentDestination?.id == R.id.configuracionFragment) {
+                navController.popBackStack(R.id.miPerfil, false)
+            }
             try {
                 navController.navigate(R.id.miPerfil, null, navOptions)
             } catch (_: Exception) {
