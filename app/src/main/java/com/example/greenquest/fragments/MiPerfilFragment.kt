@@ -83,8 +83,7 @@ class MiPerfilFragment : Fragment() {
 
 
         binding.configuracionButton.setOnClickListener {
-            val action = MiPerfilFragmentDirections.actionMiPerfilToConfiguracionFragment()
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.configuracionFragment)
 
         }
 
