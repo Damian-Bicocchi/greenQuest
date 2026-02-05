@@ -7,6 +7,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -26,6 +27,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -34,7 +36,13 @@ import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
 import com.example.greenquest.states.reporte.EstadoReporte
+import com.example.greenquest.states.reporte.EstadoReporteUI
 import com.example.greenquest.viewmodel.ReporteViewModel
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ReportarFragment : Fragment() {
 
@@ -46,22 +54,64 @@ class ReportarFragment : Fragment() {
     private var fullImageBitmap: Bitmap? = null
     private var thumbnailBitmap: Bitmap? = null
 
-    private var tipoResiduoSeleccionado: TipoResiduo? = null
-
-    // UI elements
     private lateinit var buttonAbrirCamara: Button
     private lateinit var imgThumbnail: ImageView
-    private lateinit var imgFullScreen: ImageView
+
+    private var currentPhotoPath: String? = null
+    private lateinit var outputPhotoUri: Uri
 
     private lateinit var reporteViewModel: ReporteViewModel
+
 
     private val takePictureLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            processCameraResult(result.data)
+            processCameraResult()
         } else {
             Log.d("reporteLogging", "El resultado de la activity fue X")
+        }
+    }
+
+    private fun startCamera() {
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (ex: IOException) {
+            Log.e("Camera", "Error creando archivo de imagen", ex)
+            null
+        }
+
+        photoFile?.also { file ->
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "${requireContext().packageName}.fileprovider",
+                file
+            )
+            outputPhotoUri = photoURI
+
+            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            takePictureLauncher.launch(takePictureIntent)
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat(
+            "yyyyMMdd_HHmmss", Locale.getDefault()
+        )
+            .format(Date())
+        val storageDir = requireContext().filesDir
+
+        return File.createTempFile(
+            "GREENQUEST_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            currentPhotoPath = absolutePath
         }
     }
 
@@ -102,7 +152,11 @@ class ReportarFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reportar, container, false)
+        return inflater.inflate(
+            R.layout.fragment_reportar,
+            container,
+            false
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -110,7 +164,8 @@ class ReportarFragment : Fragment() {
 
         val buttonEnviarReporte = view.findViewById<Button>(R.id.button_enviar_reporte)
 
-        val selectClasificacion: Spinner = view.findViewById(R.id.select_clasificacion_correcta)
+        val selectClasificacion: Spinner = view.findViewById(
+            R.id.select_clasificacion_correcta)
 
         cargarSpinnerCategorias(selectClasificacion)
         observeViewModel()
@@ -150,15 +205,9 @@ class ReportarFragment : Fragment() {
                 bitmap ->
                 reporteViewModel.processReport(idResiduo = idResiduo, imageData = bitmap)
             } ?: run {
-                Toast.makeText(
-                    requireContext(),
-                    "Debe tomar primer una foto del residuo",
-                    Toast.LENGTH_SHORT
-                )
+
+                mostrarDialogoFallido("Debe tomar primero una foto del residuo")
             }
-
-
-
         }
 
         val volver = view.findViewById<TextView>(R.id.link_volver_reporte)
@@ -168,33 +217,46 @@ class ReportarFragment : Fragment() {
     }
 
 
-    private fun processCameraResult(data: Intent?) {
-        val thumbnail = data?.extras?.get("data") as? Bitmap
-        thumbnail?.let {
-            thumbnailBitmap = it
-            fullImageBitmap = it
+    private fun processCameraResult() {
+        try {
+            currentPhotoPath?.let { path ->
+                val file = File(path)
+                if (file.exists()) {
+                    val options = BitmapFactory.Options().apply {
+                        inJustDecodeBounds = false
+                    }
 
-            mostrarThumbnail()
+                    fullImageBitmap = BitmapFactory.decodeFile(path, options)
 
-            Toast.makeText(
-                requireContext(),
-                "Foto tomada",
-                Toast.LENGTH_SHORT
-            )
+                    fullImageBitmap?.let { bitmap ->
+                        thumbnailBitmap = Bitmap.createScaledBitmap(
+                            bitmap,
+                            200,
+                            (200 * bitmap.height / bitmap.width),
+                            true
+                        )
+
+                        mostrarThumbnail()
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Foto tomada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        file.delete()
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Camera", "Error procesando el resultado de la cámara $e", e)
         }
     }
 
     private fun mostrarThumbnail() {
-        thumbnailBitmap?.let { bitmap ->
+        fullImageBitmap?.let { bitmap ->
             imgThumbnail.setImageBitmap(bitmap)
         }
     }
-
-    private fun startCamera() {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        takePictureLauncher.launch(cameraIntent)
-    }
-
 
     private fun showFullImage() {
         fullImageBitmap?.let { bitmap: Bitmap ->
@@ -217,7 +279,7 @@ class ReportarFragment : Fragment() {
             dialog.setContentView(imageView)
             dialog.window?.setLayout(
                 WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT
+                WindowManager.LayoutParams.WRAP_CONTENT
             )
             dialog.show()
         }
@@ -239,10 +301,14 @@ class ReportarFragment : Fragment() {
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = convertView ?: LayoutInflater.from(context)
-                    .inflate(android.R.layout.simple_spinner_item, parent, false)
+                    .inflate(
+                        android.R.layout.simple_spinner_item,
+                        parent,
+                        false
+                    )
 
                 val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getItem(position)?.name ?: "" // Texto por defecto
+                textView.text = getItem(position)?.name ?: ""
                 textView.setTextColor(
                     ContextCompat.getColor(context, R.color.texto_normal)
                 )
@@ -255,10 +321,14 @@ class ReportarFragment : Fragment() {
                 parent: ViewGroup
             ): View {
                 val view = convertView ?: LayoutInflater.from(context)
-                    .inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
+                    .inflate(
+                        android.R.layout.simple_spinner_dropdown_item,
+                        parent,
+                        false
+                    )
 
                 val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getItem(position)?.name ?: "" // Texto por defecto
+                textView.text = getItem(position)?.name ?: ""
                 textView.setTextColor(
                     ContextCompat.getColor(context, R.color.texto_normal)
                 )
@@ -290,7 +360,8 @@ class ReportarFragment : Fragment() {
     private fun showPermissionDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Permiso de cámara requerido")
-            .setMessage("Para tomar fotos de residuos, necesitamos acceso a tu cámara. ¿Quieres conceder el permiso ahora?")
+            .setMessage("Para tomar fotos de residuos, necesitamos acceso a tu cámara. " +
+                    "¿Quieres conceder el permiso ahora?")
             .setPositiveButton("SÍ, CONCEDER PERMISO") { _, _ ->
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
@@ -305,7 +376,8 @@ class ReportarFragment : Fragment() {
     private fun showPermanentDenialDialog() {
         AlertDialog.Builder(requireContext())
             .setTitle("Permiso de cámara requerido")
-            .setMessage("Has denegado el permiso de cámara permanentemente. Para habilitarlo, ve a Configuración de la aplicación y concede el permiso.")
+            .setMessage("Has denegado el permiso de cámara permanentemente. " +
+                    "Para habilitarlo, ve a Configuración de la aplicación y concede el permiso.")
             .setPositiveButton("IR A CONFIGURACIÓN") { dialog, which ->
                 openAppSettings()
             }
@@ -316,7 +388,9 @@ class ReportarFragment : Fragment() {
     private fun openAppSettings() {
         try {
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            val uri = Uri.fromParts("package", requireContext().packageName, null)
+            val uri = Uri.fromParts(
+                "package", requireContext().packageName, null
+            )
             intent.data = uri
             startActivity(intent)
         } catch (e: Exception) {
@@ -328,32 +402,37 @@ class ReportarFragment : Fragment() {
     private fun volverAlOrigenUI() {
         when (origen) {
             OrigenHaciaReporte.ESCANEAR -> {
-                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEscanearFragment())
+                findNavController().navigate(
+                    ReportarFragmentDirections
+                        .actionReportarFragmentToEscanearFragment())
             }
 
             OrigenHaciaReporte.ESTADISTICA -> {
-                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToEstadisticasFragment())
+                findNavController().navigate(
+                    ReportarFragmentDirections
+                        .actionReportarFragmentToEstadisticasFragment())
             }
 
             OrigenHaciaReporte.HISTORIALCOMPLETO -> {
-                findNavController().navigate(ReportarFragmentDirections.actionReportarFragmentToHistorialResiduoCompletoFragment())
+                findNavController().navigate(
+                    ReportarFragmentDirections
+                        .actionReportarFragmentToHistorialResiduoCompletoFragment())
             }
         }
     }
 
     private fun observeViewModel() {
-        reporteViewModel.reporteState.observe(viewLifecycleOwner) { state ->
+        reporteViewModel.reporteUIState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                EstadoReporte.SIN_REPORTE -> {
+                EstadoReporteUI.SinReporte -> {
 
                     Log.d("reporteLogging","Sin cambios")
                 }
-                EstadoReporte.REPORTADO -> {
+                EstadoReporteUI.Reportado -> {
                     mostrarDialogoExitoso()
                 }
-                EstadoReporte.REPORTE_FALLIDO -> {
-
-                    mostrarDialogoFallido()
+                is EstadoReporteUI.ReporteFallido -> {
+                    mostrarDialogoFallido(state.mensaje)
                 }
             }
         }
@@ -362,7 +441,8 @@ class ReportarFragment : Fragment() {
     private fun mostrarDialogoExitoso() {
         AlertDialog.Builder(requireContext())
             .setTitle("Reporte exitoso")
-            .setMessage("El reporte se ha enviado correctamente. Muchas gracias por tu colaboración")
+            .setMessage("El reporte se ha enviado correctamente." +
+                    " Muchas gracias por tu colaboración")
             .setPositiveButton("Aceptar") { dialog, _ ->
                 dialog.dismiss()
                 reporteViewModel.resetearEstado()
@@ -372,17 +452,19 @@ class ReportarFragment : Fragment() {
             .show()
     }
 
-    private fun mostrarDialogoFallido(){
+    private fun mostrarDialogoFallido(mensaje : String){
         Log.d("reporteLogging", "Mostrar Dialogo Fallido")
         AlertDialog.Builder(requireContext())
             .setTitle("Reporte fallido")
-            .setMessage(reporteViewModel.reporteMensajeFallido.value)
+            .setMessage(mensaje)
             .setPositiveButton("Aceptar") { dialog, _ ->
                 dialog.dismiss()
                 reporteViewModel.resetearEstado()
             }
             .show()
     }
+
+
 
 }
 

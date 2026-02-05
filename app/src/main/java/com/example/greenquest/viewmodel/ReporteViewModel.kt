@@ -9,34 +9,24 @@ import androidx.lifecycle.viewModelScope
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.repository.ReporteRepository
 import com.example.greenquest.states.reporte.EstadoReporte
+import com.example.greenquest.states.reporte.EstadoReporteUI
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ReporteViewModel : ViewModel(){
-    private val _reportState = MutableLiveData(EstadoReporte.SIN_REPORTE)
+    private val _reportState = MutableLiveData<EstadoReporte>()
     val reporteState: LiveData<EstadoReporte> = _reportState
-    private val _reporteMensajeFallido = MutableLiveData("")
-    val reporteMensajeFallido : LiveData<String> = _reporteMensajeFallido
+    private val _reporteUIState = MutableLiveData<EstadoReporteUI>()
+    val reporteUIState: LiveData<EstadoReporteUI> = _reporteUIState
+
 
     private val _tipoResiduoSeleccionado = MutableStateFlow<TipoResiduo?>(null)
-    val tipoResiduoSeleccionado: StateFlow<TipoResiduo?> = _tipoResiduoSeleccionado
 
 
 
     fun processReport(idResiduo: String, imageData: Bitmap){
 
-        if (idResiduo.isEmpty()) {
-            _reportState.value = EstadoReporte.REPORTE_FALLIDO
-            _reporteMensajeFallido.value = "Residuo vacío"
-            return
-        }
-
-        if (_tipoResiduoSeleccionado.equals(null)){
-            _reportState.value = EstadoReporte.REPORTE_FALLIDO
-            _reporteMensajeFallido.value = "No seleccionó una categoría"
-            return
-        }
+        if (!validarReporte(idResiduo, imageData)) return
 
         viewModelScope.launch {
             try {
@@ -44,11 +34,36 @@ class ReporteViewModel : ViewModel(){
                     imageData = imageData,
                     clasificacionUsuario = _tipoResiduoSeleccionado.value!!,
                     idResiduo = idResiduo)
-                _reportState.value = EstadoReporte.REPORTADO
+                _reporteUIState.value = EstadoReporteUI.Reportado
             } catch (e: Exception){
-                Log.e("reporteLogging", "Excepción en processReport $e")
+                Log.e("reporteLogging",
+                    "Excepción en processReport $e")
             }
         }
+    }
+
+    private fun validarReporte(idResiduo: String, imageData: Bitmap): Boolean {
+        if (idResiduo.isEmpty()) {
+            _reporteUIState.value = EstadoReporteUI.ReporteFallido("No hay " +
+                    "un residuo asociado para reportar")
+            return false
+        }
+
+        if (_tipoResiduoSeleccionado.value == null) {
+            _reportState.value = EstadoReporte.REPORTE_FALLIDO
+            _reporteUIState.value = EstadoReporteUI.ReporteFallido("No seleccionó " +
+                    "una categoría de residuo")
+
+            return false
+        }
+
+        if (imageData.width == 0 || imageData.height == 0) {
+            _reporteUIState.value = EstadoReporteUI.ReporteFallido("La imagen no " +
+                    "es válida")
+            return false
+        }
+
+        return true
     }
 
     fun seleccionarTipoResiduo(tipo: TipoResiduo?) {
