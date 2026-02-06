@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import com.example.greenquest.R
@@ -33,4 +34,11 @@ class CategoriaAdapter(context: Context,
         holder.textView.text = item.getString(context)
         return view
     }
+    private val noOpFilter = object : Filter() {
+        private val noOpResult = FilterResults()
+        override fun performFiltering(constraint: CharSequence?) = noOpResult
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {}
+    }
+
+    override fun getFilter() = noOpFilter
 }

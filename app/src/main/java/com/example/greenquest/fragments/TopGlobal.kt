@@ -25,7 +25,7 @@ class TopGlobal : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: TopGlobalViewModel by viewModels()
     private lateinit var adapter: GlobalRankingAdapter
-    private lateinit var categoryAdapter: ArrayAdapter<Categoria>
+    private lateinit var categoryAdapter: CategoriaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
