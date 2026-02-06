@@ -33,8 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/texto_puntos_extra"
+            app:layout_constraintEnd_toStartOf="@+id/button_ver_reporte"
             app:layout_constraintStart_toEndOf="@+id/icono_imagen_reporte"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -43,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="Plástico"
                 android:textColor="@color/texto_sobre_acento_de_fondo"
                 android:textSize="18sp"
@@ -59,26 +60,13 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/texto_puntos_extra"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:gravity="center"
-            android:minWidth="50dp"
-            android:text="+31"
-            android:textColor="@color/texto_sobre_acento_de_fondo"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_ver_reporte"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ver_reporte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reportar"
+            android:text="Ver reporte"
             android:textColor="@color/texto_sobre_acento_de_fondo"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"

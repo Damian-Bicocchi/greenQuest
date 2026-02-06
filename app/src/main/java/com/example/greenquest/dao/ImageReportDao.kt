@@ -1,6 +1,7 @@
 package com.example.greenquest.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,5 +22,14 @@ interface ImageReportDao {
     """)
     suspend fun getImageWithDetails(imageId: Long): ImageWithDetails?
 
+    @Query("""
+        SELECT *
+        FROM report_images
+        where id_residuo = :idResiduo
+    """)
+    suspend fun obtenerReportePorIdResiduo(idResiduo: String): ReporteData?
+
+    @Query("DELETE FROM report_images WHERE id_residuo = :idResiduo")
+    suspend fun deleteImageWithDetails(idResiduo: String)
 
 }

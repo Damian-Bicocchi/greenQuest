@@ -7,6 +7,7 @@ import androidx.room.Transaction
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
+import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.states.reporte.EstadoReporte
 import java.time.OffsetDateTime
 
@@ -95,6 +96,16 @@ interface HistorialResiduoDao {
     """)
     suspend fun actualizarEstadoReporte(historialResiduoId: Long, reporteEstado: EstadoReporte)
 
+    @Query("""
+       SELECT * FROM historial_residuos
+        WHERE (id_usuario = :idUsuario)
+        AND (estado = :estadoReporte)
+        ORDER BY datetime(fecha) DESC 
+    """)
+    suspend fun obtenerResiduoEnEstado(
+        idUsuario: Int,
+        estadoReporte: EstadoReporte
+    ): List<HistorialResiduo>
 
 
 }

@@ -36,11 +36,19 @@ object EstadisticasRepository {
     }
 
 
-    suspend fun obtenerTodosLosResiduos(idUsuario: Int): List<HistorialResiduo>{
+    suspend fun obtenerTodosLosResiduos(idUsuario: Int, estadoReporte: EstadoReporte?): List<HistorialResiduo>{
         val lista = withContext(Dispatchers.IO){
-            return@withContext historialResiduoDao.obtenerTodosLosResiduos(
-                idUsuario = idUsuario
-            )
+            if (estadoReporte == null){
+                return@withContext historialResiduoDao.obtenerTodosLosResiduos(
+                    idUsuario = idUsuario
+                )
+            } else {
+                return@withContext historialResiduoDao.obtenerResiduoEnEstado(
+                    idUsuario = idUsuario,
+                    estadoReporte = estadoReporte
+                )
+            }
+
         }
         return lista
     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Directorio interno de la aplicación -->
+    <files-path
+        name="greenQuestReportImages"
+        path="." />
+</paths>
