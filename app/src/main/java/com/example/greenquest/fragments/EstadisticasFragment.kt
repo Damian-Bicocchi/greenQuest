@@ -48,7 +48,7 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
     private lateinit var pieChart: PieChart
     private lateinit var barChart: BarChart
-
+    private val origenHaciaReporte : OrigenHaciaReporte = OrigenHaciaReporte.ESTADISTICA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +60,15 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_estadisticas, container, false)
+        return inflater.inflate(R.layout.fragment_estadisticas,
+            container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        estadisticaViewModel.obtenerResiduos()
+        estadisticaViewModel.obtenerResiduosEnEstado()
         val recycler: RecyclerView = view.findViewById(R.id.recycler_view_historial)
         recycler.layoutManager = LinearLayoutManager(requireContext())
         pieChart = view.findViewById(R.id.pie_chart_tipo_residuo)
@@ -106,32 +107,44 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                     3 -> estadisticaViewModel.obtenerPuntosPorPeriodo(PeriodoResiduo.TOTAL)
                 }
             }
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-                Log.d("estadisticasLogging", "onTabUnselected")
-
-            }
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                Log.d("estadisticasLogging", "onTabReselected")
-            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
         })
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    estadisticaViewModel.obtenerResiduos()
+                    estadisticaViewModel.obtenerResiduosEnEstado()
                     estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
                         val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
 
-                        val adapterHistorialItem = AdapterHistorialItem(listaFinal) { residuo ->
-                            findNavController().navigate(
-                                EstadisticasFragmentDirections.actionEstadisticasFragmentToReportarFragment(
-                                    reporteArgumentos = ReporteArgumentos(
-                                        origenHaciaReporte = OrigenHaciaReporte.ESTADISTICA,
-                                        idResiduo = residuo.idResiduo
-                                    )
+                        val adapterHistorialItem = AdapterHistorialItem(
+                            listaFinal,
+                            onAlreadyReportedClick = {
+                                residuo ->
+                                findNavController().navigate(
+                                    EstadisticasFragmentDirections
+                                        .actionEstadisticasFragmentToInformacionReporte(
+                                            reporteArgumentos = ReporteArgumentos(
+                                                origenHaciaReporte,
+                                                idResiduo = residuo.idResiduo
+                                            )
+                                        )
                                 )
-                            )
-                        }
+                            },
+                            onReportClick = {
+                                residuo ->
+                                findNavController().navigate(
+                                    EstadisticasFragmentDirections
+                                        .actionEstadisticasFragmentToReportarFragment(
+                                            reporteArgumentos = ReporteArgumentos(
+                                                origenHaciaReporte = origenHaciaReporte,
+                                                idResiduo = residuo.idResiduo
+                                            )
+                                        )
+                                )
+                            }
+                        )
                         recycler.adapter = adapterHistorialItem
                     }
                 }
@@ -154,7 +167,8 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 
 
         linkTodaActividad.setOnClickListener {
-            val action = EstadisticasFragmentDirections.actionEstadisticasFragmentToHistorialResiduoCompletoFragment()
+            val action = EstadisticasFragmentDirections
+                .actionEstadisticasFragmentToHistorialResiduoCompletoFragment()
 
             findNavController().navigate(action)
 

@@ -147,4 +147,11 @@
     <string name="title_reportar">Reportar residuo mal clasificado</string>
     <string name="texto_boton_camara">Tomar foto del residuo</string>
 
+    <string name="tab_residuos_todos">Todos los residuos</string>
+    <string name="tab_residuos_reporte_pendiente">Reportes pendientes</string>
+    <string name="tab_residuos_reporte_exitoso">Reportes éxitosos</string>
+    <string name="tab_residuos_reporte_fallido">Reportes fallidos</string>
+    <string name="sin_residuos_para_mostrar">No hay residuos para mostrar</string>
+
+
 </resources>

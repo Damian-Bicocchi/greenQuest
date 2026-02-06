@@ -8,6 +8,7 @@ import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.PeriodoResiduo
 import com.example.greenquest.repository.EstadisticasRepository
 import com.example.greenquest.repository.UsuarioRepository
+import com.example.greenquest.states.reporte.EstadoReporte
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,14 +27,13 @@ class EstadisticaViewModel : ViewModel() {
     val puntosEntreFechas: StateFlow<Int> = _puntosEntreFechas.asStateFlow()
 
 
-    fun obtenerResiduos(){
+    fun obtenerResiduosEnEstado(estadoReporte: EstadoReporte? = null){
         viewModelScope.launch {
             try {
                 val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
-                val lista = EstadisticasRepository.obtenerTodosLosResiduos(idUsuario = idUsuario)
+                val lista = EstadisticasRepository.obtenerTodosLosResiduos(idUsuario = idUsuario, estadoReporte = estadoReporte)
                 _residuos.value = lista
 
-                Log.e("reporteLogging", "la lista es $lista y el idDe usuario es $idUsuario")
             }
             catch (e: Exception){
                 Log.e("estadisticaLogging", "hubo un error en obtenerResiduos ${e.message}")

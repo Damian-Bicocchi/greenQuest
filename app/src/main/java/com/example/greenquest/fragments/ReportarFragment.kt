@@ -35,7 +35,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
-import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.states.reporte.EstadoReporteUI
 import com.example.greenquest.viewmodel.ReporteViewModel
 import java.io.File
@@ -43,6 +42,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.core.graphics.scale
 
 class ReportarFragment : Fragment() {
 
@@ -165,7 +165,7 @@ class ReportarFragment : Fragment() {
         val buttonEnviarReporte = view.findViewById<Button>(R.id.button_enviar_reporte)
 
         val selectClasificacion: Spinner = view.findViewById(
-            R.id.select_clasificacion_correcta)
+            R.id.text_clasificacion_dada)
 
         cargarSpinnerCategorias(selectClasificacion)
         observeViewModel()
@@ -186,7 +186,7 @@ class ReportarFragment : Fragment() {
         }
 
 
-        imgThumbnail = view.findViewById(R.id.image_thumbnail_reportar)
+        imgThumbnail = view.findViewById(R.id.image_thumbnail_reportar_informe)
 
 
         buttonAbrirCamara = view.findViewById(R.id.button_abrir_camara_reporte)
@@ -229,12 +229,7 @@ class ReportarFragment : Fragment() {
                     fullImageBitmap = BitmapFactory.decodeFile(path, options)
 
                     fullImageBitmap?.let { bitmap ->
-                        thumbnailBitmap = Bitmap.createScaledBitmap(
-                            bitmap,
-                            200,
-                            (200 * bitmap.height / bitmap.width),
-                            true
-                        )
+                        thumbnailBitmap = bitmap.scale(200, (200 * bitmap.height / bitmap.width))
 
                         mostrarThumbnail()
 

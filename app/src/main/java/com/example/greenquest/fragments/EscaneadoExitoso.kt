@@ -45,7 +45,7 @@ class EscaneadoExitoso : Fragment() {
                 }
         }
 
-        val buttonDenunciar = view.findViewById<View>(R.id.button_denunciar_categoria)
+        val buttonDenunciar = view.findViewById<View>(R.id.button_ver_reporte)
         val buttonContinuar = view.findViewById<View>(R.id.button_qr_exitoso_continuar)
 
         buttonContinuar.setOnClickListener {

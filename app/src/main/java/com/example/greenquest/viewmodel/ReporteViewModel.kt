@@ -1,17 +1,25 @@
 package com.example.greenquest.viewmodel
 
+import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.compose.runtime.retain.retain
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.apiParameters.TipoResiduo
+import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.repository.ReporteRepository
 import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.states.reporte.EstadoReporteUI
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ReporteViewModel : ViewModel(){
     private val _reportState = MutableLiveData<EstadoReporte>()
@@ -74,7 +82,38 @@ class ReporteViewModel : ViewModel(){
         _reportState.value = EstadoReporte.SIN_REPORTE
     }
 
+    fun eliminarReporte(idResiduo: String){
+        if (idResiduo.isEmpty()) return
+        viewModelScope.launch {
+            ReporteRepository.actualizarReporte(idResiduo, EstadoReporte.SIN_REPORTE)
+        }
+    }
 
+    suspend fun obtenerCategoriaDenunciada(idResiduo: String) : TipoResiduo {
+        if (idResiduo.isEmpty()) return TipoResiduo.BASURA
+        val reporte = ReporteRepository.obtenerReporte(idResiduo) ?: return TipoResiduo.BASURA
+        return reporte.clasificacionUsuario
+    }
+
+    suspend fun obtenerImagenReporte(idResiduo: String): Drawable? {
+        if (idResiduo.isEmpty()) return null
+
+        val reporte = ReporteRepository.obtenerReporte(idResiduo = idResiduo) ?: return null
+
+        val imagenByteArray = reporte.imageData
+        if (imagenByteArray.isEmpty()) return null
+
+        return try {
+            val bitmap = BitmapFactory.decodeByteArray(
+                imagenByteArray, 0, imagenByteArray.size)
+            // Convertir Bitmap a Drawable
+            BitmapDrawable(Resources.getSystem(), bitmap)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+
+    }
 
 
 }
