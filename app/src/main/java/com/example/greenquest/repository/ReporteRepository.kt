@@ -50,7 +50,28 @@ object ReporteRepository {
         }
     }
 
+    suspend fun actualizarReporte(idResiduo: String, nuevoEstadoReporte: EstadoReporte) {
+        withContext(Dispatchers.IO){
+            val idHistorial =
+                historialResiduoDao.obtenerIdHistorialDeIdResiduo(idResiduo = idResiduo)
+                    ?: return@withContext
+            historialResiduoDao.actualizarEstadoReporte(
+                idHistorial,
+                reporteEstado = nuevoEstadoReporte,
+            )
 
+            if (nuevoEstadoReporte == EstadoReporte.SIN_REPORTE){
+                imageReportDao.deleteImageWithDetails(idResiduo = idResiduo)
+            }
+        }
+    }
+
+    suspend fun obtenerReporte(idResiduo: String): ReporteData? {
+        if (idResiduo.isEmpty() || idResiduo.isBlank()) return null
+        val reporte = imageReportDao.obtenerReportePorIdResiduo(idResiduo)
+
+        return reporte
+    }
 
 
 }

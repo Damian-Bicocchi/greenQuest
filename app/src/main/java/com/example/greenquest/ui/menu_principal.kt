@@ -78,6 +78,7 @@ class menu_principal : AppCompatActivity() {
                 R.id.historialResiduoCompletoFragment -> setToolbar("Historial de reciclado")
                 R.id.reportarFragment -> setToolbar("Reportar clasificación")
                 R.id.mapFragment -> setToolbar("Mapa de contenedores")
+                R.id.informacionReporte -> setToolbar("Informe de reporte")
                 else -> setToolbar("")
             }
         }

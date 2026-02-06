@@ -28,13 +28,59 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/layout_tabs_tipos_reporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/title_historial_residuos_completo"
+            app:layout_constraintBottom_toTopOf="@+id/card_ultimos_reportes">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_filtro_residuos_reporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:background="@color/fondo_secundario"
+                app:tabIndicatorColor="@color/accent_color"
+                app:tabSelectedTextColor="@color/accent_color"
+                app:tabTextColor="@color/texto_secundario"
+                app:tabMode="fixed"
+                app:tabGravity="fill"
+                app:tabTextAppearance="@style/textTab">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_residuos_todos" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_residuos_reporte_pendiente" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_residuos_reporte_exitoso"/>
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tab_residuos_reporte_fallido"
+                    />
+            </com.google.android.material.tabs.TabLayout>
+
+        </LinearLayout>
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_ultima_actividad_completo"
+            android:id="@+id/card_ultimos_reportes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             app:cardCornerRadius="8dp"
-            app:layout_constraintTop_toBottomOf="@id/title_historial_residuos_completo">
+            app:layout_constraintTop_toBottomOf="@+id/layout_tabs_tipos_reporte">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp">
                     <TextView
-                        android:id="@+id/link_volver_a_estadisticas"
+                        android:id="@+id/link_volver_informe_reporte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="false"
@@ -60,9 +106,23 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_historial_completo"
+                    android:id="@+id/recycler_view_historial_reportes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/text_empty_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sin_residuos_para_mostrar"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

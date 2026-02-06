@@ -19,15 +19,16 @@ import java.util.Locale.getDefault
 
 class AdapterHistorialItem(
     val listaResiduos: List<HistorialResiduo>,
-    private val onReportClick: (HistorialResiduo) -> Unit // Callback
+    private val onReportClick: (HistorialResiduo) -> Unit,
+    private val onAlreadyReportedClick: (HistorialResiduo) -> Unit
 ) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
     class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
-        val iconoLogoResiduo: ImageView? = view.findViewById<ImageView>(R.id.icono_logo_residuo)
-        val textoNombreResiduo: TextView? = view.findViewById<TextView>(R.id.texto_nombre_residuo)
-        val textoFechaResiduo: TextView? = view.findViewById<TextView>(R.id.texto_fecha_residuo)
+        val iconoLogoResiduo: ImageView? = view.findViewById<ImageView>(R.id.icono_imagen_reporte)
+        val textoNombreResiduo: TextView? = view.findViewById<TextView>(R.id.texto_reportado_como)
+        val textoFechaResiduo: TextView? = view.findViewById<TextView>(R.id.texto_fecha_reporte)
         val textoPuntaje: TextView? = view.findViewById<TextView>(R.id.texto_puntos_extra)
 
-        val botonReportar: Button? = view.findViewById<Button>(R.id.button_denunciar_categoria)
+        val botonReportar: Button? = view.findViewById<Button>(R.id.button_ver_reporte)
     }
 
     private lateinit var parent: ViewGroup
@@ -57,15 +58,33 @@ class AdapterHistorialItem(
             append("+")
             append(residuoParticular.puntosDados)
         }
-        if (residuoParticular.estadoReporte == EstadoReporte.SIN_REPORTE){
-            holder.botonReportar?.setOnClickListener {
-                onReportClick(residuoParticular)
+
+
+
+        when (residuoParticular.estadoReporte) {
+            EstadoReporte.SIN_REPORTE -> {
+                holder.botonReportar?.text = "Reportar"
+                holder.botonReportar?.setOnClickListener {
+                    onReportClick(residuoParticular)
+                }
             }
-        } else {
-            holder.botonReportar?.text = "Reportado"
-            holder.botonReportar?.isEnabled = false
-            holder.botonReportar?.setOnClickListener {
-                Log.d("reporteLogging", "Aca debería haber un mejor manejo ")
+            EstadoReporte.REPORTADO -> {
+                holder.botonReportar?.text = "Ver reporte"
+                holder.botonReportar?.textSize = 10f
+                holder.botonReportar?.setBackgroundColor(
+                    ContextCompat.getColor(holder.view.context, R.color.acento_de_fondo))
+
+                holder.botonReportar?.setOnClickListener {
+                    onAlreadyReportedClick(residuoParticular)
+                }
+            }
+            EstadoReporte.REPORTE_FALLIDO -> {
+                Log.d("greenQuest", "No implementado")
+            }
+
+            EstadoReporte.REPORTE_EXITOSO -> {
+
+                Log.d("greenQuest", "No implementado")
             }
         }
 

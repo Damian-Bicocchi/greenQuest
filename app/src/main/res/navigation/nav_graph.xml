@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_estadisticasFragment_to_reportarFragment"
             app:destination="@id/reportarFragment" />
+        <action
+            android:id="@+id/action_estadisticasFragment_to_informacionReporte"
+            app:destination="@id/informacionReporte" />
     </fragment>
 
     <fragment
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_historialResiduoCompletoFragment_to_estadisticasFragment"
             app:destination="@id/estadisticasFragment" />
+        <action
+            android:id="@+id/action_historialResiduoCompletoFragment_to_informacionReporte"
+            app:destination="@id/informacionReporte" />
     </fragment>
 
     <fragment
@@ -116,5 +122,23 @@
         android:id="@+id/mapFragment"
         android:name="com.example.greenquest.fragments.MapFragment"
         android:label="MapFragment" />
+    <fragment
+        android:id="@+id/informacionReporte"
+        android:name="com.example.greenquest.fragments.InformacionReporte"
+        android:label="fragment_informacion_reporte"
+        tools:layout="@layout/fragment_informacion_reporte">
+
+        <argument
+            android:name="reporteArgumentos"
+            app:argType="com.example.greenquest.fragments.arguments.ReporteArgumentos">
+
+        </argument>
+        <action
+            android:id="@+id/action_informacionReporte_to_historialResiduoCompletoFragment"
+            app:destination="@id/historialResiduoCompletoFragment" />
+        <action
+            android:id="@+id/action_informacionReporte_to_estadisticasFragment"
+            app:destination="@id/estadisticasFragment" />
+    </fragment>
 
 </navigation>
