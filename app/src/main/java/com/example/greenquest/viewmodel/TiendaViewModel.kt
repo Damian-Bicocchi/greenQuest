@@ -21,12 +21,8 @@ class TiendaViewModel : ViewModel() {
 
     suspend fun actualizarArticulosAdquiridos() {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-        val articulos = obtenerArticulosDisponibles()
-        for(articulo in articulos) {
-            if(usuario.articulos_adquiridos.contains(articulo.id)) {
-                articulo.adquirido = true
-            }
-        }
+        val tiendaUsuario = TiendaAdquiridosRepository.obtenerTiendaPorUsuario(usuario.uid)
+        ArticulosProvider.actualizarArticulosAdquiridos(tiendaUsuario.articulosAdquiridos)
     }
 
     suspend fun comprarArticulo(articulo: Articulo): Boolean {
