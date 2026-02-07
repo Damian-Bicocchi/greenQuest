@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/world"
+            android:src="@drawable/position_marker__1_"
             android:clickable="true"/>
 
         <TextView
