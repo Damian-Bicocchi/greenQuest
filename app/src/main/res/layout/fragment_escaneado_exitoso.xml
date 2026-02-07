@@ -65,25 +65,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="2dp"
-                android:background="@color/acento_de_fondo"
+                android:backgroundTint="@color/acento_de_fondo"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="12dp"
                 android:text="@string/button_denunciar_categoria"
                 android:textColor="@color/texto_oscuro"
                 android:layout_gravity="center_horizontal"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="12dp" />
 
             <Button
                 android:id="@+id/button_qr_exitoso_continuar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="@color/accent_color"
+                android:backgroundTint="@color/accent_color"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="12dp"
                 android:text="@string/button_continuar"
                 android:textColor="@color/texto_oscuro"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -22,7 +22,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="@string/title_historial_residuos"
-            android:textColor="@color/accent_color"
+            android:textColor="@color/texto_normal"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -81,7 +81,7 @@
 
     <string name="hint_scan_qr">Centrá el código QR en el recuadro</string>
     <string name="button_escanear_qr">Escanear</string>
-    <string name="button_denunciar_categoria">Denunciar categoría incorrecta</string>
+    <string name="button_denunciar_categoria">Reportar categoría incorrecta</string>
     <string name="button_continuar">Continuar</string>
     <string name="rankingGeneralButton">Semanal</string>
     <string name="rankingCategorizedButton">Histórico</string>
@@ -152,6 +152,9 @@
     <string name="tab_residuos_reporte_exitoso">Reportes éxitosos</string>
     <string name="tab_residuos_reporte_fallido">Reportes fallidos</string>
     <string name="sin_residuos_para_mostrar">No hay residuos para mostrar</string>
+    <string name="informe_del_reporte">Informe del reporte</string>
+    <string name="clasificacion_reportada_como_correcta">Clasificación reportada como correcta</string>
+    <string name="button_title_eliminar_reporte">Eliminar reporte</string>
 
 
 </resources>
