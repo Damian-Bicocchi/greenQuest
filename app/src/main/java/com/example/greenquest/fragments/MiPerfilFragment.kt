@@ -1,23 +1,22 @@
 package com.example.greenquest.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
-import com.example.greenquest.adapters.AdapterLogro
-import com.example.greenquest.Provider.LogroProvider
-import com.example.greenquest.R
-import com.example.greenquest.database.user.User
-import com.example.greenquest.databinding.FragmentMiPerfilBinding
-import com.example.greenquest.repository.UsuarioRepository
-import com.example.greenquest.viewmodel.MiPerfilModel
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.greenquest.Provider.LogroProvider
+import com.example.greenquest.R
+import com.example.greenquest.adapters.AdapterLogro
+import com.example.greenquest.database.user.User
+import com.example.greenquest.databinding.FragmentMiPerfilBinding
 import com.example.greenquest.dialog.FotoDialogFragment
+import com.example.greenquest.repository.UsuarioRepository
+import com.example.greenquest.viewmodel.MiPerfilModel
 import kotlinx.coroutines.launch
 
 
@@ -66,7 +65,7 @@ class MiPerfilFragment : Fragment() {
             binding.imagenDePerfil.setImageResource(usuario.imagen?:R.drawable.outline_person_24)
             miPerfilModel.chequearYActualizarLogros(usuario)
             recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
-            Log.d("CANTIDAD DE RESIUDOS", "Papel: ${usuario.cant_papeles}, Carton: ${usuario.cant_cartones}, Metal: ${usuario.cant_metal}, Plastico: ${usuario.cant_plastico}, Vidrio: ${usuario.cant_vidrio}")
+            //Log.d("CANTIDAD DE RESIUDOS", "Papel: ${usuario.cant_papeles}, Carton: ${usuario.cant_cartones}, Metal: ${usuario.cant_metal}, Plastico: ${usuario.cant_plastico}, Vidrio: ${usuario.cant_vidrio}")
         }
 
         binding.imagenDePerfil.setOnClickListener {
