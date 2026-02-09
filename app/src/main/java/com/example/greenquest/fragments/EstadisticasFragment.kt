@@ -116,7 +116,7 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                 launch {
                     estadisticaViewModel.obtenerResiduosEnEstado()
                     estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
-                        val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
+                        val listaFinal = if (lista.size > 3) lista.subList(0, 3) else lista
 
                         val adapterHistorialItem = AdapterHistorialItem(
                             listaFinal,

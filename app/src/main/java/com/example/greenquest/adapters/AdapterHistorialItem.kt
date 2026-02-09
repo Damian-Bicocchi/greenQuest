@@ -44,7 +44,7 @@ class AdapterHistorialItem(
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
-        holder.iconoLogoResiduo?.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo))
+        holder.iconoLogoResiduo?.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo, holder))
         val fechaFormateada = residuoParticular.fecha?.let { fecha ->
             val dia = fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
             val hora = fecha.format(DateTimeFormatter.ofPattern("HH:mm"))
@@ -72,7 +72,6 @@ class AdapterHistorialItem(
             }
             EstadoReporte.REPORTADO -> {
                 holder.botonReportar?.text = holder.botonReportar.context.getString(R.string.see_report)
-                holder.botonReportar?.textSize = 10f
 
                 holder.botonReportar?.setOnClickListener {
                     onAlreadyReportedClick(residuoParticular)
@@ -91,7 +90,8 @@ class AdapterHistorialItem(
 
     }
 
-    private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo): Drawable? {
+    private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo, holder: viewHolder): Drawable? {
+        holder.iconoLogoResiduo?.contentDescription = "Logo de " + tipoResiduo.name
         val drawableId = when(tipoResiduo){
             TipoResiduo.CARTON -> R.drawable.ic_carton
             TipoResiduo.PLASTICO -> R.drawable.ic_plastico
