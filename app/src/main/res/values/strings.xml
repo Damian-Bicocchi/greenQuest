@@ -156,6 +156,8 @@
     <string name="informe_del_reporte">Informe del reporte</string>
     <string name="clasificacion_reportada_como_correcta">Clasificación reportada como correcta</string>
     <string name="button_title_eliminar_reporte">Eliminar reporte</string>
+    <string name="report">Reportar</string>
+    <string name="see_report">Ver reporte</string>
 
 
 </resources>

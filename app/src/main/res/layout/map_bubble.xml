@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -60,13 +61,15 @@
             android:textSize="12dp"
             android:maxEms="17"
             android:text="Description" />
-        <TextView android:id="@+id/bubble_subdescription"
+        <TextView
+            android:id="@+id/bubble_subdescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/texto_normal"
             android:textSize="10dp"
             android:maxEms="17"
             android:text="Address"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

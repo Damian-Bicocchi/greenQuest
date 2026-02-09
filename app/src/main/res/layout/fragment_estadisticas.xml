@@ -181,7 +181,7 @@
                     android:id="@+id/tab_layout_periodos_line_chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@color/fondo_secundario"
                     app:tabIndicatorColor="@color/accent_color"
                     app:tabSelectedTextColor="@color/accent_color"

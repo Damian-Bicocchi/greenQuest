@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.greenquest.R
 import com.example.greenquest.databinding.ActivityToolbarBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import androidx.core.view.get
+import androidx.core.view.size
 
 class menu_principal : AppCompatActivity() {
 
@@ -21,6 +27,21 @@ class menu_principal : AppCompatActivity() {
 
         binding = ActivityToolbarBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.toolbarContainer) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = 0,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
 
         val navigation = binding.bottomNavigation
         navigation.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
@@ -35,6 +56,7 @@ class menu_principal : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
 
         binding.miPerfil.setOnClickListener {
+            navigation.uncheckAllItems()
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setRestoreState(true)
@@ -53,6 +75,7 @@ class menu_principal : AppCompatActivity() {
             }
         }
         binding.map.setOnClickListener {
+            navigation.uncheckAllItems()
             val navOptions = androidx.navigation.NavOptions.Builder()
                 .setLaunchSingleTop(true)
                 .setRestoreState(true)
@@ -94,4 +117,13 @@ class menu_principal : AppCompatActivity() {
         if (titulo.length >= 20) binding.nombreFragmentActualTextView.textSize = 26f
         else binding.nombreFragmentActualTextView.textSize = 28f
     }
+
+    fun BottomNavigationView.uncheckAllItems() {
+        menu.setGroupCheckable(0, true, false)
+        for (i in 0 until menu.size) {
+            menu[i].isChecked = false
+        }
+        menu.setGroupCheckable(0, true, true)
+    }
+
 }

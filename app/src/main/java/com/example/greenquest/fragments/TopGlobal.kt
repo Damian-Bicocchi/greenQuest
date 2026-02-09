@@ -105,6 +105,13 @@ class TopGlobal : Fragment() {
 
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) {
+            viewModel.obtenerRanking()
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
