@@ -57,6 +57,7 @@
     </string>
 
     <string name="title_recuperar_contrasenia">Recuperar contraseña</string>
+    <string name="proximamente">(PROXIMAMENTE)</string>
     <string name="description_recuperar_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
     <string name="label_input_username">Ingrese su correo electrónico</string>
 

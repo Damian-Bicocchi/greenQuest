@@ -19,6 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/proximamente"
+        android:textColor="@color/texto_normal"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
     <TextView
         android:id="@+id/text_description"
         android:layout_width="0dp"
@@ -31,7 +44,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/mensaje_error"
@@ -100,33 +113,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="2dp">
+
                 <Button
                     android:id="@+id/btn_cancelar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="7dp"
                     android:backgroundTint="@color/acento_de_fondo"
+
                     android:text="@string/cancel"
                     android:textColor="@color/texto_secundario"
-
-                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintWidth_percent="0.5" />
+
                 <Button
                     android:id="@+id/btn_recuperar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="7dp"
+
                     android:backgroundTint="@color/accent_color"
                     android:text="@string/button_recuperar_contrasenia"
                     android:textColor="@color/texto_sobre_acento_de_fondo"
-
-                    app:layout_constraintStart_toEndOf="@+id/btn_cancelar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintWidth_percent="0.5"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_cancelar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

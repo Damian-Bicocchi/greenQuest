@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.greenquest.R
@@ -17,19 +18,7 @@ class recuperar_contrasenia : AppCompatActivity() {
 
         val restablecerContrasenia = findViewById<View>(R.id.btn_recuperar)
         restablecerContrasenia.setOnClickListener {
-            val inputUsername = findViewById<EditText>(R.id.input_username)
-            val mensajeError = findViewById<TextView>(R.id.mensaje_error)
-
-            val emailTexto = inputUsername.text.toString().trim()
-
-            if (emailTexto.isEmpty()) {
-                mensajeError.visibility = View.VISIBLE
-                mensajeError.text = "Debe ingresar un correo válido"
-            } else {
-                mensajeError.visibility = View.INVISIBLE
-                val intent = Intent(this, restablecer_contrasenia::class.java)
-                startActivity(intent)
-            }
+           Toast.makeText(this, "Funcionalidad en desarrollo", Toast.LENGTH_SHORT).show()
         }
         val cancelar = findViewById<View>(R.id.btn_cancelar)
         cancelar.setOnClickListener {
