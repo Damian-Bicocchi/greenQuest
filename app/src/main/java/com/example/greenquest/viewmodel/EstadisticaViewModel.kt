@@ -36,7 +36,7 @@ class EstadisticaViewModel : ViewModel() {
 
             }
             catch (e: Exception){
-                Log.e("estadisticaLogging", "hubo un error en obtenerResiduos ${e.message}")
+                Log.e("greenQuest", "Hubo un error en obtenerResiduos ${e.message}")
             }
         }
 
@@ -50,7 +50,7 @@ class EstadisticaViewModel : ViewModel() {
                 val mapeo = EstadisticasRepository.obtenerResiduosEnRangoFecha(periodoResiduo, idUsuario)
                 _residuosEntreFechas.value = mapeo
             } catch (e: Exception) {
-                Log.e("estadisticaLogging", "hubo un error en obtenerResiduosEntreFechas $e")
+                Log.e("greenQuest", "Hubo un error en obtenerResiduosEntreFechas $e")
             }
         }
     }

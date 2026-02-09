@@ -1,9 +1,6 @@
 package com.example.greenquest.repository
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.util.Log
-import android.widget.ImageView
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.reporte.ReporteData
@@ -46,7 +43,6 @@ object ReporteRepository {
                 fkIdHistorialResiduo, EstadoReporte.REPORTADO
             )
 
-            Log.d("reporteLogging", "Se acaba de crear el reporte")
         }
     }
 
