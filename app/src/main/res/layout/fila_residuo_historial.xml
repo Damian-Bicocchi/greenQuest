@@ -80,6 +80,7 @@
             android:layout_height="wrap_content"
             android:text="Reportar"
             android:textColor="@color/texto_sobre_acento_de_fondo"
+            android:backgroundTint="@color/acento_de_fondo"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

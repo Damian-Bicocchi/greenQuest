@@ -124,5 +124,6 @@ dependencies {
 
     implementation(libs.osmdroid)
     implementation(libs.osmbonuspack)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.core)
 }

@@ -122,15 +122,12 @@
             <Button
                 android:id="@+id/iniciar_sesion_button"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/shape"
-                android:backgroundTint="@color/accent_color"
-                android:gravity="center"
-                android:includeFontPadding="true"
                 android:text="@string/login_button"
-                android:textSize="20sp"
-                app:cornerRadius="20dp" />
+                android:backgroundTint="@color/accent_color"
+                android:textColor="@color/texto_sobre_acento_de_fondo"
+                android:textSize="20dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -93,6 +93,13 @@ class TopGlobal : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.obtenerRanking()
+                viewModel.ranking.collect { it ->
+                    if(it.isEmpty()) {
+                        binding.emptyAlternative.visibility = View.VISIBLE;
+                    } else {
+                        binding.emptyAlternative.visibility = View.GONE;
+                    }
+                }
             }
         }
 

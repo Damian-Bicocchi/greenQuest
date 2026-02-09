@@ -98,6 +98,12 @@ class MapFragment : Fragment() {
             val marker = item as Marker
             mSelectedStation = marker.relatedObject as Estacion?
         }
+
+        override fun onClose() {
+            super.onClose()
+            mView.findViewById<View?>(R.id.bubble_moreinfo)!!.visibility =
+                View.GONE
+        }
     }
 
 

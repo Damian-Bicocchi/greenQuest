@@ -40,6 +40,8 @@ osmbonuspack = "6.9.0"
 mpandroidchart = "v3.1.0"
 navigationFragmentKtxVersion = "2.9.7"
 navigationUiKtxVersion = "2.9.7"
+kotlinxCoroutines = "1.7.3"
+coreSplashscreen = "1.0.0"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
@@ -98,6 +100,8 @@ osmbonuspack = { module = "com.github.MKergall:osmbonuspack", version.ref = "osm
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart"}
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtxVersion" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtxVersion" }
+kotlinx-coroutines-play-services = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutines"}
+androidx-core = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

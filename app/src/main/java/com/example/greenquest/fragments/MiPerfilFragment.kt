@@ -1,29 +1,21 @@
 package com.example.greenquest.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.compose.ui.res.colorResource
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.adapters.AdapterLogro
-import com.example.greenquest.logros.Logro
 import com.example.greenquest.Provider.LogroProvider
 import com.example.greenquest.R
-import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.user.User
 import com.example.greenquest.databinding.FragmentMiPerfilBinding
-import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.viewmodel.MiPerfilModel
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.greenquest.dialog.FotoDialogFragment
 import kotlinx.coroutines.launch
@@ -87,11 +79,9 @@ class MiPerfilFragment : Fragment() {
 
         }
 
-        binding.logrosConseguidosTextview.setOnClickListener {
+        binding.logrosConseguidosButton.setOnClickListener {
             subrayarConseguidos = !subrayarConseguidos
             subrayarFaltantes = false
-            subrayarTexto(binding.logrosFaltantesTextview,subrayarFaltantes)
-            subrayarTexto(binding.logrosConseguidosTextview,subrayarConseguidos)
             if(!subrayarConseguidos && !subrayarFaltantes){
                 recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
             }else {
@@ -100,14 +90,12 @@ class MiPerfilFragment : Fragment() {
             }
         }
 
-        binding.logrosFaltantesTextview.setOnClickListener{
+        binding.logrosFaltantesButton.setOnClickListener{
             subrayarFaltantes = !subrayarFaltantes
             subrayarConseguidos = false
             if(!subrayarConseguidos && !subrayarFaltantes){
                 recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
             }else {
-                subrayarTexto(binding.logrosConseguidosTextview, subrayarConseguidos)
-                subrayarTexto(binding.logrosFaltantesTextview, subrayarFaltantes)
                 recyclerView.adapter = AdapterLogro(LogroProvider.logrosNoObtenidos())
             }
         }
@@ -136,30 +124,6 @@ class MiPerfilFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-
-    private fun subrayarTexto(textView: TextView, subrayar: Boolean) {
-        val content = textView.text.toString()
-        val spannableString = android.text.SpannableString(content)
-        if(!subrayar){
-            val spans = spannableString.getSpans(
-                0,
-                content.length,
-                android.text.style.UnderlineSpan::class.java
-            )
-            for (span in spans) {
-                spannableString.removeSpan(span)
-            }
-        }else{
-            spannableString.setSpan(
-                android.text.style.UnderlineSpan(),
-                0,
-                content.length,
-                android.text.Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-        }
-        textView.text = spannableString
     }
 
 

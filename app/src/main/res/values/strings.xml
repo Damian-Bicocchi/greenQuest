@@ -6,6 +6,7 @@
     <string name="username_text">Nombre de Usuario</string>
     <string name="password_text">Contraseña</string>
     <string name="login_button">Iniciar Sesion</string>
+    <string name="signup_button">Registrar Usuario</string>
     <string name="password_hint">Distingue entre mayúsculas y minúsculas</string>
     <string name="username_hint">Nombre de usuario</string>
 
@@ -100,7 +101,7 @@
     <string name="marcos_perfil">Marcos de perfil</string>
     <string name="descripcion_hint">Usuario sin descripcion</string>
 
-    <string name="texto_acerca_de">GreenQuest es una aplicación diseñada por Joaquín, Damián y Francisco, tres estudiantes de la Facultad de Informatíca de la UNLP, creada con el objetivo de fomentar el reciclaje y la conciencia ambiental a través de la gamificación.\nNuestra misión es hacer que el reciclaje sea divertido y gratificante, motivando a los usuarios a adoptar hábitos sostenibles en su vida diaria mediante el uso de  estaciones de residuos inteligentes creadas para este propósito.
+    <string name="texto_acerca_de">GreenQuest es una aplicación diseñada por Joaquín, Damián y Francisco, tres estudiantes de la Facultad de Informatíca de la UNLP, creada con el objetivo de fomentar el reciclaje y la conciencia ambiental a través de la gamificación.\n\nNuestra misión es hacer que el reciclaje sea divertido y gratificante, motivando a los usuarios a adoptar hábitos sostenibles en su vida diaria mediante el uso de  estaciones de residuos inteligentes creadas para este propósito.
     </string>
 
     <string name="title_bottom_ranking">Rankings</string>

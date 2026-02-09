@@ -25,7 +25,7 @@ class TiendaFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentTiendaBinding.inflate(inflater, container, false)
         val recyclerView =  binding.MiTiendaRV

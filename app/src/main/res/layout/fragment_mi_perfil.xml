@@ -6,47 +6,47 @@
     android:layout_height="match_parent"
     android:id="@+id/miPefilFragment"
     android:background="@color/fondo_primario"
-    tools:context=".fragments.MiPerfilFragment">
+    tools:context=".fragments.MiPerfilFragment"
+    android:padding="15dp"
+    android:paddingBottom="0dp">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="371dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/fondo_secundario"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/logroSelector"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_group_background"
+        app:selectionRequired="false"
+        app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/configuracionButton"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/configuracionButton">
 
-        <TextView
-            android:id="@+id/logros_conseguidos_textview"
-            android:layout_width="94dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/logros_conseguidos"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/logros_faltantes_textview"
-            android:layout_width="103dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logrosConseguidosButton"
+            style="@style/Theme.GreenQuest.ButtonGroupToggleButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/logros_faltantes"
-            android:textAlignment="center" />
+            android:text="@string/logros_conseguidos" />
 
-    </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logrosFaltantesButton"
+            style="@style/Theme.GreenQuest.ButtonGroupToggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/logros_faltantes" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <Button
         android:id="@+id/configuracionButton"
-        android:layout_width="373dp"
-        android:layout_height="41dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:backgroundTint="@color/boton_configiuracion"
+        android:backgroundTint="@color/acento_de_fondo"
         android:text="Configuracion"
         android:textColor="@color/texto_oscuro"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,37 +56,33 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/logros_recyclerview"
-        android:layout_width="402dp"
-        android:layout_height="345dp"
-        android:layout_marginStart="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
-        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/logroSelector"
+        app:layout_constraintStart_toStartOf="@+id/logroSelector"
+        app:layout_constraintTop_toBottomOf="@+id/logroSelector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
         app:spanCount="2" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="373dp"
-        android:layout_height="210dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/fondo_secundario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/secondary_card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username_editperfil"
-            android:layout_width="172dp"
-            android:layout_height="35dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:autoSizeMaxTextSize="16dp"
             android:autoSizeMinTextSize="10dp"
             android:autoSizeTextType="uniform"
@@ -95,18 +91,17 @@
             android:inputType="text|textNoSuggestions"
             android:textColor="@color/texto_normal"
             android:textColorHint="@color/texto_normal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/descripcion_editperfil"
+            app:layout_constraintEnd_toEndOf="@id/descripcion_editperfil"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:text="Nombre de Usuario"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.764"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagenDePerfil"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -114,17 +109,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="52dp"
             android:text="Descripción de perfil"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagenDePerfil"
             app:layout_constraintTop_toBottomOf="@+id/username_editperfil" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/descripcion_editperfil"
-            android:layout_width="172dp"
-            android:layout_height="89dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
             android:autoSizeMaxTextSize="16dp"
             android:autoSizeMinTextSize="10dp"
             android:background="@drawable/edittext"
@@ -134,18 +129,20 @@
             android:textColor="@color/texto_normal"
             android:textColorHint="@color/texto_normal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintStart_toEndOf="@id/imagenDePerfil"
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
             android:id="@+id/imagenDePerfil"
-            android:layout_width="163dp"
-            android:layout_height="186dp"
-            android:layout_marginStart="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="150dp"
+            android:minWidth="150dp"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.483"
             tools:src="@tools:sample/avatars" />
 
 

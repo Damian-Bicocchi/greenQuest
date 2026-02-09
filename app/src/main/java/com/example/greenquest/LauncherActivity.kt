@@ -3,6 +3,7 @@ package com.example.greenquest
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.*
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.*
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.ui.iniciar_sesion
@@ -13,6 +14,15 @@ class LauncherActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_adapter)
+
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                Thread.sleep(100)
+                true
+            }
+        }
+
 
         lifecycleScope.launch {
             val accessToken = TokenDataStoreProvider.get().getAccessToken()

@@ -8,10 +8,11 @@
     android:paddingBottom="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="177dp"
-        android:layout_height="211dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/radius_color_secundario"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/secondary_card"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +22,8 @@
             android:layout_width="92dp"
             android:layout_height="27dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/radius_color_secundario"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/secondary_card"
             android:backgroundTint="#D5BD0D"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +46,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="55dp"
                 android:layout_height="18dp"
-                android:background="#EDE28D"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -62,7 +63,12 @@
                     android:textAlignment="center"
                     android:textColor="#000000"
                     tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    tools:layout_editor_absoluteY="0dp"
+                    app:layout_constraintLeft_toRightOf="@id/imageView2"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

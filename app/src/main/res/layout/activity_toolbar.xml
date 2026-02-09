@@ -9,8 +9,12 @@
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         xmlns:tools="http://schemas.android.com/tools"
+        android:clipToPadding="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:fitsSystemWindows="true"
         android:background="@drawable/radius_color_secundario">
 
         <ImageView
@@ -22,8 +26,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/position_marker__1_"
-            android:clickable="true"/>
+            android:src="@drawable/icono_mapa"
+            android:clickable="true"
+            android:tint="#CAD3F5"/>
 
         <TextView
             android:id="@+id/nombreFragmentActualTextView"
@@ -45,6 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tint="#CAD3F5"
             android:src="@drawable/outline_person_24"
             android:clickable="true"/>
 
@@ -70,7 +76,6 @@
         android:elevation ="8dp"
         app:menu="@menu/bottom_navigation"
         app:labelVisibilityMode="selected"
-        style="@style/BottomNavitation"
         />
 
 
