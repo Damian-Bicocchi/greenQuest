@@ -76,12 +76,21 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ver_reporte"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Reportar"
+            android:text=""
             android:textColor="@color/texto_sobre_acento_de_fondo"
             android:backgroundTint="@color/acento_de_fondo"
-            android:textSize="11sp"
+
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:gravity="center"
+
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeMaxTextSize="14sp"
+            app:autoSizeStepGranularity="1sp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

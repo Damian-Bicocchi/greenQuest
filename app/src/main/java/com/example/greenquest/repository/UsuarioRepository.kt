@@ -1,22 +1,21 @@
 package com.example.greenquest.repository
 
 import android.util.Log
-import com.example.greenquest.ErrorHandlerProvider
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.RetrofitInstance
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.apiParameters.AuthSuccessResponse
-import com.example.greenquest.apiParameters.Request
-import retrofit2.Response
-import com.example.greenquest.database.user.User
 import com.example.greenquest.apiParameters.LogoutRequest
 import com.example.greenquest.apiParameters.PosicionRanking
 import com.example.greenquest.apiParameters.RankingEntry
+import com.example.greenquest.apiParameters.Request
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.apiParameters.UserInfoResponse
+import com.example.greenquest.database.user.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 
 object UsuarioRepository {
     private val api = RetrofitInstance.api
@@ -131,14 +130,13 @@ object UsuarioRepository {
             val usuario = obtenerUsuarioLocal()
             if (usuario != null) {
                 for (item in recursosReciclados) {
-                    Log.d("UsuarioRepository", "Tipo residuo: ${item.nombre}, Cantidad: ${item.cantidad}, id usuario: $id")
                     usuario.incrementarCantidadResiduo(item.nombre, item.cantidad)
                 }
                 actualizarUsuarioLocal(usuario)
             }
         }
         catch (e: Exception) {
-            Log.e("UsuarioRepository", "Error al obtener residuos del usuario", e)
+            Log.e("greenQuest", "Error al obtener residuos del usuario", e)
         }
     }
 
