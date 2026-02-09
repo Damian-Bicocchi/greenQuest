@@ -159,6 +159,7 @@
     <string name="button_title_eliminar_reporte">Eliminar reporte</string>
     <string name="report">Reportar</string>
     <string name="see_report">Ver reporte</string>
+    <string name="profile_image">Imagen de Perfil</string>
 
 
 </resources>
