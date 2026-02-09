@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 import java.util.Locale.getDefault
 
 @Serializable
-enum class TipoResiduo(@ColorRes val colorRes: Int) {
+enum class TipoResiduo(@param:ColorRes @field:ColorRes val colorRes: Int) {
 
     @SerialName("Carton")
     CARTON(R.color.color_carton),

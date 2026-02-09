@@ -13,8 +13,9 @@
         android:id="@+id/card_contenedor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
         app:cardUseCompatPadding="true"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/fondo_secundario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:background="@color/fondo_secundario">
+            android:padding="20dp">
 
             <TextView
                 android:id="@+id/trivia_pregunta_texto"
@@ -45,14 +45,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp">
 
-                <RadioButton
+                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/opcion_ejemplo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
+                    android:checked="true"
                     android:text="Opción de ejemplo"
+                    android:textColor="@color/texto_normal"
                     android:textSize="20sp"
-                    android:background="@color/acento_de_fondo"
                     />
             </RadioGroup>
 
@@ -65,7 +66,7 @@
                 android:textAllCaps="true"
                 android:textSize="16sp"
                 app:cornerRadius="12dp"
-                android:background="@color/accent_color"/>
+                android:backgroundTint="@color/accent_color"/>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

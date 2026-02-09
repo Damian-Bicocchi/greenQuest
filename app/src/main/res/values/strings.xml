@@ -6,6 +6,7 @@
     <string name="username_text">Nombre de Usuario</string>
     <string name="password_text">Contraseña</string>
     <string name="login_button">Iniciar Sesion</string>
+    <string name="signup_button">Registrar Usuario</string>
     <string name="password_hint">Distingue entre mayúsculas y minúsculas</string>
     <string name="username_hint">Nombre de usuario</string>
 
@@ -56,6 +57,7 @@
     </string>
 
     <string name="title_recuperar_contrasenia">Recuperar contraseña</string>
+    <string name="proximamente">(PROXIMAMENTE)</string>
     <string name="description_recuperar_contrasenia">Ingresa tu correo. Te enviaremos un código para que puedas restablecer tu contraseña</string>
     <string name="label_input_username">Ingrese su correo electrónico</string>
 
@@ -81,7 +83,7 @@
 
     <string name="hint_scan_qr">Centrá el código QR en el recuadro</string>
     <string name="button_escanear_qr">Escanear</string>
-    <string name="button_denunciar_categoria">Denunciar categoría incorrecta</string>
+    <string name="button_denunciar_categoria">Reportar categoría incorrecta</string>
     <string name="button_continuar">Continuar</string>
     <string name="rankingGeneralButton">Semanal</string>
     <string name="rankingCategorizedButton">Histórico</string>
@@ -100,7 +102,7 @@
     <string name="marcos_perfil">Marcos de perfil</string>
     <string name="descripcion_hint">Usuario sin descripcion</string>
 
-    <string name="texto_acerca_de">GreenQuest es una aplicación diseñada por Joaquín, Damián y Francisco, tres estudiantes de la Facultad de Informatíca de la UNLP, creada con el objetivo de fomentar el reciclaje y la conciencia ambiental a través de la gamificación.\nNuestra misión es hacer que el reciclaje sea divertido y gratificante, motivando a los usuarios a adoptar hábitos sostenibles en su vida diaria mediante el uso de  estaciones de residuos inteligentes creadas para este propósito.
+    <string name="texto_acerca_de">GreenQuest es una aplicación diseñada por Joaquín, Damián y Francisco, tres estudiantes de la Facultad de Informatíca de la UNLP, creada con el objetivo de fomentar el reciclaje y la conciencia ambiental a través de la gamificación.\n\nNuestra misión es hacer que el reciclaje sea divertido y gratificante, motivando a los usuarios a adoptar hábitos sostenibles en su vida diaria mediante el uso de  estaciones de residuos inteligentes creadas para este propósito.
     </string>
 
     <string name="title_bottom_ranking">Rankings</string>
@@ -152,6 +154,11 @@
     <string name="tab_residuos_reporte_exitoso">Reportes éxitosos</string>
     <string name="tab_residuos_reporte_fallido">Reportes fallidos</string>
     <string name="sin_residuos_para_mostrar">No hay residuos para mostrar</string>
+    <string name="informe_del_reporte">Informe del reporte</string>
+    <string name="clasificacion_reportada_como_correcta">Clasificación reportada como correcta</string>
+    <string name="button_title_eliminar_reporte">Eliminar reporte</string>
+    <string name="report">Reportar</string>
+    <string name="see_report">Ver reporte</string>
 
 
 </resources>

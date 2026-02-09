@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -97,6 +99,12 @@ class MapFragment : Fragment() {
                 View.VISIBLE
             val marker = item as Marker
             mSelectedStation = marker.relatedObject as Estacion?
+        }
+
+        override fun onClose() {
+            super.onClose()
+            mView.findViewById<View?>(R.id.bubble_moreinfo)!!.visibility =
+                View.GONE
         }
     }
 
@@ -203,7 +211,10 @@ class MapFragment : Fragment() {
         mapView.isClickable = true
 
         val mapViewController = mapView.controller
+
         locationOverlay = MyLocationNewOverlay(GpsMyLocationProvider(context), mapView)
+        locationOverlay?.setPersonIcon(ContextCompat.getDrawable(requireContext(), R.drawable.mood_48)?.toBitmap())
+        locationOverlay?.setDirectionIcon(ContextCompat.getDrawable(requireContext(), R.drawable.navigation_48)?.toBitmap())
         locationOverlay?.setPersonAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
         mapView.overlays.add(locationOverlay)
         locationOverlay?.enableMyLocation()

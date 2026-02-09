@@ -100,7 +100,6 @@
         android:fontFamily="sans-serif-black"
         android:textAlignment="center"
         android:gravity="center"
-        android:visibility="gone"
         android:text="@string/unregisteredWeeklyActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

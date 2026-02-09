@@ -25,7 +25,7 @@ class TopGlobal : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: TopGlobalViewModel by viewModels()
     private lateinit var adapter: GlobalRankingAdapter
-    private lateinit var categoryAdapter: ArrayAdapter<Categoria>
+    private lateinit var categoryAdapter: CategoriaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,9 +93,23 @@ class TopGlobal : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.obtenerRanking()
+                viewModel.ranking.collect { it ->
+                    if(it.isEmpty()) {
+                        binding.emptyAlternative.visibility = View.VISIBLE;
+                    } else {
+                        binding.emptyAlternative.visibility = View.GONE;
+                    }
+                }
             }
         }
 
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) {
+            viewModel.obtenerRanking()
+        }
     }
 
 

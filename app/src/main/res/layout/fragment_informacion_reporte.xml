@@ -28,7 +28,7 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Informe del reporte"
+                android:text="@string/informe_del_reporte"
                 android:textColor="@color/accent_color"
                 android:textSize="20sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Clasificación reportada como correcta"
+                android:text="@string/clasificacion_reportada_como_correcta"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_thumbnail_reportar_informe" />
@@ -79,7 +79,6 @@
                 android:textColor="@color/texto_normal"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:text="Hola"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/label_clasificacion_reporte_informe" />
@@ -104,7 +103,7 @@
                     android:backgroundTint="@color/texto_rojo"
                     android:gravity="center"
                     android:minHeight="56dp"
-                    android:text="Eliminar reporte"
+                    android:text="@string/button_title_eliminar_reporte"
                     android:textAllCaps="true"
                     android:textColor="@color/texto_oscuro"
                     android:textSize="14sp" />

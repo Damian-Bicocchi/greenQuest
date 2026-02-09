@@ -63,16 +63,16 @@ class AdapterHistorialItem(
 
         when (residuoParticular.estadoReporte) {
             EstadoReporte.SIN_REPORTE -> {
-                holder.botonReportar?.text = "Reportar"
+                holder.botonReportar?.text = holder.botonReportar.context.getString(R.string.report)
+                holder.botonReportar?.setBackgroundColor(
+                    ContextCompat.getColor(holder.view.context, R.color.texto_rojo))
                 holder.botonReportar?.setOnClickListener {
                     onReportClick(residuoParticular)
                 }
             }
             EstadoReporte.REPORTADO -> {
-                holder.botonReportar?.text = "Ver reporte"
+                holder.botonReportar?.text = holder.botonReportar.context.getString(R.string.see_report)
                 holder.botonReportar?.textSize = 10f
-                holder.botonReportar?.setBackgroundColor(
-                    ContextCompat.getColor(holder.view.context, R.color.acento_de_fondo))
 
                 holder.botonReportar?.setOnClickListener {
                     onAlreadyReportedClick(residuoParticular)

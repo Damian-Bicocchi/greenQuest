@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -12,18 +13,25 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:visibility="gone" />
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:padding="5dp"
         android:orientation="vertical" >
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bubble_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:orientation="horizontal" >
             <TextView android:id="@+id/bubble_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/bubble_moreinfo"
                 android:textColor="@color/texto_normal"
                 android:maxEms="17"
                 android:layout_gravity="left"
@@ -35,24 +43,33 @@
                 style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/bubble_title"
+                android:layout_marginLeft="10dp"
                 app:backgroundTint="@color/fondo_secundario"
                 app:icon="@drawable/path_distance"
-                app:iconTint="@color/accent_color"></Button>
-        </LinearLayout>
+                app:iconTint="@color/accent_color" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView android:id="@+id/bubble_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/bubble_header"
+            app:layout_constraintLeft_toLeftOf="@id/bubble_header"
+            app:layout_constraintRight_toRightOf="@id/bubble_header"
             android:textColor="@color/texto_normal"
             android:textSize="12dp"
             android:maxEms="17"
             android:text="Description" />
-        <TextView android:id="@+id/bubble_subdescription"
+        <TextView
+            android:id="@+id/bubble_subdescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/texto_normal"
             android:textSize="10dp"
             android:maxEms="17"
             android:text="Address"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:visibility="gone"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

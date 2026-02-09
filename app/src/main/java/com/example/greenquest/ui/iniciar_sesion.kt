@@ -72,7 +72,7 @@ class iniciar_sesion : ComponentActivity() {
                         Toast.makeText(
                             this@iniciar_sesion,
                             "Inicio de sesión exitoso.",
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_SHORT
                         ).show()
                         startActivity(Intent(this@iniciar_sesion, menu_principal::class.java))
                     } else {

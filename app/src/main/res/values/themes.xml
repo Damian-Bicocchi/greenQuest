@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.GreenQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.GreenQuest" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textColor">@color/texto_normal</item>
         <item name="android:textColorHint">@color/texto_normal</item>
         <item name="materialButtonStyle">@style/Widget.GreenQuest.Button</item>
         <item name="materialButtonOutlinedStyle">@style/Widget.GreenQuest.Button.Outlined</item>
         <item name="popupMenuStyle">@style/Widget.GreenQuest.PopupMenu</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.GreenQuest.MaterialAlertDialog</item>
+        <item name="bottomNavigationStyle">@style/Widget.GreenQuest.BottomNavigationView</item>
+        <item name="android:windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_brand_logo</item>
+        <item name="colorPrimary">@color/accent_color</item>
+        <item name="colorOnPrimary">@color/texto_normal</item>
+        <item name="colorSecondary">@color/accent_color</item>
+        <item name="colorOnSecondary">@color/texto_normal</item>
+        <item name="colorTertiary">@color/accent_color</item>
+        <item name="colorOnTertiary">@color/texto_normal</item>
     </style>
 
-    <style name="Widget.GreenQuest.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+    <style name="Widget.GreenQuest.PopupMenu" parent="Widget.Material3.PopupMenu">
         <item name="android:popupBackground">@drawable/selector_background</item>
     </style>
 
-    <style name="Theme.GreenQuest.ButtonGroupToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Theme.GreenQuest.ButtonGroupToggleButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="strokeColor">@color/fondo_secundario</item>
@@ -23,7 +33,7 @@
         <item name="backgroundTint">@color/button_toggle_group_background_selector</item>
     </style>
 
-    <style name="Theme.GreenQuest.ButtonGroupConnectedButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Theme.GreenQuest.ButtonGroupConnectedButton" parent="Widget.Material3.Button.TextButton">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="strokeColor">@color/fondo_secundario</item>
@@ -33,13 +43,13 @@
         <item name="backgroundTint">@color/button_group_background_selector</item>
     </style>
 
-    <style name="Widget.GreenQuest.Button" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.GreenQuest.Button" parent="Widget.Material3.Button">
         <item name="backgroundTint">@color/accent_color</item>
-        <item name="android:textColor">@color/texto_oscuro</item>
+        <item name="android:textColor">@color/texto_sobre_acento_de_fondo</item>
         <item name="cornerRadius">8dp</item>
     </style>
 
-    <style name="Widget.GreenQuest.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Widget.GreenQuest.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:textColor">@color/accent_color</item>
         <item name="cornerRadius">8dp</item>
     </style>
@@ -48,10 +58,16 @@
         <item name="android:textColor">@color/texto_normal</item>
     </style>
 
-    <style name="BottomNavitation">
-        <item name="android:background" >@color/bottom_navigation_background</item>
-        <item name="itemIconTint">@color/texto_oscuro</item>
-        <item name="itemTextColor">@color/texto_oscuro</item>
+    <style name="Widget.GreenQuest.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.GreenQuest.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.GreenQuest.BottomNavigationView" parent="">
+        <item name="colorOnSurface">@color/texto_oscuro</item>
+        <item name="colorOnSurfaceVariant">@color/texto_oscuro</item>
+        <item name="colorSurfaceContainer">@color/bottom_navigation_background</item>
+        <item name="colorSecondaryContainer">@color/accent_color</item>
+        <item name="colorOnSecondaryContainer">@color/texto_oscuro</item>
     </style>
 
     <style name="ThemeOverlay.GreenQuest.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
@@ -62,5 +78,10 @@
         <item name="alertDialogStyle">@style/MaterialAlertDialog.Material3</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.GreenQuest.Button</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.GreenQuest.Button</item>
+    </style>
+
+    <style name="textTab" parent="TextAppearance.Design.Tab">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:minLines">2</item>
     </style>
 </resources>

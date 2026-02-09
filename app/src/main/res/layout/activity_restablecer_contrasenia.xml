@@ -42,7 +42,7 @@
         android:minHeight="40dp"
         android:gravity="center"
         android:textColor="@color/texto_oscuro"
-        android:background="@color/texto_rojo"
+        android:background="@drawable/red_card"
         android:textSize="24dp"
         android:textStyle="bold"
         android:visibility="invisible"

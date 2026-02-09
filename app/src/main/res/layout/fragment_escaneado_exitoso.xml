@@ -13,7 +13,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="21dp"
-        android:background="@color/texto_verde"
+        android:background="@drawable/secondary_card"
+        android:backgroundTint="@color/texto_verde"
         android:gravity="center"
         android:padding="9dp"
         android:textColor="@color/texto_oscuro"
@@ -31,7 +32,7 @@
         android:id="@+id/layout_centro_denunciar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/fondo_secundario"
+        app:cardBackgroundColor="@color/fondo_secundario"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +45,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/fondo_secundario"
             android:orientation="vertical"
             android:padding="21dp">
 
@@ -65,25 +65,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="2dp"
-                android:background="@color/acento_de_fondo"
+                android:backgroundTint="@color/acento_de_fondo"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="12dp"
                 android:text="@string/button_denunciar_categoria"
                 android:textColor="@color/texto_oscuro"
                 android:layout_gravity="center_horizontal"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="12dp" />
 
             <Button
                 android:id="@+id/button_qr_exitoso_continuar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="@color/accent_color"
+                android:backgroundTint="@color/accent_color"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="12dp"
                 android:text="@string/button_continuar"
                 android:textColor="@color/texto_oscuro"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
