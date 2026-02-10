@@ -44,10 +44,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
                 <TextView
                     android:id="@+id/textviewPrecioArticulo"
@@ -55,10 +57,9 @@
                     android:layout_height="wrap_content"
                     android:autoSizeMaxTextSize="14sp"
                     android:autoSizeMinTextSize="8sp"
-                    app:flow_verticalAlign="center"
                     android:text="@string/placeholder_article_price"
-                    android:textAlignment="center"
                     android:textColor="#000000"
+                    android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
