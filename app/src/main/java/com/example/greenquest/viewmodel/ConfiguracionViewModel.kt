@@ -10,7 +10,7 @@ class ConfiguracionViewModel: ViewModel() {
     suspend fun cerrarSesion(): Result<Unit> {
         val usuarioLocal = UsuarioRepository.obtenerUsuarioLocal()
         if (usuarioLocal != null) {
-            UsuarioRepository.eliminarUsuarioLocal(usuarioLocal)
+            UsuarioRepository.desactivarSesionUsuarioLocal(usuarioLocal)
         }
         LogroProvider.cerrarSesionLogros()
         TiendaAdquiridosRepository.limpiarSesion()

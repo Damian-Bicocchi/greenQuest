@@ -29,7 +29,7 @@ class InicioSesionModel: ViewModel() {
                 val response = UsuarioRepository.login(userName,password)
 
                 if(!response.isSuccessful){
-                    _status.value = "Usuario o contraseÃ±a incorrectos"
+                    _status.value = "Usuario o contraseña incorrectos"
                     return@launch
                 }
                 val body = response.body()
@@ -42,6 +42,7 @@ class InicioSesionModel: ViewModel() {
                 TokenDataStoreProvider.get().saveRefreshToken(body.refresh)
 
                 val id = UsuarioRepository.getUserProfile()
+
                 UsuarioRepository.guardarUsuarioLocal(
                     User(
                         uid = id.id!!,
@@ -52,7 +53,7 @@ class InicioSesionModel: ViewModel() {
                         descripcion = null
                     )
                 )
-                UsuarioRepository.cantReciduosUsuario(id.id)
+                UsuarioRepository.cantResiduosUsuario(id.id)
                 _status.value = "OK"
             }catch (e: Exception){
                 Log.d("InicioSesionModel", "Error de conexion", e)

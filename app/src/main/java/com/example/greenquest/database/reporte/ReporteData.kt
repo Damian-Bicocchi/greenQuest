@@ -38,7 +38,7 @@ data class ReporteData(
     val idImagenReportada: Long = 0,
 
     @ColumnInfo(name = "image_data")
-    val imageData: ByteArray,
+    val imageData: String,
 
     @ColumnInfo(name = "clasificacion_usuario")
     val clasificacionUsuario: TipoResiduo,
@@ -54,24 +54,4 @@ data class ReporteData(
 
     @ColumnInfo("fk_id_historial_residuo_reportado")
     val fkIdHistorialResiduoReportado: Long
-) {
-    override fun equals(other: Any?): Boolean {
-        // Codigo generado por el IDE
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ReporteData
-
-        if (idImagenReportada != other.idImagenReportada) return false
-        if (!imageData.contentEquals(other.imageData)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        // Codigo generado por el IDE
-        var result = idImagenReportada.hashCode()
-        result = 31 * result + imageData.contentHashCode()
-        return result
-    }
-}
+)

@@ -1,21 +1,16 @@
 package com.example.greenquest.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.greenquest.R
 import com.example.greenquest.adapters.AdapterArticulo
-import com.example.greenquest.adapters.AdapterLogro
-import com.example.greenquest.database.user.User
-import com.example.greenquest.repository.UsuarioRepository
-import kotlinx.coroutines.launch
-import com.example.greenquest.databinding.*
+import com.example.greenquest.databinding.FragmentTiendaBinding
 import com.example.greenquest.viewmodel.TiendaViewModel
+import kotlinx.coroutines.launch
 
 class TiendaFragment : Fragment() {
 

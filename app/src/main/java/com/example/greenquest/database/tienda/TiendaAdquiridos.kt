@@ -1,4 +1,4 @@
-package com.example.greenquest.database
+package com.example.greenquest.database.tienda
 
 import androidx.room.*
 

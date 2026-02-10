@@ -2,6 +2,7 @@ package com.example.greenquest
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.*
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.*
@@ -31,14 +32,14 @@ class LauncherActivity: ComponentActivity() {
 
             // Sí, sin este choclo, no cierra la sesión si el token falla en autenticar.
             if (accessToken == null || refreshToken == null || usuarioLocal == null) {
-                usuarioLocal?.let { UsuarioRepository.eliminarUsuarioLocal(it) }
+                usuarioLocal?.let { UsuarioRepository.desactivarSesionUsuarioLocal(it) }
                 TokenDataStoreProvider.get().clearAllTokens()
                 startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
             } else {
                 try{
                     startActivity(Intent(this@LauncherActivity, menu_principal::class.java))
                 } catch (_: Exception){
-                    usuarioLocal.let { UsuarioRepository.eliminarUsuarioLocal(it) }
+                    usuarioLocal.let { UsuarioRepository.desactivarSesionUsuarioLocal(it) }
                     TokenDataStoreProvider.get().clearAllTokens()
                     startActivity(Intent(this@LauncherActivity, iniciar_sesion::class.java))
                 }
