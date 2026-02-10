@@ -98,12 +98,12 @@ object UsuarioRepository {
     }
 
     suspend fun obtenerUsuarioLocal(): User?{
-        if (usuario == null) {
-            return withContext(Dispatchers.IO) {
-                userDao.getFirstUser()
+        return if (usuario == null) {
+            withContext(Dispatchers.IO) {
+                userDao.getActiveUser()
             }
         }else{
-            return usuario
+            usuario
         }
     }
 
@@ -111,6 +111,8 @@ object UsuarioRepository {
     suspend fun guardarUsuarioLocal(user: User){
         withContext(Dispatchers.IO) {
             userDao.insert(user)
+            user.sesion_activa = true
+            userDao.updateUser(user)
         }
         usuario = user
     }
@@ -123,10 +125,17 @@ object UsuarioRepository {
         }
     }
 
+    suspend fun desactivarSesionUsuarioLocal(user: User){
+        usuario = null
+        withContext(Dispatchers.IO){
+            userDao.logoutUser(user.uid)
+        }
+    }
 
-    suspend fun cantReciduosUsuario(id : Int){
+
+    suspend fun cantResiduosUsuario(id : Int){
         try{
-            val recursosReciclados = api.cantReciduosUsuario(id)
+            val recursosReciclados = api.cantResiduosUsuario(id)
             val usuario = obtenerUsuarioLocal()
             if (usuario != null) {
                 for (item in recursosReciclados) {
@@ -155,7 +164,7 @@ object UsuarioRepository {
 
     suspend fun obtenerIdUsuarioActual(): Int {
         val id = withContext(Dispatchers.IO){
-            userDao.getFirstUser()?.uid ?: -1
+            userDao.getActiveUser()?.uid ?: -1
         }
         return id
     }

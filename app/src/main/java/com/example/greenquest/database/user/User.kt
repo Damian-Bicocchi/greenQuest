@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.greenquest.apiParameters.TipoResiduo
-import com.example.greenquest.database.TiendaAdquiridos
 
 @Entity
 data class User(
@@ -20,6 +19,7 @@ data class User(
     @ColumnInfo(name= "cant_vidrio", defaultValue = "0") var cant_vidrio: Int = 0,
     @ColumnInfo(name = "cant_plastico", defaultValue = "0") var cant_plastico: Int = 0,
     @ColumnInfo(name = "imagen") var imagen: Int? = null,
+    @ColumnInfo(name = "sesion_activa") var sesion_activa: Boolean = false,
     @ColumnInfo(name = "articulos_adquiridos") var articulos_adquiridos: MutableList<Int> = mutableListOf()
 
 ){

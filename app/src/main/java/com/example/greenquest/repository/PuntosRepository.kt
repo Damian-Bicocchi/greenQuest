@@ -5,6 +5,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+@Deprecated("Sin uso en la aplicación actualmente")
 object PuntosRepository{
     private val userDao by lazy {
         GreenQuestApp.instance.database.userDao()
@@ -13,7 +14,7 @@ object PuntosRepository{
 
     suspend fun getPuntaje() {
         withContext(ioDispatcher) {
-            userDao.getFirstUser()?.puntos ?: 0
+            userDao.getActiveUser()?.puntos ?: 0
         }
     }
 

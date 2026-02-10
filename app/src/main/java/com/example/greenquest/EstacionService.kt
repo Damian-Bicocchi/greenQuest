@@ -29,7 +29,7 @@ interface EstacionService {
     suspend fun getUserData(): UserInfoResponse
 
     @GET("residuos/{id_user}/")
-    suspend fun cantReciduosUsuario(
+    suspend fun cantResiduosUsuario(
         @Path("id_user") id: Int
     ): List<RecursoRecicladoDTO>
     @GET("puntos/")

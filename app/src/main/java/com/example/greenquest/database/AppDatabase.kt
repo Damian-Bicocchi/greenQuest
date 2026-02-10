@@ -12,6 +12,9 @@ import com.example.greenquest.dao.TriviaDao
 import com.example.greenquest.dao.UserDao
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.reporte.ReporteData
+import com.example.greenquest.database.tienda.CompraArticulo
+import com.example.greenquest.database.tienda.TiendaAdquiridos
+import com.example.greenquest.database.tienda.TiendaConArticulos
 import com.example.greenquest.database.trivia.OpcionesTrivia
 import com.example.greenquest.database.trivia.PreguntaTrivia
 import com.example.greenquest.database.trivia.RespuestaUsuario
@@ -24,7 +27,8 @@ import com.example.greenquest.database.trivia.RespuestaUsuario
         RespuestaUsuario::class,
         HistorialResiduo::class,
         TiendaAdquiridos::class,
-        ReporteData::class],
+        ReporteData::class,
+        CompraArticulo::class],
     version = 9,
     exportSchema = false
 )
