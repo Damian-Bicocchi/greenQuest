@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import com.example.greenquest.R
 import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.Articulo
+import com.example.greenquest.database.tienda.Articulo
 import com.example.greenquest.databinding.FilaFotosPerfilBinding
 
 class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<AdapterImagen.ViewHolder>() {

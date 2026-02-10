@@ -201,7 +201,7 @@ class ReportarFragment : Fragment() {
 
             fullImageBitmap?.let {
                 bitmap ->
-                reporteViewModel.processReport(idResiduo = idResiduo, imageData = bitmap)
+                reporteViewModel.processReport(idResiduo = idResiduo, imageData = bitmap, requireContext())
             } ?: run {
 
                 mostrarDialogoFallido("Debe tomar primero una foto del residuo")

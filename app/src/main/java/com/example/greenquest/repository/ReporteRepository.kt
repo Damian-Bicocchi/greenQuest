@@ -1,5 +1,6 @@
 package com.example.greenquest.repository
 
+import android.content.Context
 import android.graphics.Bitmap
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
@@ -8,6 +9,8 @@ import com.example.greenquest.states.reporte.EstadoReporte
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.time.OffsetDateTime
 
 object ReporteRepository {
@@ -18,19 +21,21 @@ object ReporteRepository {
         GreenQuestApp.instance.database.historialResiduoDao()
     }
 
-    suspend fun insertarReporte(imageData: Bitmap, clasificacionUsuario: TipoResiduo, idResiduo: String){
+    suspend fun insertarReporte(context: Context, imageData: Bitmap, clasificacionUsuario: TipoResiduo, idResiduo: String) {
+        withContext(Dispatchers.IO) {
+            val fileName = "reporte_${idResiduo}_${System.currentTimeMillis()}.jpg"
+            val file = File(context.filesDir, fileName)
 
-        withContext(Dispatchers.IO){
-            val baos = ByteArrayOutputStream()
-            imageData.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            FileOutputStream(file).use { out ->
+                imageData.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            }
 
-            val fkIdHistorialResiduo =
-                EstadisticasRepository.obtenerIdHistorialDeIdResiduo(idResiduo = idResiduo)
-                    ?: return@withContext
+            val fkIdHistorialResiduo = EstadisticasRepository.obtenerIdHistorialDeIdResiduo(idResiduo) ?: return@withContext
+
             imageReportDao.insertImage(
                 ReporteData(
                     idImagenReportada = 0,
-                    imageData = baos.toByteArray(),
+                    imageData = file.absolutePath,
                     clasificacionUsuario = clasificacionUsuario,
                     fecha = OffsetDateTime.now(),
                     idUsuarioReporte = UsuarioRepository.obtenerIdUsuarioActual(),
@@ -39,10 +44,7 @@ object ReporteRepository {
                 )
             )
 
-            historialResiduoDao.actualizarEstadoReporte(
-                fkIdHistorialResiduo, EstadoReporte.REPORTADO
-            )
-
+            historialResiduoDao.actualizarEstadoReporte(fkIdHistorialResiduo, EstadoReporte.REPORTADO)
         }
     }
 

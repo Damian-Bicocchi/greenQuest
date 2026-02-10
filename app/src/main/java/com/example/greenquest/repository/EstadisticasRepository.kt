@@ -1,5 +1,6 @@
 package com.example.greenquest.repository
 
+import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
@@ -22,11 +23,13 @@ object EstadisticasRepository {
 
     suspend fun insertarResiduoAlHistorial(payload: QrPayloadResiduo){
         withContext(Dispatchers.IO){
+            val idUsuario = UsuarioRepository.obtenerIdUsuarioActual()
+            if (idUsuario == -1)return@withContext
             historialResiduoDao.insertarResiduoAlHistorial(
                 HistorialResiduo(
                     historialResiduoId = 0,
                     idResiduo = payload.idResiduo,
-                    idUsuario = UsuarioRepository.getUserProfile().id!!,
+                    idUsuario = UsuarioRepository.obtenerIdUsuarioActual(),
                     fecha = OffsetDateTime.now(),
                     tipoResiduo = payload.tipoResiduo,
                     puntosDados = payload.puntaje

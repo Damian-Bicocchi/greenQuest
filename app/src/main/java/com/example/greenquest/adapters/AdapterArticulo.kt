@@ -1,19 +1,13 @@
 package com.example.greenquest.adapters
 
 
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.collection.buildIntFloatMap
 import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.Articulo
 import com.example.greenquest.R
+import com.example.greenquest.database.tienda.Articulo
 import com.example.greenquest.databinding.FilaTiendaBinding
 import com.example.greenquest.viewmodel.TiendaViewModel
-import androidx.lifecycle.lifecycleScope
-import com.google.android.datatransport.runtime.ExecutionModule_ExecutorFactory.executor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,11 +21,7 @@ class AdapterArticulo(val listaArticulo: List<Articulo>,
     private val tiendaViewModel = TiendaViewModel()
 
 
-    inner class ViewHolder(binding : FilaTiendaBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        val binding = binding
-
-    }
+    class ViewHolder(val binding: FilaTiendaBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
