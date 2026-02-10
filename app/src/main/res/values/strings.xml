@@ -160,6 +160,10 @@
     <string name="report">Reportar</string>
     <string name="see_report">Ver reporte</string>
     <string name="profile_image">Imagen de Perfil</string>
+    <string name="placeholder_article_name">Nombre de un articulo</string>
+    <string name="placeholder_article_price">100000</string>
+    <string name="placeholder_article_image_description">Imagen Artículo</string>
+    <string name="score_image">Imagen de puntos</string>
 
 
 </resources>
