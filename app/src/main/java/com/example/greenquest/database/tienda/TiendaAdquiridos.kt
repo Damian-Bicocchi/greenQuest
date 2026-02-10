@@ -1,11 +1,10 @@
 package com.example.greenquest.database.tienda
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity
 data class TiendaAdquiridos(
     @PrimaryKey val userId: Int,
+    @ColumnInfo(name = "articulos_adquiridos") var articulosAdquiridos: MutableList<Int> = mutableListOf(),
     @ColumnInfo(name = "monedas_obtenidas") var monedasObtenidas: Int = 0
 )

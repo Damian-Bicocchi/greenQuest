@@ -5,16 +5,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.R
+import com.example.greenquest.database.tienda.Articulo
 import com.example.greenquest.databinding.FilaTiendaBinding
 import com.example.greenquest.viewmodel.TiendaViewModel
-import com.example.greenquest.database.tienda.ArticuloTiendaUI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AdapterArticulo(
-    val listaArticulo: MutableList<ArticuloTiendaUI>,
-    private val onCompraExitosa: () -> Unit
+class AdapterArticulo(val listaArticulo: List<Articulo>,
+                      private val onCompraExitosa: () -> Unit
 ) : RecyclerView.Adapter<AdapterArticulo.ViewHolder>() {
 
     private var adapterScope = CoroutineScope(Dispatchers.Main)
@@ -41,8 +40,8 @@ class AdapterArticulo(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = listaArticulo[position]
 
-        holder.binding.imagenArticulo.setImageResource(item.articulo.imagen ?: R.drawable.podium)
-        holder.binding.nombreArticuloTienda.text = item.articulo.nombre
+        holder.binding.imagenArticulo.setImageResource(item.imagen ?: R.drawable.podium)
+        holder.binding.nombreArticuloTienda.text = item.nombre
 
         holder.binding.nombreArticuloTienda.alpha = 1f
         holder.binding.imagenArticulo.alpha = 1f
@@ -58,7 +57,7 @@ class AdapterArticulo(
                 Toast.makeText(holder.itemView.context, "Ya has adquirido este artículo", Toast.LENGTH_SHORT).show()
             }
         } else {
-            holder.binding.textviewPrecioArticulo.text = "${item.articulo.valor}"
+            holder.binding.textviewPrecioArticulo.text = "${item.valor}"
 
             holder.binding.textviewPrecioArticulo.setOnClickListener {
 
@@ -66,7 +65,7 @@ class AdapterArticulo(
                 if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
 
                 adapterScope.launch {
-                    if (tiendaViewModel.comprarArticulo(listaArticulo[pos].articulo)) {
+                    if (tiendaViewModel.comprarArticulo(listaArticulo[pos])) {
 
                         notifyItemChanged(pos)
 

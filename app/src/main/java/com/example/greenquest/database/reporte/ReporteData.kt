@@ -17,7 +17,7 @@ import java.time.OffsetDateTime
             entity = User::class,
             parentColumns = ["uid"],
             childColumns = ["id_usuario_reporte"],
-            onDelete = ForeignKey.NO_ACTION
+            onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = HistorialResiduo::class,
