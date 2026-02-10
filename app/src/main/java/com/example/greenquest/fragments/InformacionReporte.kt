@@ -56,7 +56,10 @@ class InformacionReporte : Fragment() {
         lifecycleScope.launch {
             imagenReporte.setImageDrawable(
                 reporteViewModel
-                    .obtenerImagenReporte(args.reporteArgumentos.idResiduo)
+                    .obtenerImagenReporte(
+                        requireContext(),
+                        idResiduo = args.reporteArgumentos.idResiduo
+                    )
             )
         }
 

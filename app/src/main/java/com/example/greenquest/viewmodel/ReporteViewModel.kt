@@ -1,5 +1,6 @@
 package com.example.greenquest.viewmodel
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -16,6 +17,10 @@ import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.states.reporte.EstadoReporteUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import androidx.core.graphics.drawable.toDrawable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 
 class ReporteViewModel : ViewModel(){
     private val _reportState = MutableLiveData<EstadoReporte>()
@@ -28,7 +33,7 @@ class ReporteViewModel : ViewModel(){
 
 
 
-    fun processReport(idResiduo: String, imageData: Bitmap){
+    fun processReport(idResiduo: String, imageData: Bitmap, context: Context){
 
         if (!validarReporte(idResiduo, imageData)) return
 
@@ -37,7 +42,9 @@ class ReporteViewModel : ViewModel(){
                 ReporteRepository.insertarReporte(
                     imageData = imageData,
                     clasificacionUsuario = _tipoResiduoSeleccionado.value!!,
-                    idResiduo = idResiduo)
+                    idResiduo = idResiduo,
+                    context = context
+                )
                 _reporteUIState.value = EstadoReporteUI.Reportado
             } catch (e: Exception){
                 Log.e("greenQuest",
@@ -91,24 +98,30 @@ class ReporteViewModel : ViewModel(){
         return reporte.clasificacionUsuario
     }
 
-    suspend fun obtenerImagenReporte(idResiduo: String): Drawable? {
+    suspend fun obtenerImagenReporte(context: Context, idResiduo: String): Drawable? {
         if (idResiduo.isEmpty()) return null
 
         val reporte = ReporteRepository.obtenerReporte(idResiduo = idResiduo) ?: return null
 
-        val imagenByteArray = reporte.imageData
-        if (imagenByteArray.isEmpty()) return null
+        val path = reporte.imageData
+        if (path.isEmpty()) return null
 
         return try {
-            val bitmap = BitmapFactory.decodeByteArray(
-                imagenByteArray, 0, imagenByteArray.size)
-            // Convertir Bitmap a Drawable
-            BitmapDrawable(Resources.getSystem(), bitmap)
+            withContext(Dispatchers.IO) {
+                val file = File(path)
+                if (!file.exists()) return@withContext null
+
+                // 4. Decode the file into a Bitmap
+                val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+
+                // 5. Convert to Drawable
+                // Use context.resources instead of Resources.getSystem() for correct density scaling
+                bitmap?.toDrawable(context.resources)
+            }
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("greenQuest", "Error decoding image file: $e")
             null
         }
-
     }
 
 

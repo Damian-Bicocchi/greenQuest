@@ -25,6 +25,11 @@ class ArticulosProvider {
                 }
             }
         }
+        fun cerrarSesionArticulos() {
+            for (articulo in articulosTienda) {
+                articulo.adquirido = false
+            }
+        }
     }
 
 }
