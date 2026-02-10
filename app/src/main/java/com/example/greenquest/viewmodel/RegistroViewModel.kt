@@ -64,7 +64,7 @@ class RegistroViewModel : ViewModel() {
             }
 
         } catch (e: Exception) {
-            Log.e("RegistroViewModel", e.message.toString())
+            Log.e("greenQuest", e.message.toString())
             emit("Error de conexión con el servidor")
         }
     }

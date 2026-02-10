@@ -6,19 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.repository.EstadisticasRepository
-import com.example.greenquest.repository.LogrosRepository
 import com.example.greenquest.repository.ScannerRepository
 import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 import com.example.greenquest.states.ScanState
-import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -73,11 +68,11 @@ class EscanearModel: ViewModel() {
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e("escanearLogging", "Hubo un error en process Image -> $e")
+                        Log.e("greenQuest", "Hubo un error en process Image -> $e")
                     }
                 }
             } catch (e: Exception) {
-                Log.e("escanearLogging", "LA excepecion ocurre en linea 70 $e")
+                Log.e("greenQuest", "LA excepecion ocurre en linea 70 $e")
             } finally {
                 onFinished()
             }

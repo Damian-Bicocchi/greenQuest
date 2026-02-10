@@ -1,13 +1,8 @@
 package com.example.greenquest.repository
 
-import android.util.Log
 import com.example.greenquest.GreenQuestApp
-import com.example.greenquest.dao.TiendaDao
-import com.example.greenquest.database.AppDatabase
+import com.example.greenquest.Provider.ArticulosProvider
 import com.example.greenquest.database.TiendaAdquiridos
-import com.example.greenquest.database.user.User
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 object TiendaAdquiridosRepository {
 
@@ -48,7 +43,7 @@ object TiendaAdquiridosRepository {
         if (adquiridos != null && adquiridos.monedasObtenidas >= cantidadMonedas){
             adquiridos.monedasObtenidas -= cantidadMonedas
             adquiridos.articulosAdquiridos.add(idArticulo)
-            Log.d("TIENDA", "Articulo ${idArticulo} comprado. Monedas restantes: ${adquiridos.monedasObtenidas} y ids Comprados ${adquiridos.articulosAdquiridos}")
+            //Log.d("TIENDA", "Articulo ${idArticulo} comprado. Monedas restantes: ${adquiridos.monedasObtenidas} y ids Comprados ${adquiridos.articulosAdquiridos}")
             tiendaDao.actualizarTienda(adquiridos)
             tiendaUsuario = adquiridos
             return true
@@ -67,5 +62,6 @@ object TiendaAdquiridosRepository {
     }
     fun limpiarSesion() {
         tiendaUsuario = null
+        ArticulosProvider.cerrarSesionArticulos()
     }
 }

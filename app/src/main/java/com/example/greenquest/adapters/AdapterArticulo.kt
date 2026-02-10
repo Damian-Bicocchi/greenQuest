@@ -67,7 +67,7 @@ class AdapterArticulo(val listaArticulo: List<Articulo>,
                 Toast.makeText(holder.itemView.context, "Ya has adquirido este artículo", Toast.LENGTH_SHORT).show()
             }
         } else {
-            holder.binding.textviewPrecioArticulo.text = "${item.valor} puntos"
+            holder.binding.textviewPrecioArticulo.text = "${item.valor}"
 
             holder.binding.textviewPrecioArticulo.setOnClickListener {
 

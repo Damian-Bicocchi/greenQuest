@@ -6,20 +6,16 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
-import androidx.compose.runtime.retain.retain
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.greenquest.apiParameters.TipoResiduo
-import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.repository.ReporteRepository
 import com.example.greenquest.states.reporte.EstadoReporte
 import com.example.greenquest.states.reporte.EstadoReporteUI
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ReporteViewModel : ViewModel(){
     private val _reportState = MutableLiveData<EstadoReporte>()
@@ -44,7 +40,7 @@ class ReporteViewModel : ViewModel(){
                     idResiduo = idResiduo)
                 _reporteUIState.value = EstadoReporteUI.Reportado
             } catch (e: Exception){
-                Log.e("reporteLogging",
+                Log.e("greenQuest",
                     "Excepción en processReport $e")
             }
         }

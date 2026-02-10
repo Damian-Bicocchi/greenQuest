@@ -17,7 +17,6 @@ class TriviaDataLoader() {
 
                 Gson().fromJson(jsonString, TriviaMetadata::class.java)
             } catch (e: Exception) {
-                Log.e("triviaLogging", "Error cargando el json de preguntas: ${e.message}")
 
                 throw Exception("Error cargando el json de preguntas: ${e.message}", e)
             }
@@ -34,7 +33,6 @@ class TriviaDataLoader() {
                 val trivia = gson.fromJson(jsonString, TriviaMetadata::class.java)
                 return@withContext trivia.version
             } catch (e: Exception) {
-                Log.e("triviaLogging", "hubo error $e al parsear el json")
                 return@withContext -1
             }
         }

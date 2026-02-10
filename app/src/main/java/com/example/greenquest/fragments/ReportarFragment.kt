@@ -68,8 +68,6 @@ class ReportarFragment : Fragment() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             processCameraResult()
-        } else {
-            Log.d("reporteLogging", "El resultado de la activity fue X")
         }
     }
 
@@ -77,7 +75,7 @@ class ReportarFragment : Fragment() {
         val photoFile: File? = try {
             createImageFile()
         } catch (ex: IOException) {
-            Log.e("Camera", "Error creando archivo de imagen", ex)
+            Log.e("greenQuest", "Error creando archivo de imagen", ex)
             null
         }
 
@@ -243,7 +241,7 @@ class ReportarFragment : Fragment() {
                 }
             }
         } catch (e: Exception) {
-            Log.e("Camera", "Error procesando el resultado de la cámara $e", e)
+            Log.e("greenQuest", "Error procesando el resultado de la cámara $e", e)
         }
     }
 
@@ -419,10 +417,7 @@ class ReportarFragment : Fragment() {
     private fun observeViewModel() {
         reporteViewModel.reporteUIState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                EstadoReporteUI.SinReporte -> {
-
-                    Log.d("reporteLogging","Sin cambios")
-                }
+                EstadoReporteUI.SinReporte -> {}
                 EstadoReporteUI.Reportado -> {
                     mostrarDialogoExitoso()
                 }
@@ -448,7 +443,6 @@ class ReportarFragment : Fragment() {
     }
 
     private fun mostrarDialogoFallido(mensaje : String){
-        Log.d("reporteLogging", "Mostrar Dialogo Fallido")
         AlertDialog.Builder(requireContext())
             .setTitle("Reporte fallido")
             .setMessage(mensaje)

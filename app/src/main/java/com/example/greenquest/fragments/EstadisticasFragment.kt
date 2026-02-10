@@ -1,7 +1,6 @@
 package com.example.greenquest.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,13 +88,8 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                 }
             }
 
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-                Log.d("estadisticasLogging", "onTabUnselected")
-
-            }
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                Log.d("estadisticasLogging", "onTabReselected")
-            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
         })
 
         tabsLineChart.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
@@ -116,7 +110,7 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
                 launch {
                     estadisticaViewModel.obtenerResiduosEnEstado()
                     estadisticaViewModel.residuos.collect { lista: List<HistorialResiduo> ->
-                        val listaFinal = if (lista.size > 3) lista.subList(0, 2) else lista
+                        val listaFinal = if (lista.size > 3) lista.subList(0, 3) else lista
 
                         val adapterHistorialItem = AdapterHistorialItem(
                             listaFinal,
@@ -349,7 +343,6 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
             val date = inputFormat.parse(dateString)
             outputFormat.format(date ?: Date())
         } catch (_: Exception) {
-            Log.e("estadisticasLogging", "Hubo error en linea 395")
             return dateString
         }
     }
