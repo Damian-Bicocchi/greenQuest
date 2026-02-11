@@ -2,12 +2,8 @@ package com.example.greenquest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
-import com.example.greenquest.Articulo
 import com.example.greenquest.Provider.ArticulosProvider
-import com.example.greenquest.R
-import com.example.greenquest.adapters.AdapterArticulo
-import com.example.greenquest.database.user.User
+import com.example.greenquest.database.tienda.Articulo
 import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
 

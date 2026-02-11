@@ -57,7 +57,7 @@ class TokenAuthenticator(
         runBlocking {
             tokenStore.clearAllTokens()
             UsuarioRepository.obtenerUsuarioLocal()
-                ?.let { UsuarioRepository.eliminarUsuarioLocal(it) }
+                ?.let { UsuarioRepository.desactivarSesionUsuarioLocal(it) }
         }
     }
 }

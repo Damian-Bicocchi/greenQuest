@@ -10,10 +10,28 @@ interface UserDao {
     @Query("SELECT * FROM user LIMIT 1")
     fun getFirstUser(): User?
 
+    @Query(
+        """
+        SELECT *
+        FROM user
+        WHERE sesion_activa = 1
+    """
+    )
+    fun getActiveUser(): User?
+
+    @Query("""
+        UPDATE user
+        SET sesion_activa = 0
+        WHERE uid = :idUsuario
+    """)
+    fun logoutUser(idUsuario: Int)
+
+
+
     @Delete
     fun delete(user: User)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(user: User)
 
     @Update
@@ -22,7 +40,7 @@ interface UserDao {
     @Transaction
     suspend fun incrementarPuntos(addPuntos: Int) {
         if (addPuntos <= 0) return
-        val currentUser = getFirstUser()
+        val currentUser = getActiveUser()
         if (currentUser != null) {
             val nuevosPuntos = currentUser.puntos + addPuntos
             currentUser.puntos = nuevosPuntos

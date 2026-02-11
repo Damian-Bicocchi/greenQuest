@@ -53,7 +53,8 @@ class EscanearModel: ViewModel() {
 
                             // Crear elemento del historial
                             EstadisticasRepository.insertarResiduoAlHistorial(payload)
-                            TiendaAdquiridosRepository.addMonedas(payload.puntaje, UsuarioRepository.obtenerUsuarioLocal()!!.uid)
+                            TiendaAdquiridosRepository.addMonedas(payload.puntaje,
+                                UsuarioRepository.obtenerIdUsuarioActual())
                             UsuarioRepository.incrementarCantidadResiduoLocal(payload.tipoResiduo)
 
 

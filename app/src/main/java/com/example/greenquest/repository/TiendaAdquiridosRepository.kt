@@ -1,8 +1,9 @@
 package com.example.greenquest.repository
 
+import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.Provider.ArticulosProvider
-import com.example.greenquest.database.TiendaAdquiridos
+import com.example.greenquest.database.tienda.TiendaAdquiridos
 
 object TiendaAdquiridosRepository {
 
@@ -35,12 +36,13 @@ object TiendaAdquiridosRepository {
 
     suspend fun addMonedas(cantidadMonedas: Int, idUsuario: Int) {
         tiendaDao.addMonedas(cantidadMonedas, idUsuario)
+        Log.d("monedasLogging", "Se le agregan $cantidadMonedas al usuario $idUsuario")
         tiendaUsuario = tiendaDao.obtenerTiendaPorUsuario(idUsuario)
     }
 
     suspend fun comprarArticulo (cantidadMonedas: Int, idArticulo : Int, idUsuario: Int) : Boolean{
         val adquiridos = obtenerTiendaPorUsuario(idUsuario)
-        if (adquiridos != null && adquiridos.monedasObtenidas >= cantidadMonedas){
+        if (adquiridos.monedasObtenidas >= cantidadMonedas){
             adquiridos.monedasObtenidas -= cantidadMonedas
             adquiridos.articulosAdquiridos.add(idArticulo)
             //Log.d("TIENDA", "Articulo ${idArticulo} comprado. Monedas restantes: ${adquiridos.monedasObtenidas} y ids Comprados ${adquiridos.articulosAdquiridos}")
@@ -53,12 +55,12 @@ object TiendaAdquiridosRepository {
 
     suspend fun obtenerMonedasUsuario(idUsuario : Int) : Int {
         val adquiridos = obtenerTiendaPorUsuario(idUsuario)
-        return adquiridos?.monedasObtenidas ?: 0
+        return adquiridos.monedasObtenidas
     }
 
     suspend fun obtenerArticulosAdquiridosUsuario(idUsuario : Int) : List<Int> {
         val adquiridos = obtenerTiendaPorUsuario(idUsuario)
-        return adquiridos?.articulosAdquiridos ?: emptyList()
+        return adquiridos.articulosAdquiridos
     }
     fun limpiarSesion() {
         tiendaUsuario = null
