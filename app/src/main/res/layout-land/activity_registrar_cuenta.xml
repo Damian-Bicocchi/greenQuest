@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo_primario"
-    android:padding="5dp">
+    android:padding="15dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/registro_layout"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardRegister"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cardRegister"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.4"
             >
             <TextView
                 android:id="@+id/registrar_cuenta"
@@ -23,12 +24,13 @@
                 android:text="@string/label_registrar_cuenta"
                 android:textColor="@color/texto_normal"
                 android:textSize="32dp"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
                 android:id="@+id/descripcion_bienvenida"
-                android:layout_width="277dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/bienvenido_registrar_cuenta"
@@ -43,17 +45,16 @@
             android:id="@+id/cardRegister"
             app:cardBackgroundColor="@color/fondo_secundario"
             app:cardCornerRadius="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registro_layout"
-            app:layout_constraintWidth_percent="0.9">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/registro_layout"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/fondo_secundario"
                 android:orientation="vertical"
                 android:padding="20dp">
