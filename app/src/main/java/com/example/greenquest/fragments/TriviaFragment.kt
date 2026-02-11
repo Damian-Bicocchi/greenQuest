@@ -34,8 +34,8 @@ class TriviaFragment : Fragment() {
 
     private fun showGameFinished() {
         binding.triviaPreguntaTexto.text = getString(R.string.every_question_right)
-        binding.containerOpciones.visibility = View.INVISIBLE
-        binding.botonResponder.visibility = View.INVISIBLE
+        binding.containerOpciones.visibility = View.GONE
+        binding.botonResponder.visibility = View.GONE
     }
 
     private fun mostrarPregunta(preguntaConOpciones: PreguntaConOpciones){
