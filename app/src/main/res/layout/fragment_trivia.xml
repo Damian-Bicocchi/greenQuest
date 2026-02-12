@@ -62,11 +62,12 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:backgroundTint="@color/accent_color"
                 android:text="@string/button_responder_pregunta"
                 android:textAllCaps="true"
+                android:textColor="@color/texto_sobre_acento_de_fondo"
                 android:textSize="16sp"
-                app:cornerRadius="12dp"
-                android:backgroundTint="@color/accent_color"/>
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
