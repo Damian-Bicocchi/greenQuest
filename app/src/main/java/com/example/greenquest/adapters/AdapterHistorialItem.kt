@@ -21,8 +21,8 @@ class AdapterHistorialItem(
     val listaResiduos: List<HistorialResiduo>,
     private val onReportClick: (HistorialResiduo) -> Unit,
     private val onAlreadyReportedClick: (HistorialResiduo) -> Unit
-) : RecyclerView.Adapter<AdapterHistorialItem.viewHolder>() {
-    class viewHolder(val view: View): RecyclerView.ViewHolder(view) {
+) : RecyclerView.Adapter<AdapterHistorialItem.RecyclerViewHolder>() {
+    class RecyclerViewHolder(val view: View): RecyclerView.ViewHolder(view) {
         val iconoLogoResiduo: ImageView? = view.findViewById<ImageView>(R.id.icono_imagen_reporte)
         val textoNombreResiduo: TextView? = view.findViewById<TextView>(R.id.texto_reportado_como)
         val textoFechaResiduo: TextView? = view.findViewById<TextView>(R.id.texto_fecha_reporte)
@@ -36,13 +36,13 @@ class AdapterHistorialItem(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): viewHolder {
+    ): RecyclerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.fila_residuo_historial, parent, false)
         this.parent = parent
-        return viewHolder(view = view)
+        return RecyclerViewHolder(view = view)
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val residuoParticular = listaResiduos[position]
         holder.iconoLogoResiduo?.setImageDrawable(getLogoParaTipoResiduo(residuoParticular.tipoResiduo, holder))
         val fechaFormateada = residuoParticular.fecha?.let { fecha ->
@@ -90,7 +90,7 @@ class AdapterHistorialItem(
 
     }
 
-    private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo, holder: viewHolder): Drawable? {
+    private fun getLogoParaTipoResiduo(tipoResiduo: TipoResiduo, holder: RecyclerViewHolder): Drawable? {
         holder.iconoLogoResiduo?.contentDescription = "Logo de " + tipoResiduo.name
         val drawableId = when(tipoResiduo){
             TipoResiduo.CARTON -> R.drawable.ic_carton

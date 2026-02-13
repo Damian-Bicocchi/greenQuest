@@ -20,6 +20,7 @@
             android:id="@+id/icono_imagen_reporte"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:importantForAccessibility="no"
             android:padding="8dp"
             app:tint="@color/texto_sobre_acento_de_fondo"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Plástico"
+                android:text="@string/waste_placeholder"
                 android:textColor="@color/texto_sobre_acento_de_fondo"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -54,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.8"
-                android:text="09/12/2018 • 12:34"
+                android:text="@string/date_placeholder"
                 android:textColor="@color/texto_sobre_acento_de_fondo"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -66,7 +67,7 @@
             android:layout_marginHorizontal="8dp"
             android:gravity="center"
             android:minWidth="50dp"
-            android:text="+31"
+            android:text="@string/points_added_placeholder"
             android:textColor="@color/texto_sobre_acento_de_fondo"
             android:textSize="22sp"
             android:textStyle="bold"

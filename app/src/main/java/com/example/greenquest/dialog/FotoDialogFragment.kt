@@ -28,7 +28,7 @@ class FotoDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogoLayoutBinding.inflate(inflater, container, false)
         recyclerView = binding.recyclerViewDialogo
         recyclerView.layoutManager =

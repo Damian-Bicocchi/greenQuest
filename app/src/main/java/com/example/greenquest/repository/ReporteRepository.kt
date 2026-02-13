@@ -8,7 +8,6 @@ import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.states.reporte.EstadoReporte
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.time.OffsetDateTime
@@ -39,7 +38,7 @@ object ReporteRepository {
                     clasificacionUsuario = clasificacionUsuario,
                     fecha = OffsetDateTime.now(),
                     idUsuarioReporte = UsuarioRepository.obtenerIdUsuarioActual(),
-                    id_residuo = idResiduo,
+                    idResiduo = idResiduo,
                     fkIdHistorialResiduoReportado = fkIdHistorialResiduo,
                 )
             )

@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -25,7 +24,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.greenquest.R
 import com.example.greenquest.apiParameters.Estacion
 import com.example.greenquest.databinding.FragmentMapBinding
-import com.example.greenquest.ui.menu_principal
+import com.example.greenquest.ui.MenuPrincipal
 import com.example.greenquest.viewmodel.MapViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -136,7 +135,7 @@ class MapFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                     // Request permision directly and if not allowed return to menu
-                    startActivity(Intent(activity, menu_principal::class.java))
+                    startActivity(Intent(activity, MenuPrincipal::class.java))
                     requireActivity().finish()
 
                 }

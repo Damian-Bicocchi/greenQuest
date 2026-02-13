@@ -2,7 +2,7 @@ package com.example.greenquest.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.greenquest.Provider.ArticulosProvider
+import com.example.greenquest.provider.ArticulosProvider
 import com.example.greenquest.database.tienda.Articulo
 import com.example.greenquest.repository.TiendaAdquiridosRepository
 import com.example.greenquest.repository.UsuarioRepository
@@ -23,7 +23,7 @@ class TiendaViewModel : ViewModel() {
 
     suspend fun comprarArticulo(articulo: Articulo): Boolean {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-        Log.d("TIENDA", "Intentando comprar articulo ${articulo.id} por ${articulo.valor} monedas. Usuario tiene ${usuario.articulos_adquiridos} articulosIds")
+        Log.d("TIENDA", "Intentando comprar articulo ${articulo.id} por ${articulo.valor} monedas. Usuario tiene ${usuario.articulosAdquiridos} articulosIds")
         if(TiendaAdquiridosRepository.comprarArticulo(articulo.valor,articulo.id,usuario.uid)) {
             articulo.adquirido = true
             return true

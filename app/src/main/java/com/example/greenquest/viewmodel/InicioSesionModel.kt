@@ -4,7 +4,7 @@ package com.example.greenquest.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.greenquest.ChequeosUsuario
+import com.example.greenquest.UserChecks
 import com.example.greenquest.TokenDataStoreProvider
 import com.example.greenquest.database.user.User
 import com.example.greenquest.repository.UsuarioRepository
@@ -19,7 +19,7 @@ class InicioSesionModel: ViewModel() {
 
     fun iniciarSesion(userName: String,password: String ) {
 
-        if (!ChequeosUsuario.camposCompletos(userName,password)) {
+        if (!UserChecks.isFieldsFilled(userName,password)) {
             _status.value = "Rellene todos los campos"
             return
         }

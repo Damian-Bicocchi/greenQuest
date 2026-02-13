@@ -164,6 +164,41 @@
     <string name="placeholder_article_price">100000</string>
     <string name="placeholder_article_image_description">Imagen Artículo</string>
     <string name="score_image">Imagen de puntos</string>
+    <string name="map_access_button">Botón de acceso al mapa</string>
+    <string name="fragmenttitle_placeholder">FragmentTitle</string>
+    <string name="profile_access_button">Botón de acceso al perfil</string>
+    <string name="achivement_image">Imagen del logro</string>
+    <string name="achivement_name_placeholder">Nombre del logro</string>
+    <string name="achivement_description_placeholder">Descripción del logro</string>
+    <string name="trace_route_button">Botón de trazar ruta</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="address">Address</string>
+    <string name="hello_world_placeholder">Hola mundo</string>
+    <string name="return_button">Volver</string>
+    <string name="selected_image">Foto seleccionada</string>
+    <string name="save">Guardar</string>
+    <string name="select">Seleccionar</string>
+    <string name="icon">Icono</string>
+    <string name="date_placeholder">09/12/2018 • 12:34</string>
+    <string name="item">Item</string>
+    <string name="waste_placeholder">Plástico</string>
+    <string name="points_added_placeholder">+31</string>
+    <string name="username_placeholder">Username</string>
+    <string name="ranking_placeholder">Ranking #0</string>
+    <string name="user_generated_image_placeholder">A</string>
+    <string name="points_placeholder">0\npuntos</string>
+    <string name="app_settings">Configuracion de la aplicacion</string>
+    <string name="accound_settings">Configuracion de la cuenta</string>
+    <string name="you_recycled_title">Reciclaste:</string>
+    <string name="score_history">Historial de puntaje</string>
+    <string name="Settings">Configuracion</string>
+    <string name="username">Nombre de Usuario</string>
+    <string name="profile_description">Descripción de perfil</string>
+    <string name="important_advice">¡Aviso Importante!</string>
+    <string name="option_placeholder">Opción de ejemplo</string>
+    <string name="number_placeholder">123</string>
+    <string name="adquired">Adquirido</string>
 
 
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,9 +22,9 @@
             android:layout_height="17dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="4dp"
-            android:text="Username"
+            android:text="@string/username_placeholder"
             android:textColor="@color/texto_sobre_acento_de_fondo"
-            android:textSize="14sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,9 +35,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:text="Ranking #0"
+            android:text="@string/ranking_placeholder"
             android:textColor="@color/texto_sobre_acento_de_fondo"
-            android:textSize="10sp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -54,7 +53,7 @@
             android:layout_marginBottom="4dp"
             android:background="@drawable/top_image_placeholder"
             android:gravity="center"
-            android:text="A"
+            android:text="@string/user_generated_image_placeholder"
             android:textAlignment="center"
             app:cornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -77,10 +76,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="0\npuntos"
+                android:text="@string/points_placeholder"
                 android:textAlignment="center"
                 android:textColor="@color/texto_sobre_acento_de_fondo"
-                android:textSize="10dp" />
+                android:textSize="11sp" />
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

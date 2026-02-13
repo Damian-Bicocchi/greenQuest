@@ -6,8 +6,4 @@
     android:id="@+id/categorizarFragment"
     tools:context=".fragments.CategorizarFragment">
 
-    
-    <include layout="@layout/activity_adapter" />
-
-
 </FrameLayout>

@@ -1,6 +1,5 @@
 package com.example.greenquest.repository
 
-import android.util.Log
 import com.example.greenquest.GreenQuestApp
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.escaneo.QrPayloadResiduo
@@ -175,7 +174,8 @@ object EstadisticasRepository {
         }
     }
 
-    suspend fun actualizarEstadoReporte(idHistorialResiduo: Long,estadoReporte: EstadoReporte){
+    @Suppress("UNUSED_PARAMETER")
+    suspend fun actualizarEstadoReporte(idHistorialResiduo: Long, estadoReporte: EstadoReporte){
         if (idHistorialResiduo <= 0) return
 
         return withContext(Dispatchers.IO){

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,7 +14,6 @@ import com.example.greenquest.R
 import com.example.greenquest.adapters.CategoriaAdapter
 import com.example.greenquest.adapters.GlobalRankingAdapter
 import com.example.greenquest.databinding.FragmentTopGlobalBinding
-import com.example.greenquest.enums.Categoria
 import com.example.greenquest.viewmodel.TopGlobalViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -93,11 +91,11 @@ class TopGlobal : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.obtenerRanking()
-                viewModel.ranking.collect { it ->
+                viewModel.ranking.collect {
                     if(it.isEmpty()) {
-                        binding.emptyAlternative.visibility = View.VISIBLE;
+                        binding.emptyAlternative.visibility = View.VISIBLE
                     } else {
-                        binding.emptyAlternative.visibility = View.GONE;
+                        binding.emptyAlternative.visibility = View.GONE
                     }
                 }
             }

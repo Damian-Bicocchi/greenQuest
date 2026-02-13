@@ -13,27 +13,33 @@ data class User(
     @ColumnInfo(name = "descripcion") var descripcion: String?,
     @ColumnInfo(name = "puntos", defaultValue = "0") var puntos: Int = 0,
     @ColumnInfo(name = "monedas", defaultValue = "0") var monedas: Int = 0,
-    @ColumnInfo(name = "cant_cartones", defaultValue = "0") var cant_cartones: Int = 0,
-    @ColumnInfo(name= "cant_papeles", defaultValue = "0") var cant_papeles: Int = 0,
-    @ColumnInfo(name= "cant_metal", defaultValue = "0") var cant_metal: Int = 0,
-    @ColumnInfo(name= "cant_vidrio", defaultValue = "0") var cant_vidrio: Int = 0,
-    @ColumnInfo(name = "cant_plastico", defaultValue = "0") var cant_plastico: Int = 0,
+    @ColumnInfo(name = "cant_cartones", defaultValue = "0") var cantCartones: Int = 0,
+    @ColumnInfo(name= "cant_papeles", defaultValue = "0") var cantPapeles: Int = 0,
+    @ColumnInfo(name= "cant_metal", defaultValue = "0") var cantMetal: Int = 0,
+    @ColumnInfo(name= "cant_vidrio", defaultValue = "0") var cantVidrio: Int = 0,
+    @ColumnInfo(name = "cant_plastico", defaultValue = "0") var cantPlastico: Int = 0,
     @ColumnInfo(name = "imagen") var imagen: Int? = null,
-    @ColumnInfo(name = "sesion_activa") var sesion_activa: Boolean = false,
-    @ColumnInfo(name = "articulos_adquiridos") var articulos_adquiridos: MutableList<Int> = mutableListOf()
+    @ColumnInfo(name = "sesion_activa") var sesionActiva: Boolean = false,
+    @ColumnInfo(name = "articulos_adquiridos") var articulosAdquiridos: MutableList<Int> = mutableListOf()
 
 ){
     fun incrementarCantidadResiduo(tipoResiduo: TipoResiduo, cantidad: Int? = 1){
-        if(tipoResiduo == TipoResiduo.CARTON){
-            cant_cartones +=cantidad?:1
-        }else if(tipoResiduo == TipoResiduo.PAPEL){
-            cant_papeles +=cantidad?:1
-        }else if(tipoResiduo == TipoResiduo.METAL){
-            cant_metal +=cantidad?:1
-        }else if (tipoResiduo == TipoResiduo.VIDRIO){
-            cant_vidrio +=cantidad?:1
-        }else{
-            cant_plastico +=cantidad?:1
+        when (tipoResiduo) {
+            TipoResiduo.CARTON -> {
+                cantCartones += cantidad ?: 1
+            }
+            TipoResiduo.PAPEL -> {
+                cantPapeles += cantidad ?: 1
+            }
+            TipoResiduo.METAL -> {
+                cantMetal += cantidad ?: 1
+            }
+            TipoResiduo.VIDRIO -> {
+                cantVidrio += cantidad ?: 1
+            }
+            else -> {
+                cantPlastico += cantidad ?: 1
+            }
         }
     }
 }

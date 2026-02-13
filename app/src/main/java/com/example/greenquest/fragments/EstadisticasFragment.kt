@@ -352,7 +352,7 @@ class EstadisticasFragment : Fragment(R.layout.fragment_estadisticas) {
 }
 
 class IntegerFormatter : ValueFormatter(){
-    override fun getFormattedValue(value: Float): String? {
+    override fun getFormattedValue(value: Float): String {
         return "" + (value.toInt())
     }
 }

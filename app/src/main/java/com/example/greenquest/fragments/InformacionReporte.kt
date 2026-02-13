@@ -17,7 +17,6 @@ import com.example.greenquest.fragments.arguments.OrigenHaciaReporte
 import com.example.greenquest.viewmodel.ReporteViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import kotlin.getValue
 
 
