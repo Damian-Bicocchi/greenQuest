@@ -54,6 +54,8 @@
         android:spacing="15dp"
         app:boxBackgroundColor="@color/acento_de_fondo"
         app:layout_constraintTop_toBottomOf="@+id/rankingSelector"
+        android:textColorHint="@color/texto_sobre_acento_de_fondo"
+        app:hintTextColor="@color/texto_sobre_acento_de_fondo"
         app:selectionRequired="true"
         app:singleSelection="true"
         android:hint="@string/category_select_hint">

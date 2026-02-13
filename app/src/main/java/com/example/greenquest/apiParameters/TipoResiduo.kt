@@ -1,5 +1,6 @@
 package com.example.greenquest.apiParameters
 
+import android.content.Context
 import androidx.annotation.ColorRes
 import com.example.greenquest.R
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -35,5 +36,14 @@ enum class TipoResiduo(@param:ColorRes @field:ColorRes val colorRes: Int) {
             .replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString()
             }
+
+    fun getString(context: Context): String = context.getString(when (this) {
+        TipoResiduo.CARTON -> R.string.categoryCarton
+        TipoResiduo.PLASTICO -> R.string.categoryPlastico 
+        TipoResiduo.VIDRIO -> R.string.categoryVidrio
+        TipoResiduo.METAL -> R.string.categoryMetal
+        TipoResiduo.PAPEL -> R.string.categoryPapel
+        TipoResiduo.BASURA -> R.string.categoryBasura
+    })
 }
 

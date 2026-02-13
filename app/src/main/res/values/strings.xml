@@ -93,6 +93,7 @@
     <string name="categoryMetal">Metal</string>
     <string name="categoryPapel">Papel</string>
     <string name="categoryTodos">Todos</string>
+    <string name="categoryBasura">Basura</string>
     <string name="category_select_hint">Tipo de residuo</string>
     <string name="cerrar_sesion_button">Cerrar sesión</string>
     <string name="mi_pefil">Mi perfil</string>
@@ -145,7 +146,7 @@
 
     <string name="title_button_enviar_reporte">Enviar Reporte</string>
     <string name="vista_previa_de_imagen_para_reporte">Vista previa de imagen para reporte</string>
-    <string name="label_ingresar_clasificacion_correcta">¿Cuál es la clasificación correcta?</string>
+    <string name="hint_correct_category">Clasificación correcta</string>
     <string name="title_reportar">Reportar residuo mal clasificado</string>
     <string name="texto_boton_camara">Tomar foto del residuo</string>
 

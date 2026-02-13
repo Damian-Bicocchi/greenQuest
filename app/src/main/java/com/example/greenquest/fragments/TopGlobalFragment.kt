@@ -18,7 +18,7 @@ import com.example.greenquest.viewmodel.TopGlobalViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class TopGlobal : Fragment() {
+class TopGlobalFragment : Fragment() {
     private var _binding: FragmentTopGlobalBinding? = null
     private val binding get() = _binding!!
     private val viewModel: TopGlobalViewModel by viewModels()
@@ -44,7 +44,7 @@ class TopGlobal : Fragment() {
         adapter = GlobalRankingAdapter(emptyList())
         binding.rankingList.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@TopGlobal.adapter
+            adapter = this@TopGlobalFragment.adapter
         }
 
         context?.let {
