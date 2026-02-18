@@ -111,7 +111,7 @@ object UsuarioRepository {
     suspend fun guardarUsuarioLocal(user: User){
         withContext(Dispatchers.IO) {
             userDao.insert(user)
-            user.sesion_activa = true
+            user.sesionActiva = true
             userDao.updateUser(user)
         }
         usuario = user

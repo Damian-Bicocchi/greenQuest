@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/activity_adapter"/>
-
     <TextView
         android:id="@+id/qr_mensaje_felicidades"
         android:layout_width="0dp"
@@ -55,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="0dp"
                 android:gravity="center"
-                android:text="Reciclaste: "
+                android:text="@string/you_recycled_title"
                 android:textColor="@color/texto_normal"
                 android:textSize="24sp"/>
 

@@ -7,7 +7,6 @@ import androidx.room.Transaction
 import com.example.greenquest.database.estadisticas.HistorialResiduo
 import com.example.greenquest.database.estadisticas.ResumenPuntos
 import com.example.greenquest.database.estadisticas.ResumenResiduo
-import com.example.greenquest.database.reporte.ReporteData
 import com.example.greenquest.states.reporte.EstadoReporte
 import java.time.OffsetDateTime
 

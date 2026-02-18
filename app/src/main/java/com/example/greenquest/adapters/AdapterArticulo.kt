@@ -12,8 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AdapterArticulo(val listaArticulo: List<Articulo>,
-                      private val onCompraExitosa: () -> Unit
+class AdapterArticulo(
+    val listaArticulo: List<Articulo>,
+    private val onCompraExitosa: () -> Unit
 ) : RecyclerView.Adapter<AdapterArticulo.ViewHolder>() {
 
     private var adapterScope = CoroutineScope(Dispatchers.Main)
@@ -51,10 +52,15 @@ class AdapterArticulo(val listaArticulo: List<Articulo>,
             holder.binding.nombreArticuloTienda.alpha = 0.5f
             holder.binding.imagenArticulo.alpha = 0.5f
             holder.binding.textviewPrecioArticulo.alpha = 0.5f
-            holder.binding.textviewPrecioArticulo.text = "Adquirido"
+            holder.binding.textviewPrecioArticulo.text =
+                holder.binding.textviewPrecioArticulo.context.getString(R.string.adquired)
 
             holder.binding.textviewPrecioArticulo.setOnClickListener {
-                Toast.makeText(holder.itemView.context, "Ya has adquirido este artículo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Ya has adquirido este artículo",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } else {
             holder.binding.textviewPrecioArticulo.text = "${item.valor}"
@@ -92,8 +98,6 @@ class AdapterArticulo(val listaArticulo: List<Articulo>,
     override fun getItemCount(): Int {
         return listaArticulo.size
     }
-
-
 
 
 }

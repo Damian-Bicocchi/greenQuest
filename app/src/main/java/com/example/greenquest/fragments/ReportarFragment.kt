@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -43,8 +45,14 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import androidx.core.graphics.scale
+import com.example.greenquest.adapters.CategoriaAdapter
+import com.example.greenquest.adapters.ReportarCategoriaAdapter
+import com.example.greenquest.databinding.FragmentReportarBinding
+import com.example.greenquest.databinding.FragmentTopGlobalBinding
 
 class ReportarFragment : Fragment() {
+    private var _binding: FragmentReportarBinding? = null
+    private val binding get() = _binding!!
 
     private val args: ReportarFragmentArgs by navArgs()
 
@@ -61,6 +69,7 @@ class ReportarFragment : Fragment() {
     private lateinit var outputPhotoUri: Uri
 
     private lateinit var reporteViewModel: ReporteViewModel
+    private lateinit var categoryAdapter: ReportarCategoriaAdapter
 
 
     private val takePictureLauncher = registerForActivityResult(
@@ -142,46 +151,38 @@ class ReportarFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentReportarBinding.inflate(inflater, container, false)
         reporteViewModel = ViewModelProvider(this)[ReporteViewModel::class.java]
 
         origen = args.reporteArgumentos.origenHaciaReporte
         idResiduo = args.reporteArgumentos.idResiduo
 
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(
-            R.layout.fragment_reportar,
-            container,
-            false
-        )
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val buttonEnviarReporte = view.findViewById<Button>(R.id.button_enviar_reporte)
+        val buttonEnviarReporte = binding.buttonEnviarReporte
 
-        val selectClasificacion: Spinner = view.findViewById(
-            R.id.text_clasificacion_dada)
-
-        cargarSpinnerCategorias(selectClasificacion)
-        observeViewModel()
-
-        selectClasificacion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val seleccion = if (position > 0) {
-                    parent.getItemAtPosition(position) as TipoResiduo
-                } else {
-                    null
-                }
-                reporteViewModel.seleccionarTipoResiduo(seleccion)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                reporteViewModel.seleccionarTipoResiduo(null)
+        context?.let {
+            categoryAdapter = ReportarCategoriaAdapter(requireContext(), R.layout.dropdown_item)
+            binding.categorySelectionTextView.setAdapter(categoryAdapter)
+            val text = categoryAdapter.getItem(0)?.getString(requireContext()) ?: ""
+            binding.categorySelectionTextView.setText(
+                text, false
+            )
+            binding.categorySelectionTextView.setOnItemClickListener { _, _, position, _ ->
+                val category = categoryAdapter.getItem(position) ?: return@setOnItemClickListener
+                binding.categorySelectionTextView.setText(
+                    category.getString(requireContext()), false
+                )
+                reporteViewModel.seleccionarTipoResiduo(category)
             }
         }
+
+        observeViewModel()
 
 
         imgThumbnail = view.findViewById(R.id.image_thumbnail_reportar_informe)
@@ -220,11 +221,26 @@ class ReportarFragment : Fragment() {
             currentPhotoPath?.let { path ->
                 val file = File(path)
                 if (file.exists()) {
-                    val options = BitmapFactory.Options().apply {
-                        inJustDecodeBounds = false
+                    var bitmap = BitmapFactory.decodeFile(path)
+
+                    val exif = ExifInterface(path)
+                    val orientation = exif.getAttributeInt(
+                        ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_NORMAL
+                    )
+                    val matrix = Matrix()
+                    when (orientation) {
+                        ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+                        ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+                        ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+                    }
+                    if (!matrix.isIdentity) {
+                        bitmap = Bitmap.createBitmap(
+                            bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
+                        )
                     }
 
-                    fullImageBitmap = BitmapFactory.decodeFile(path, options)
+                    fullImageBitmap = bitmap
 
                     fullImageBitmap?.let { bitmap ->
                         thumbnailBitmap = bitmap.scale(200, (200 * bitmap.height / bitmap.width))
@@ -276,61 +292,6 @@ class ReportarFragment : Fragment() {
             )
             dialog.show()
         }
-    }
-
-
-
-    private fun cargarSpinnerCategorias(spinner: Spinner) {
-        val categoriasOrdenadas = TipoResiduo.entries.sortedBy { it.name }
-
-        val listaConVacio = mutableListOf<TipoResiduo?>(null).apply {
-            addAll(categoriasOrdenadas)
-        }
-
-        val adapter = object : ArrayAdapter<TipoResiduo?>(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            listaConVacio
-        ) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = convertView ?: LayoutInflater.from(context)
-                    .inflate(
-                        android.R.layout.simple_spinner_item,
-                        parent,
-                        false
-                    )
-
-                val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getItem(position)?.name ?: ""
-                textView.setTextColor(
-                    ContextCompat.getColor(context, R.color.texto_normal)
-                )
-                return view
-            }
-
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view = convertView ?: LayoutInflater.from(context)
-                    .inflate(
-                        android.R.layout.simple_spinner_dropdown_item,
-                        parent,
-                        false
-                    )
-
-                val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getItem(position)?.name ?: ""
-                textView.setTextColor(
-                    ContextCompat.getColor(context, R.color.texto_normal)
-                )
-                return view
-            }
-        }
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
     }
 
     private fun chequearPermisoCamara() {

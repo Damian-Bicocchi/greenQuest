@@ -1,6 +1,5 @@
 package com.example.greenquest.dialog
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +9,13 @@ import com.example.greenquest.databinding.DialogoAcercaDeBinding
 
 class AcercaDeDialogFragment  : DialogFragment(){
 
-    lateinit var binding : com.example.greenquest.databinding.DialogoAcercaDeBinding
+    lateinit var binding : DialogoAcercaDeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogoAcercaDeBinding.inflate(inflater)
 
         binding.volver.setOnClickListener {

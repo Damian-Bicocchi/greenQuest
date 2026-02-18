@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.greenquest.dialog.AcercaDeDialogFragment
-import com.example.greenquest.ui.iniciar_sesion
+import com.example.greenquest.ui.IniciarSesion
 import com.example.greenquest.viewmodel.ConfiguracionViewModel
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -38,7 +38,7 @@ class ConfiguracionFragment : Fragment() {
                     Toast.makeText(context, "Error al cerrar sesión", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(context, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(context, iniciar_sesion::class.java))
+                    startActivity(Intent(context, IniciarSesion::class.java))
                 }
             }
         }

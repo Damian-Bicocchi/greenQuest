@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="black">#FF000000</color>
     <color name="texto_normal">#CAD3F5</color>
     <color name="texto_secundario">#A5ADCB</color>
@@ -8,7 +8,6 @@
     <color name="accent_color"> #AC96D6</color>
     <color name="recuadros_input_text">#6D7089</color>
     <color name="bottom_navigation_background">#8087A2</color>
-    <color name="bottom_navigation_item_active">#AC96D6</color>
     <color name="fila_usuario_normal">#6E738D</color>
     <color name="fila_usuario_oro">#FBBC05</color>
     <color name="fila_usuario_plata">#EEEEEE</color>
@@ -20,11 +19,9 @@
     <color name="texto_rojo">#ed8796</color>
     <color name="texto_naranja">#f5a97f</color>
     <color name="acento_de_fondo">#6E738D</color>
-    <color name="color_de_la_barra_de_abajo">#8087a2</color>
     <color name="texto_oscuro">#181926</color>
     <color name="texto_sobre_acento_de_fondo">#1D1B20</color>
     <color name="white">#FFFFFF</color>
-    <color name="boton_configiuracion">#6E738D</color>
 
     <color name="color_plastico">#2E7D32</color>
     <color name="color_vidrio">#1565C0</color>
@@ -34,7 +31,7 @@
     <color name="color_papel">#4FC3F7</color>
 
 
-    <array name="pieChartColorArray">
+    <array name="pieChartColorArray" tools:keep="@array/pieChartColorArray">
         <item>@color/color_plastico</item>
         <item>@color/color_vidrio</item>
         <item>@color/color_carton</item>

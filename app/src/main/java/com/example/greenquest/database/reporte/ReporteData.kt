@@ -50,7 +50,7 @@ data class ReporteData(
     val idUsuarioReporte: Int,
 
     @ColumnInfo(name = "id_residuo")
-    val id_residuo: String,
+    val idResiduo: String,
 
     @ColumnInfo("fk_id_historial_residuo_reportado")
     val fkIdHistorialResiduoReportado: Long

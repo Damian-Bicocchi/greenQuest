@@ -2,7 +2,6 @@ package com.example.greenquest
 
 import android.app.Application
 import android.content.Context
-import androidx.core.view.WindowCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -21,7 +20,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 * SupervisorJob():
 Es un tipo especial de Job que permite que las corrutinas fallen independientemente
 Si una corrutina falla (lanza excepción), no cancela las demás corrutinas del mismo scope
-* Dispatchers.DEfault
+* Dispatchers.Default
 Es el dispatcher por defecto para operaciones intensivas de CPU
 Usa un pool de hilos optimizado para cálculos
 * El más los combina, creando un contexto de corrutina

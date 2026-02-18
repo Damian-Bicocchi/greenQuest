@@ -9,7 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.greenquest.Provider.LogroProvider
+import com.example.greenquest.provider.LogroProvider
 import com.example.greenquest.R
 import com.example.greenquest.adapters.AdapterLogro
 import com.example.greenquest.database.user.User
@@ -31,8 +31,8 @@ class MiPerfilFragment : Fragment() {
 
     private lateinit var usuario : User
 
-    private var subrayarConseguidos = false
-    private var subrayarFaltantes = false
+    private var activarConseguidos = false
+    private var activarFaltantes = false
 
     private val miPerfilModel : MiPerfilModel by viewModels()
 
@@ -50,7 +50,7 @@ class MiPerfilFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentMiPerfilBinding.inflate(inflater, container, false)
         val recyclerView = binding.logrosRecyclerview
@@ -79,9 +79,9 @@ class MiPerfilFragment : Fragment() {
         }
 
         binding.logrosConseguidosButton.setOnClickListener {
-            subrayarConseguidos = !subrayarConseguidos
-            subrayarFaltantes = false
-            if(!subrayarConseguidos && !subrayarFaltantes){
+            activarConseguidos = !activarConseguidos
+            activarFaltantes = false
+            if(!activarConseguidos){
                 recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
             }else {
                 val listaLogrosObtenidos = LogroProvider.logrosObtenidos()
@@ -90,9 +90,9 @@ class MiPerfilFragment : Fragment() {
         }
 
         binding.logrosFaltantesButton.setOnClickListener{
-            subrayarFaltantes = !subrayarFaltantes
-            subrayarConseguidos = false
-            if(!subrayarConseguidos && !subrayarFaltantes){
+            activarFaltantes = !activarFaltantes
+            activarConseguidos = false
+            if(!activarFaltantes){
                 recyclerView.adapter = AdapterLogro(LogroProvider.obtenerLogrosObtenidosPrimero())
             }else {
                 recyclerView.adapter = AdapterLogro(LogroProvider.logrosNoObtenidos())
@@ -129,8 +129,8 @@ class MiPerfilFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            subrayarFaltantes = false
-            subrayarConseguidos = false
+            activarFaltantes = false
+            activarConseguidos = false
             usuario = UsuarioRepository.obtenerUsuarioLocal()!!
             binding.usernameEditperfil.setText(usuario.userName.toString())
             binding.usernameEditperfil.setEnabled(false)

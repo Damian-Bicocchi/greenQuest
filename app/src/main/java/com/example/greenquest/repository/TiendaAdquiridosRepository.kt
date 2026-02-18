@@ -2,7 +2,7 @@ package com.example.greenquest.repository
 
 import android.util.Log
 import com.example.greenquest.GreenQuestApp
-import com.example.greenquest.Provider.ArticulosProvider
+import com.example.greenquest.provider.ArticulosProvider
 import com.example.greenquest.database.tienda.TiendaAdquiridos
 
 object TiendaAdquiridosRepository {

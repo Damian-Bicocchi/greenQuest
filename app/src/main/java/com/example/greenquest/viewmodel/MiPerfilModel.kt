@@ -2,9 +2,8 @@ package com.example.greenquest.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.greenquest.database.tienda.Articulo
-import com.example.greenquest.Provider.ArticulosProvider
-import com.example.greenquest.Provider.LogroProvider
-import com.example.greenquest.adapters.AdapterLogro
+import com.example.greenquest.provider.ArticulosProvider
+import com.example.greenquest.provider.LogroProvider
 import com.example.greenquest.apiParameters.TipoResiduo
 import com.example.greenquest.database.user.User
 import com.example.greenquest.repository.TiendaAdquiridosRepository
@@ -12,12 +11,12 @@ import com.example.greenquest.repository.UsuarioRepository
 
 class MiPerfilModel : ViewModel() {
 
-    suspend fun chequearYActualizarLogros(usuario: User){
-        LogroProvider.chequearYActualizarLogros(TipoResiduo.PAPEL,usuario.cant_papeles)
-        LogroProvider.chequearYActualizarLogros(TipoResiduo.CARTON,usuario.cant_cartones)
-        LogroProvider.chequearYActualizarLogros(TipoResiduo.METAL,usuario.cant_metal)
-        LogroProvider.chequearYActualizarLogros(TipoResiduo.PLASTICO,usuario.cant_plastico)
-        LogroProvider.chequearYActualizarLogros(TipoResiduo.VIDRIO,usuario.cant_vidrio)
+    fun chequearYActualizarLogros(usuario: User){
+        LogroProvider.chequearYActualizarLogros(TipoResiduo.PAPEL,usuario.cantPapeles)
+        LogroProvider.chequearYActualizarLogros(TipoResiduo.CARTON,usuario.cantCartones)
+        LogroProvider.chequearYActualizarLogros(TipoResiduo.METAL,usuario.cantMetal)
+        LogroProvider.chequearYActualizarLogros(TipoResiduo.PLASTICO,usuario.cantPlastico)
+        LogroProvider.chequearYActualizarLogros(TipoResiduo.VIDRIO,usuario.cantVidrio)
 
     }
 

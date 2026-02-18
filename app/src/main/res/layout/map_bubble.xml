@@ -12,6 +12,7 @@
         android:id="@+id/bubble_image"
         android:layout_width="65dp"
         android:layout_height="65dp"
+        android:importantForAccessibility="no"
         android:visibility="gone" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -34,9 +35,9 @@
                 app:layout_constraintRight_toLeftOf="@id/bubble_moreinfo"
                 android:textColor="@color/texto_normal"
                 android:maxEms="17"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="1"
-                android:text="Title" />
+                android:text="@string/title" />
 
             <Button
                 android:id="@+id/bubble_moreinfo"
@@ -46,7 +47,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/bubble_title"
-                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/trace_route_button"
+                android:layout_marginStart="10dp"
                 app:backgroundTint="@color/fondo_secundario"
                 app:icon="@drawable/path_distance"
                 app:iconTint="@color/accent_color" />
@@ -58,17 +60,17 @@
             app:layout_constraintLeft_toLeftOf="@id/bubble_header"
             app:layout_constraintRight_toRightOf="@id/bubble_header"
             android:textColor="@color/texto_normal"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:maxEms="17"
-            android:text="Description" />
+            android:text="@string/description" />
         <TextView
             android:id="@+id/bubble_subdescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/texto_normal"
-            android:textSize="10dp"
+            android:textSize="11sp"
             android:maxEms="17"
-            android:text="Address"
+            android:text="@string/address"
             android:visibility="gone"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>

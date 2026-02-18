@@ -8,7 +8,6 @@ import android.widget.ImageView
 import com.example.greenquest.R
 import androidx.recyclerview.widget.RecyclerView
 import com.example.greenquest.database.tienda.Articulo
-import com.example.greenquest.databinding.FilaFotosPerfilBinding
 
 class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<AdapterImagen.ViewHolder>() {
 
@@ -43,13 +42,9 @@ class AdapterImagen (val articulos: List<Articulo>) : RecyclerView.Adapter<Adapt
         return articulos.size
     }
 
-    override fun onViewRecycled(holder: ViewHolder) {
-        super.onViewRecycled(holder)
-
-    }
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
-        val imagenArticulo = view.findViewById<ImageView>(R.id.imagenSeleccionar)
-        val botonSeleccionar = view.findViewById<Button>(R.id.buttonSeleccionar)
+        val imagenArticulo: ImageView = view.findViewById<ImageView>(R.id.imagenSeleccionar)
+        val botonSeleccionar: Button = view.findViewById<Button>(R.id.buttonSeleccionar)
     }
 
 

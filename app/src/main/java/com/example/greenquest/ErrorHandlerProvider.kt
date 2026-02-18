@@ -1,9 +1,10 @@
+@file:Suppress("RunBlocking")
+
 package com.example.greenquest
 
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.example.greenquest.ui.menu_principal
 import kotlinx.coroutines.runBlocking
 import kotlin.system.exitProcess
 

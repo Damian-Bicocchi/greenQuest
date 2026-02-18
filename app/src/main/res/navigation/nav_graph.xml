@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/topGlobalFragment"
-        android:name="com.example.greenquest.fragments.TopGlobal"
+        android:name="com.example.greenquest.fragments.TopGlobalFragment"
         android:label="Top Global" />
 
     <fragment

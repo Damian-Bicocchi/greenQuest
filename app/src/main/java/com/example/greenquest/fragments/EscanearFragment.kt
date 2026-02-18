@@ -31,7 +31,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.greenquest.R
 import com.example.greenquest.database.escaneo.DatosEscaneo
 import com.example.greenquest.states.ScanState
-import com.example.greenquest.ui.menu_principal
+import com.example.greenquest.ui.MenuPrincipal
 import com.example.greenquest.viewmodel.EscanearModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -89,7 +89,7 @@ class EscanearFragment : Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
                     // Request permision directly and if not allowed return to menu
-                    startActivity(Intent(activity, menu_principal::class.java))
+                    startActivity(Intent(activity, MenuPrincipal::class.java))
                     requireActivity().finish()
                 }
             }

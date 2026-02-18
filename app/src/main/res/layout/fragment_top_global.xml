@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fondo_primario"
     android:padding="15dp">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -43,7 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="categorySelection,categorySelectionTextView" />
+        app:constraint_referenced_ids="categorySelection,categorySelectionTextView"
+        tools:ignore="NotSibling" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/categorySelection"
@@ -54,6 +54,8 @@
         android:spacing="15dp"
         app:boxBackgroundColor="@color/acento_de_fondo"
         app:layout_constraintTop_toBottomOf="@+id/rankingSelector"
+        android:textColorHint="@color/texto_sobre_acento_de_fondo"
+        app:hintTextColor="@color/texto_sobre_acento_de_fondo"
         app:selectionRequired="true"
         app:singleSelection="true"
         android:hint="@string/category_select_hint">
@@ -66,7 +68,8 @@
             android:inputType="none"
             android:popupBackground="@drawable/selector_background"
             android:textColor="@color/texto_sobre_acento_de_fondo"
-            android:title="@string/category_select_hint"/>
+            android:title="@string/category_select_hint"
+            tools:ignore="LabelFor" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
