@@ -1,6 +1,7 @@
 package com.example.greenquest.adapters
 
 
+import android.app.AlertDialog
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,8 @@ class AdapterArticulo(
         holder.binding.nombreArticuloTienda.alpha = 1f
         holder.binding.imagenArticulo.alpha = 1f
         holder.binding.textviewPrecioArticulo.alpha = 1f
+        holder.binding.contenedorPrecio.alpha = 1f
+        holder.binding.imageView2.alpha = 1f
 
         if (item.adquirido) {
             holder.binding.nombreArticuloTienda.alpha = 0.5f
@@ -54,8 +57,10 @@ class AdapterArticulo(
             holder.binding.textviewPrecioArticulo.alpha = 0.5f
             holder.binding.textviewPrecioArticulo.text =
                 holder.binding.textviewPrecioArticulo.context.getString(R.string.adquired)
+            holder.binding.contenedorPrecio.alpha = 0.5f
+            holder.binding.imageView2.alpha = 0.5f
 
-            holder.binding.textviewPrecioArticulo.setOnClickListener {
+            holder.binding.contenedorPrecio.setOnClickListener {
                 Toast.makeText(
                     holder.itemView.context,
                     "Ya has adquirido este artículo",
@@ -65,32 +70,41 @@ class AdapterArticulo(
         } else {
             holder.binding.textviewPrecioArticulo.text = "${item.valor}"
 
-            holder.binding.textviewPrecioArticulo.setOnClickListener {
+            holder.binding.contenedorPrecio.setOnClickListener {
 
                 val pos = holder.bindingAdapterPosition
                 if (pos == RecyclerView.NO_POSITION) return@setOnClickListener
+                val builder : AlertDialog.Builder = AlertDialog.Builder(holder.itemView.context)
+                builder.setTitle("Confirmar compra")
+                builder.setMessage("¿Estás seguro de que deseas comprar este artículo por ${item.valor} monedas?")
+                builder.setPositiveButton("Confirmar") { dialog, _ ->
+                    adapterScope.launch {
+                        if (tiendaViewModel.comprarArticulo(listaArticulo[pos])) {
 
-                adapterScope.launch {
-                    if (tiendaViewModel.comprarArticulo(listaArticulo[pos])) {
+                            notifyItemChanged(pos)
 
-                        notifyItemChanged(pos)
+                            Toast.makeText(
+                                holder.itemView.context,
+                                "Artículo comprado",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                        Toast.makeText(
-                            holder.itemView.context,
-                            "Artículo comprado",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            onCompraExitosa()
 
-                        onCompraExitosa()
-
-                    } else {
-                        Toast.makeText(
-                            holder.itemView.context,
-                            "No tenés monedas suficientes",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        } else {
+                            Toast.makeText(
+                                holder.itemView.context,
+                                "No tenés monedas suficientes",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
+                    dialog.dismiss()
                 }
+                builder.setNegativeButton("Cancelar") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                builder.show()
             }
         }
     }

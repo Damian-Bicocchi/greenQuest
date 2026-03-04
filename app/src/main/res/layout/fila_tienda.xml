@@ -20,16 +20,16 @@
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contenedorPrecio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_marginBottom="10dp"
             android:background="@drawable/secondary_card"
             android:backgroundTint="#D5BD0D"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nombreArticuloTienda"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/nombreArticuloTienda">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -48,8 +48,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textviewPrecioArticulo"
@@ -58,8 +57,8 @@
                     android:autoSizeMaxTextSize="14sp"
                     android:autoSizeMinTextSize="8sp"
                     android:text="@string/placeholder_article_price"
-                    android:textColor="#000000"
                     android:textAlignment="center"
+                    android:textColor="#000000"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
