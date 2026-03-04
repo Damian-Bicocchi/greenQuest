@@ -12,6 +12,7 @@
 
     <string name="link_text_recuperar_contrasenia">Recuperar contraseña</string>
     <string name="link_text_registrar_cuenta">Registrar cuenta</string>
+    <string name="used_server">Servidor utilizado</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -201,5 +202,9 @@
     <string name="number_placeholder">123</string>
     <string name="adquired">Adquirido</string>
 
-
+    <string name="default_server">Servidor por defecto</string>
+    <string name="custom_server">Servidor personalizado</string>
+    <string name="placeholder_server">http://example.com:8000/api/</string>
+    <string name="server_url_saved">URL del servidor guardada</string>
+    <string name="invalid_server_url">La URL debe iniciar con http:// o https://</string>
 </resources>

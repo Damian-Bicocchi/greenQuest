@@ -35,6 +35,9 @@ class GreenQuestApp : Application() {
         lateinit var instance: GreenQuestApp
             private set
         lateinit var prefs: Prefs
+            private set
+        lateinit var apiStorage: ApiStorage
+            private set
     }
 
     lateinit var database: AppDatabase
@@ -56,6 +59,8 @@ class GreenQuestApp : Application() {
         database = Room.databaseBuilder(
             applicationContext, AppDatabase::class.java, "usuarios-db"
         ).fallbackToDestructiveMigration(false).build()
+
+        apiStorage = ApiStorage(applicationContext)
 
         prefs = Prefs(applicationContext)
 

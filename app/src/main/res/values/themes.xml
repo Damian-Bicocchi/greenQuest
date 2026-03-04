@@ -8,6 +8,7 @@
         <item name="popupMenuStyle">@style/Widget.GreenQuest.PopupMenu</item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.GreenQuest.MaterialAlertDialog</item>
         <item name="bottomNavigationStyle">@style/Widget.GreenQuest.BottomNavigationView</item>
+        <item name="materialDividerStyle">@style/Widget.GreenQuest.MaterialDivider</item>
         <item name="colorPrimary">@color/accent_color</item>
         <item name="colorOnPrimary">@color/texto_normal</item>
         <item name="colorSecondary">@color/accent_color</item>
@@ -16,6 +17,10 @@
         <item name="colorOnTertiary">@color/texto_normal</item>
         <item name="colorOutline">@android:color/transparent</item>
         <item name="android:windowBackground">@color/fondo_primario</item>
+    </style>
+
+    <style name="Widget.GreenQuest.MaterialDivider" parent="Widget.Material3.MaterialDivider">
+        <item name="dividerColor">@color/acento_de_fondo</item>
     </style>
 
     <style name="Widget.GreenQuest.PopupMenu" parent="Widget.Material3.PopupMenu">
