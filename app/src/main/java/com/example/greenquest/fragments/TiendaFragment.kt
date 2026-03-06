@@ -28,6 +28,7 @@ class TiendaFragment : Fragment() {
         lifecycleScope.launch {
             tiendaViewModel.actualizarArticulosAdquiridos()
             binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()
+
             recyclerView.adapter = AdapterArticulo(tiendaViewModel.obtenerArticulosDisponibles()){
                 lifecycleScope.launch {
                     binding.textviewCantMonedas.text = tiendaViewModel.actualizarMonedasUsuario()

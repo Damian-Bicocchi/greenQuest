@@ -94,6 +94,7 @@ class TriviaFragment : Fragment() {
             }
         val dialog: AlertDialog = builder.create()
         dialog.show()
+        selectedOptionId = null
 
     }
 
@@ -117,11 +118,25 @@ class TriviaFragment : Fragment() {
         }
 
         binding.botonResponder.setOnClickListener {
-            triviaViewModel.chequearRespuestaCorrecta(
-                selectedQuestionId!!,
-                selectedOptionId!!)
+            if (selectedOptionId != null){
+                triviaViewModel.chequearRespuestaCorrecta(
+                    selectedQuestionId!!,
+                    selectedOptionId!!)
+            } else {
+                mostrarAdvertenciaSeleccion()
+            }
+
         }
         triviaViewModel.loadNextQuestion()
     }
 
+    private fun mostrarAdvertenciaSeleccion() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Selección necesaria")
+            .setMessage("Por favor, selecciona una opción antes de continuar.")
+            .setPositiveButton("Entendido") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 }

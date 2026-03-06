@@ -23,7 +23,10 @@ class TiendaViewModel : ViewModel() {
 
     suspend fun comprarArticulo(articulo: Articulo): Boolean {
         val usuario = UsuarioRepository.obtenerUsuarioLocal()!!
-        Log.d("TIENDA", "Intentando comprar articulo ${articulo.id} por ${articulo.valor} monedas. Usuario tiene ${usuario.articulosAdquiridos} articulosIds")
+        Log.d("TIENDA",
+            "Intentando comprar articulo ${articulo.id} " +
+                    "por ${articulo.valor} monedas. Usuario tiene " +
+                    "${usuario.articulosAdquiridos} articulosIds")
         if(TiendaAdquiridosRepository.comprarArticulo(articulo.valor,articulo.id,usuario.uid)) {
             articulo.adquirido = true
             return true
@@ -33,6 +36,8 @@ class TiendaViewModel : ViewModel() {
     }
     suspend fun actualizarMonedasUsuario(): String {
         val idUsuario = UsuarioRepository.obtenerUsuarioLocal()!!.uid
-        return TiendaAdquiridosRepository.obtenerMonedasUsuario(idUsuario).toString()
+        val moneditas = TiendaAdquiridosRepository.obtenerMonedasUsuario(idUsuario = idUsuario).toString()
+        //Log.d("monedasLogging", "La cantidad de moneditas del usuario es $moneditas")
+        return moneditas
     }
 }
